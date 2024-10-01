@@ -1,0 +1,17 @@
+.CardSntxt {
+  text-align: center !important;
+}
+
+.TableSerial {
+  margin-top: 20px;
+  max-height: 500px;
+  max-width: 1000px;
+  margin-left: 100px;
+  overflow-y: none;
+}
+.TableSerial th {
+  text-align: center;
+}
+.TableSerial td {
+  text-align: center;
+}
