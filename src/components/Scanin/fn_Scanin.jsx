@@ -145,7 +145,7 @@ function fn_Scanin() {
         await submitData("submit", {
           Itemid: type,
           Serial: txtScanoutValue,
-          Admin: "POND",
+          Admin: localStorage.getItem("ip"),
           movement: "OUT",
           ID: user,
         });
@@ -172,7 +172,7 @@ function fn_Scanin() {
           await submitData("submit", {
             Itemid: ddlvalueout.typeid,
             Serial: txtScanoutValue,
-            Admin: "POND",
+            Admin: localStorage.getItem("ip"),
             movement: "OUT",
             ID: user,
           });
