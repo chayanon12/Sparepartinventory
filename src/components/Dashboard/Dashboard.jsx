@@ -8,7 +8,7 @@ import "./Dashboard.css";
 import Warehouse from "/src/assets/inventory.png";
 
 function SecondContent() {
-  const { count, time, DtData, columns, formattedDate, DtDataAction } =
+  const { count, time, DtData, columns, formattedDate, DtDataAction,formattedTime } =
     fn_dashboard();
   const combinedData = {};
   DtData.forEach((item) => {
@@ -155,7 +155,7 @@ function SecondContent() {
                   fontSize: "45px",
                 }}
               >
-                {time.toLocaleTimeString()}
+                {formattedTime}
               </Flex>
               <p
                 style={{

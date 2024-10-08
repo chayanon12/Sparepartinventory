@@ -11,6 +11,12 @@ function fn_dashboard() {
   const [DtDataAction, setDtDataAction] = useState([]);
   const Date2 = new Date();
   const formattedDate = moment(Date2).format('D MMMM YYYY');
+  const formattedTime = time.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  });
   const columns = [
     {
       title: "",
@@ -93,7 +99,7 @@ function fn_dashboard() {
         });
   }
 }
-  return { count, time, DtData,columns,formattedDate,DtDataAction };
+  return { count, time, DtData,columns,formattedDate,DtDataAction,formattedTime };
 }
 
 export { fn_dashboard };
