@@ -16,6 +16,11 @@ function CheckSerial() {
       key: "type_name",
     },
     {
+      title: "Serial Number",
+      dataIndex: "serial_number",
+      key: "serial_number",
+    },
+    {
       title: "Items Status",
       dataIndex: "product_status",
       key: "product_status",

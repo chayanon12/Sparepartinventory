@@ -43,6 +43,7 @@ function Sidebar({ collapsed, theme, pageChange }) {
           { key: "3", icon: <LoginOutlined />, label: "Scan Out" },
           { key: "4", icon: <PrinterOutlined />, label: "Barcode Genarate" },
           { key: "5", icon: <LoginOutlined />, label: "Check Items" },
+          // { key: "6", icon: <OrderedListOutlined />, label: "Barcode" },
         ]}
         onClick={(e) => pageChange(e.key)}
       />

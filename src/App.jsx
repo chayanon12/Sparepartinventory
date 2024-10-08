@@ -1,7 +1,7 @@
 import { LanTwoTone } from "@mui/icons-material";
 import { Button, Card, Flex, Layout } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import CustomHeader from "./components/Header";
 import ScanIN from "./components/Scanin/ScanIn";
@@ -9,6 +9,7 @@ import ScanOut from "./components/ScanOut/ScanOut";
 import SecondContent from "./components/Dashboard/Dashboard";
 import GenarateBarcode from "./components/Generatebarcode/GenerateBarcode";
 import CheckSerial from "./components/ChcekSerial/CheckSerial";
+import Barcode from "./components/Barcode/barcode";
 import "./App.css";
 import axios from "axios";
 
@@ -20,6 +21,16 @@ function App() {
   const [hoverEnabled, setHoverEnabled] = useState(false);
   const [switchValue, setSwitchValue] = useState(true);
   const [page, setPage] = useState("1");
+  const [ipAdmin,setIpAdmin] = useState("");
+  useEffect(() => {
+    const getIp = async () => {
+      const response = await axios.get("/Sparepart/api/common/getIPaddress");
+      setIpAdmin(response.data.ip);
+      localStorage.setItem("ip",response.data.ip);
+    };
+    getIp();
+  }, []);
+  console.log(ipAdmin);
   const handleSwitchChange = (value) => {
     setSwitchValue(value);
   };
@@ -52,6 +63,7 @@ function App() {
     3: <ScanOut state={open} />,
     4: <GenarateBarcode state={open} />,
     5: <CheckSerial state={open} />,
+    6: <Barcode state={open} />,
   };
   return (
     <Layout className={switchValue === false ? "dark-theme" : ""}>

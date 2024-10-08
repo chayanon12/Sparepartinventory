@@ -8,7 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Button, Card, Flex, Select,Table } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { fn_Scanin } from "../Scanin/fn_Scanin";
 import "../Scanin/ScanIn.css";
 import Scanner from "/src/assets/Scannerout.png";
@@ -31,8 +31,15 @@ function ScanOut() {
     setDdlFacRequire,
     filteredDataSource2,
     columns,
-    ddlData2
+    ddlData2,
+    user, setuser,
+    handleScantxtIDUserValue_Change
   } = fn_Scanin();
+  useEffect(() => {
+    if (user == "") {
+      document.getElementById("txtScanIDUser").focus();
+    }
+  }, [user]);
   return (
     <div>
       {" "}
@@ -75,7 +82,20 @@ function ScanOut() {
                 />
               )}
             />
-            <Select
+            <TextField
+              sx={{ width: 200 }}
+              size="small"
+              id="txtScanIDUser"
+              label="Scan In ID Code (User)"
+              value={user}
+              onChange={(e) => setuser(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleScantxtIDUserValue_Change();
+                }
+              }}
+            />
+            {/* <Select
               id="ddlFac"
               showSearch
               placeholder="Select Dept"
@@ -91,15 +111,25 @@ function ScanOut() {
                 label: `${item.cc_ctr} : ${item.cc_desc}`,
                 value: item.cc_ctr,
               }))}
-              style={{ width: 300, height: 40 }}
-            ></Select>
+              style={{ width: 200, height: 40 }}
+            ></Select> */}
             <TextField
-              sx={{ width: 400 }}
+              sx={{ width: 200 }}
               size="small"
-              id="txtScan"
+              id="txtScanIDUser"
+              disabled
+              label="Dept."
+              value={ddlFacValue}
+              onChange={(e) => setDdlFacValue(e.target.value)}
+            />
+            <TextField
+              sx={{ width: 300 }}
+              size="small"
+              id="txtScanOut"
               label="Scan out serial number"
               value={txtScanoutValue}
               onChange={(e) => setTxtScanoutValue(e.target.value)}
+              onBlur={handleScanouttxtValue_Change}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleScanouttxtValue_Change();

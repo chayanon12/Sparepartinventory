@@ -65,7 +65,6 @@ function fn_GenerateBarcode() {
     }
   }
   function genType(selectedType) {
-    console.log(selectedType, "selectedType");
     const typeMapping = {
       KEYBOARD: "KEY",
       MOUSE: "MOU",

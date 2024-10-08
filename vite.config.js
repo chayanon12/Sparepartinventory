@@ -8,6 +8,7 @@ export default defineConfig({
     host: true,
     strictPort: true, //บังคับ port
     port: 9001
+    
   }
 })
 

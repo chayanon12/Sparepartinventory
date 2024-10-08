@@ -217,7 +217,7 @@ function SecondContent() {
                   fontSize: "45px",
                 }}
               >
-                {count - countout}
+                {count}
               </Flex>
               <p
                 style={{

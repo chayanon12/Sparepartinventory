@@ -1,7 +1,5 @@
-import { Button, Card, Flex, Table } from "antd";
-import React, { useState } from "react";
-import { Input } from "antd";
-const { Search } = Input;
+import { Button, Card, Flex, Table,Select } from "antd";
+import React, { useEffect, useState } from "react";
 import { fn_Scanin } from "./fn_Scanin";
 import "./ScanIn.css";
 import { Autocomplete, Paper, TextField } from "@mui/material";
@@ -11,6 +9,7 @@ function ScanIn({ state }) {
     txtScanValue,
     setTxtScanValue,
     handleScantxtValue_Change,
+    handleScantxtIDValue_Change,
     filteredDataSource,
     DtDataState,
     ddlvalue,
@@ -20,8 +19,14 @@ function ScanIn({ state }) {
     ddlDataInState,
     setDdlDataInState,
     columns,
+    admin,setAdmin
    
   } = fn_Scanin();
+  // useEffect(() => {
+  //       if (admin == "") {
+  //     document.getElementById("txtScanID").focus();
+  //   }
+  // },[])
   return (
     <div>
       {" "}
@@ -47,7 +52,7 @@ function ScanIn({ state }) {
           <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
             <Autocomplete
               id="single-autocomplete"
-              sx={{ width: 300, marginLeft: "50px" }}
+              sx={{ width: 200, marginLeft: "50px" }}
               value={ddlvalue}
               size="small"
               onChange={(event, newValue) => {
@@ -66,6 +71,19 @@ function ScanIn({ state }) {
                 />
               )}
             />
+            {/* <TextField
+              sx={{ width: 250 }}
+              size="small"
+              id="txtScanID"
+              label="Scan In ID Code (Admin)"
+              value={admin}
+              onChange={(e) => setAdmin(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleScantxtIDValue_Change();
+                }
+              }}
+            /> */}
             <TextField
               sx={{ width: 400 }}
               size="small"
