@@ -89,6 +89,7 @@ function ScanOut() {
               label="Scan In ID Code (User)"
               value={user}
               onChange={(e) => setuser(e.target.value)}
+              onBlur={handleScantxtIDUserValue_Change}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleScantxtIDUserValue_Change();
@@ -129,7 +130,6 @@ function ScanOut() {
               label="Scan out serial number"
               value={txtScanoutValue}
               onChange={(e) => setTxtScanoutValue(e.target.value)}
-              onBlur={handleScanouttxtValue_Change}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleScanouttxtValue_Change();

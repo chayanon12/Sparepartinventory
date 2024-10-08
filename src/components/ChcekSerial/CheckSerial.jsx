@@ -63,7 +63,12 @@ function CheckSerial() {
       key: "admin_id",
     },
     {
-      title: "User Dept Receive",
+      title: "Admin Scan Out",
+      dataIndex: "admin_out_id",
+      key: "admin_out_id",
+    },
+    {
+      title: "User Receive",
       dataIndex: "user_dept",
       key: "user_dept",
     },

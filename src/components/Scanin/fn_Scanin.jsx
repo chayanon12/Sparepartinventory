@@ -42,7 +42,7 @@ function fn_Scanin() {
       key: "create_date",
     },
     {
-      title: "Scan Out By",
+      title: "User Receive",
       dataIndex: "scan_out",
       key: "scan_out",
     },
@@ -213,7 +213,6 @@ function fn_Scanin() {
             }).then(() => {
               setTxtScanValue("");
               setTxtScanoutValue("");
-              console.log("submitData");
               submitData("getDttable", "");
             });
           } else if (response.status === 203) {
