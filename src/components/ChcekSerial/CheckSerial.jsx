@@ -1,118 +1,50 @@
 import React, { useState } from "react";
 import { Button, Card, Flex, Select, Input, Table, Tag } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { render } from "react-dom";
+import { fn_CcheckSerial } from "./fn_CcheckSerial";
+import "./CheckSerial.css";
+import "../Common/StyleCommon.css";
 function CheckSerial() {
-  const { Search } = Input;
-  const [serialNumber, setSerialNumber] = useState("");
-  const [DtDataState, setDtDataState] = useState(false);
-  const [DtData, setDtData] = useState([]);
-  const columns = [
-    {
-      title: "Itams Name",
-      dataIndex: "type_name",
-      key: "type_name",
-    },
-    {
-      title: "Serial Number",
-      dataIndex: "serial_number",
-      key: "serial_number",
-    },
-    {
-      title: "Items Status",
-      dataIndex: "product_status",
-      key: "product_status",
-      render: (text, record, index) => {
-        const backgroundColor =
-          record.product_status === "OUTSTOCK"
-            ? "#f50"
-            : record.product_status !== "OUTSTOCK"
-            ? "#87d068"
-            : "transparent";
+  const {
+    columns,
+    onSearch,
+    setSerialNumber,
+    serialNumber,
+    DtDataState,
+    DtData,
+    Search,
+    ddlItems,
+    ddlItemsValue, 
+    setDdlItemsValue
+  } = fn_CcheckSerial();
 
-        return (
-          <Tag
-            style={{
-              width: 100,
-              textAlign: "center",
-              padding: "0px 0px 0px 0px",
-            }}
-            color={backgroundColor}
-          >
-            {text}
-          </Tag>
-        );
-      },
-    },
-    {
-      title: "Scan In Date",
-      dataIndex: "scan_in_date",
-      key: "scan_in_date",
-    },
-    {
-      title: "Scan Out Date",
-      dataIndex: "scan_out_date",
-      key: "scan_out_date",
-    },
-
-    {
-      title: "Admin Scan In",
-      dataIndex: "admin_id",
-      key: "admin_id",
-    },
-    {
-      title: "Admin Scan Out",
-      dataIndex: "admin_out_id",
-      key: "admin_out_id",
-    },
-    {
-      title: "User Receive",
-      dataIndex: "user_dept",
-      key: "user_dept",
-    },
-  ];
-  const onSearch = async () => {
-    console.log(serialNumber);
-    try {
-      const res = await axios.get(`/Sparepart/api/common/getCheckSerial`, {
-        params: {
-          serial_number: serialNumber,
-        },
-      });
-      if (res.data != "") {
-        setDtDataState(true);
-        setDtData(res.data);
-      }
-    } catch (error) {
-      setDtDataState(false);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.message,
-      });
-    }
-  };
   return (
     <Flex gap="10px">
-      <Card
-        className="openCard"
-        style={{
-          width: "1250px",
-          maxHeight: "630px",
-          margin: "0 auto",
-          overflow: "auto",
-        }}
-      >
+      <Card className="openCard">
+         <Select
+              id="ddlFac"
+              showSearch
+              placeholder="Select Items"
+              optionFilterProp="label"
+              value={ddlItemsValue}
+              onChange={(event, newValue) => {
+                setDdlItemsValue(newValue);
+              }}
+              options={ddlItems.map((item) => ({
+                label: item.type_name,
+                // label: `${item.cc_ctr} : ${item.cc_desc}`,
+                value: item.type_id,
+              }))}
+              style={{ width: 200, height: 40 }}
+            ></Select>
         <Search
           id="SearchSerial"
           placeholder="Input Serial Number"
           allowClear
           enterButton="Search"
           size="large"
+          className="CheckSearchSerial"
           prefix={<FileSearchOutlined />}
-          style={{ width: 400 }}
           onChange={(e) => setSerialNumber(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -123,9 +55,10 @@ function CheckSerial() {
         />
         {DtDataState && (
           <Table
-            className="TableCheck"
+            className="TableCheckSerial"
             columns={columns}
             dataSource={DtData}
+            scroll={{ x: 100 * 5 }}
             pagination={{
               pageSize: 6,
             }}

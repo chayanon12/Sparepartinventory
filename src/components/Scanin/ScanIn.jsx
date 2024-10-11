@@ -9,17 +9,14 @@ function ScanIn({ state }) {
     txtScanValue,
     setTxtScanValue,
     handleScantxtValue_Change,
-    handleScantxtIDValue_Change,
     filteredDataSource,
     DtDataState,
     ddlvalue,
     setDdlValue,
     ddlData,
-    setDdlData,
     ddlDataInState,
     setDdlDataInState,
     columns,
-    admin,setAdmin
    
   } = fn_Scanin();
   // useEffect(() => {

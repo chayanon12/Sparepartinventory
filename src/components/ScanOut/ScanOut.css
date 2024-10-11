@@ -1,0 +1,23 @@
+.ScanOutImg{
+    width: 50px !important;
+    height: 50px !important;
+}
+.ScanOutFirstDiv{
+    display: flex;
+    margin-top: 10px;
+    gap:10px;
+}
+.ScanOutAutocomplete{
+  width: 200px;
+  margin-left: 50px;
+}
+.ScanOutUserIdTextF{
+    width: 200px !important;
+}
+.ScanOutSerialTextF{
+    width: 300px;
+}
+.ScanOutbtn{
+   margin-left: 5px;
+   height: 40px;
+}

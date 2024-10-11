@@ -88,7 +88,6 @@ function fn_GenerateBarcode() {
     return typeMapping[selectedType] || "";
   }
   const handleGeneClick = async () => {
-    console.log(ddlvalue, "ddlvalue");
     if (ddlvalue == null) {
       Swal.fire({
         icon: "error",
@@ -211,7 +210,7 @@ function fn_GenerateBarcode() {
     }
     setSelectedItems(newSelectedItems);
     setSelectAll(newSelectedItems.size === displayedItems.length);
-    console.log(newSelectedItems, "newSelectedItems");
+
   };
   const handleAutocompleteChange = (newValue) => {
     setSnNumber([]);

@@ -14,6 +14,11 @@ import {
   SettingOutlined,
   ScanOutlined,
   PrinterOutlined,
+  BarChartOutlined ,
+  FileSearchOutlined,
+  SearchOutlined,
+  SignatureOutlined,
+  ToolOutlined 
 } from "@ant-design/icons";
 
 function Sidebar({ collapsed, theme, pageChange }) {
@@ -36,14 +41,16 @@ function Sidebar({ collapsed, theme, pageChange }) {
         items={[
           {
             key: "1",
-            icon: <UserOutlined />,
+            icon: <BarChartOutlined />,
             label: "Dashboard",
           },
           { key: "2", icon: <ScanOutlined />, label: "Scan In" },
           { key: "3", icon: <LoginOutlined />, label: "Scan Out" },
           { key: "4", icon: <PrinterOutlined />, label: "Barcode Genarate" },
-          { key: "5", icon: <LoginOutlined />, label: "Check Items" },
-          // { key: "6", icon: <OrderedListOutlined />, label: "Barcode" },
+          { key: "5", icon: <SearchOutlined />, label: "Check Items" },
+          { key: "6", icon:<ToolOutlined />, label: "Modify items" },
+          { key: "7", icon: <SignatureOutlined />, label: "Add Type" },
+          { key: "8", icon: <FileSearchOutlined />, label: "Report" },
         ]}
         onClick={(e) => pageChange(e.key)}
       />

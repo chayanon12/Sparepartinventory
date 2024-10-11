@@ -87,7 +87,6 @@ function fn_dashboard() {
       await axios
         .get(`/Sparepart/api/common/getOutSum`)
         .then((res) => {
-          console.log(res.data,'dtAction');
           setDtDataAction(res.data);
         })
         .catch((err) => {

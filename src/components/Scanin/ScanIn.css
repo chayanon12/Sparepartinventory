@@ -4,14 +4,6 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
   
-
-  .openCard {
-    animation: collapseCard 0.3s ease forwards;
-    max-height: auto;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    max-height: 610px !important;
-  }
-  
   .ScanTable{
     width: 800px !important;
     max-height: 500px;

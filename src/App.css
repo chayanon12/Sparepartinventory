@@ -70,7 +70,7 @@
   border-color: #4f6f52 !important;
 }
 .ant-btn-primary {
-  background: #4f6f52 !important;
+  background: #4f6f52 ;
 }
 .ant-btn-primary:hover {
   background: #173a1a !important;
@@ -124,5 +124,3 @@
 .TableDashboard th,td{
   text-align: center !important;
 }
-
-

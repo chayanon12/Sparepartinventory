@@ -7,34 +7,31 @@ import {
   TableRow,
   TextField,
 } from "@mui/material";
-import { Button, Card, Flex, Select,Table } from "antd";
+import { Button, Card, Flex, Select, Table } from "antd";
 import React, { useEffect } from "react";
-import { fn_Scanin } from "../Scanin/fn_Scanin";
-import "../Scanin/ScanIn.css";
+import { fn_ScanOut } from "./fn_ScanOut";
 import Scanner from "/src/assets/Scannerout.png";
+import "./ScanOut.css";
+import "../Common/StyleCommon.css";
 function ScanOut() {
   const {
     txtScanoutValue,
     setTxtScanoutValue,
     handleScanouttxtValue_Change,
-    DtData,
     DtDataState,
     ddlvalueout,
     setDdlValueout,
     ddlData,
     ddlDataOutState,
     setDdlDataOutState,
-    ddlFac,
     ddlFacValue,
     setDdlFacValue,
-    ddlFacRequire,
-    setDdlFacRequire,
     filteredDataSource2,
     columns,
-    ddlData2,
-    user, setuser,
-    handleScantxtIDUserValue_Change
-  } = fn_Scanin();
+    user,
+    setuser,
+    handleScantxtIDUserValue_Change,
+  } = fn_ScanOut();
   useEffect(() => {
     if (user == "") {
       document.getElementById("txtScanIDUser").focus();
@@ -44,27 +41,15 @@ function ScanOut() {
     <div>
       {" "}
       <Flex gap="10px">
-        <Card
-          className="openCard"
-          style={{
-            width: "1250px",
-            maxHeight: "630px",
-            margin: "0 auto",
-            overflow: "auto",
-          }}
-        >
+        <Card className="openCard">
           <div className="Scanhead">
-            <img
-              src={Scanner}
-              alt="Scanner"
-              style={{ width: "50px", height: "50px" }}
-            />{" "}
+            <img className="ScanOutImg" src={Scanner} alt="Scanner" />
             <h1 style={{ fontSize: "35px", color: "#d40c0ce3" }}>Scan Out</h1>
           </div>
-          <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
+          <div className="ScanOutFirstDiv">
             <Autocomplete
+              className="ScanOutAutocomplete"
               id="single-autocomplete"
-              sx={{ width: 200, marginLeft: "50px" }}
               value={ddlvalueout}
               size="small"
               onChange={(event, newValue) => {
@@ -83,7 +68,7 @@ function ScanOut() {
               )}
             />
             <TextField
-              sx={{ width: 200 }}
+              className="ScanOutUserIdTextF"
               size="small"
               id="txtScanIDUser"
               label="Scan In ID Code (User)"
@@ -115,18 +100,17 @@ function ScanOut() {
               style={{ width: 200, height: 40 }}
             ></Select> */}
             <TextField
-              sx={{ width: 200 }}
               size="small"
-              id="txtScanIDUser"
+              className="ScanOutUserIdTextF"
               disabled
               label="Dept."
               value={ddlFacValue}
               onChange={(e) => setDdlFacValue(e.target.value)}
             />
             <TextField
-              sx={{ width: 300 }}
               size="small"
               id="txtScanOut"
+              className="ScanOutSerialTextF"
               label="Scan out serial number"
               value={txtScanoutValue}
               onChange={(e) => setTxtScanoutValue(e.target.value)}
@@ -139,7 +123,7 @@ function ScanOut() {
 
             <Button
               type="primary"
-              style={{ marginLeft: 10, height: 40 }}
+              className="ScanOutbtn"
               onClick={handleScanouttxtValue_Change}
             >
               Submit

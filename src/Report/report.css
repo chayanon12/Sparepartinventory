@@ -1,0 +1,8 @@
+.divReport {
+  display: flex;
+  align-items: center; /* แนวตั้ง */
+  gap: 10px;
+}
+.btnSearch{
+    background-color: rgb(16, 114, 242) !important;
+}

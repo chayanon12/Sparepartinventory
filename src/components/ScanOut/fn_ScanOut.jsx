@@ -1,14 +1,17 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Swal from "sweetalert2";
-function fn_Scanin() {
+function fn_ScanOut() {
   const fac = import.meta.env.VITE_FAC;
-  const [txtScanValue, setTxtScanValue] = useState("");
+  const [txtScanoutValue, setTxtScanoutValue] = useState("");
   const [DtData2, setDtdata] = useState([]);
   const [DtDataState, setDtDataState] = useState(false);
-  const [ddlvalue, setDdlValue] = useState(null);
-  const [ddlDataInState, setDdlDataInState] = useState(false);
   const [ddlData, setDdlData] = useState([]);
+  const [ddlvalueout, setDdlValueout] = useState(null);
+  const [ddlFacValue, setDdlFacValue] = useState("");
+  const [ddlDataOutState, setDdlDataOutState] = useState(false);
+  const [ddlFacRequire, setDdlFacRequire] = useState(false);
+  const [user, setuser] = useState("");
   const columns = [
     {
       title: "Serial Number",
@@ -41,49 +44,71 @@ function fn_Scanin() {
       key: "update_date",
     },
   ];
-  const filteredDataSource = DtData2.filter((item) => item.status === "IN");
+  const filteredDataSource2 = DtData2.filter((item) => item.status === "OUT");
   useEffect(() => {
     submitData("DDL", "");
     submitData("getFac", "");
   }, []);
-  const handleScantxtValue_Change = async () => {
-    let type = "";
-    if (txtScanValue !== "") {
-      const splicedValue = txtScanValue.slice(0, 3);
-      type = await submitData("getTypeid", splicedValue);
+  const handleScantxtIDUserValue_Change = async () => {
+    if (user !== "") {
+      let dtData = await submitData("getIDUser", { user: user, flg: "user" });
 
-      if (type !== "") {
+      if (dtData.length > 0) {
+        document.getElementById("txtScanOut").focus();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "ID Code is Wrong",
+        }).then(() => {
+          setuser("");
+          document.getElementById("txtScanIDUser").focus();
+        });
+      }
+    } else {
+      document.getElementById("txtScanIDUser").focus();
+    }
+  };
+  const handleScanouttxtValue_Change = async () => {
+    let type = "";
+
+    if (txtScanoutValue !== "") {
+      const splicedValue = txtScanoutValue.slice(0, 3);
+      type = await submitData("getTypeid", splicedValue);
+      if (type !== "" && user !== "") {
         await submitData("submit", {
           Itemid: type,
-          Serial: txtScanValue,
+          Serial: txtScanoutValue,
           Admin: localStorage.getItem("username"),
-          movement: "IN",
-          ID: "",
+          movement: "OUT",
+          ID: user,
+          UserDept: ddlFacValue,
         });
       } else {
-        if (ddlvalue == null) {
-          setDdlDataInState(true);
+        if (ddlvalueout == null) {
+          setDdlDataOutState(true);
           Swal.fire({
             icon: "error",
             title: "Error",
             text: "Please select type",
+          }).then(() => {
+            document.getElementById("txtScanIDUser").focus();
           });
         } else {
           await submitData("submit", {
-            Itemid: ddlvalue.typeid,
-            Serial: txtScanValue,
+            Itemid: ddlvalueout.typeid,
+            Serial: txtScanoutValue,
             Admin: localStorage.getItem("username"),
-            movement: "IN",
-            ID: "",
+            movement: "OUT",
+            ID: user,
+            UserDept: ddlFacValue,
           });
-          setDdlValue(null);
         }
       }
     } else {
       document.getElementById("txtScan").focus();
     }
   };
-
   async function submitData(option, params) {
     if (option == "submit") {
       axios
@@ -97,6 +122,7 @@ function fn_Scanin() {
               strSerialNo: params.Serial,
               strAdminId: params.Admin,
               strID: params.ID,
+              strUserDept: params.UserDept
             },
           },
           {
@@ -106,14 +132,13 @@ function fn_Scanin() {
           }
         )
         .then((response) => {
-
           if (response.data.result === "Success" || response.status === 200) {
             Swal.fire({
               icon: "success",
               title: "Success",
               text: "Data has been saved",
             }).then(() => {
-              setTxtScanValue("");
+              setTxtScanoutValue("");
               submitData("getDttable", "");
             });
           } else if (response.status === 203) {
@@ -122,7 +147,7 @@ function fn_Scanin() {
               title: "Error",
               text: "Serial number already exists",
             }).then(() => {
-              setTxtScanValue("");
+              setTxtScanoutValue("");
               submitData("getDttable", "");
             });
           } else if (response.status === 204) {
@@ -131,7 +156,7 @@ function fn_Scanin() {
               title: "Error",
               text: "Serial number already Out of stock",
             }).then(() => {
-              setTxtScanValue("");
+              setTxtScanoutValue("");
               submitData("getDttable", "");
             });
           } else if (response.status === 205) {
@@ -143,7 +168,8 @@ function fn_Scanin() {
               submitData("getDttable", "");
             });
           }
-          setDdlValue(null);
+          setDdlValueout(null);
+          setDdlFacValue(null);
         })
         .catch((error) => {
           Swal.fire({
@@ -161,7 +187,6 @@ function fn_Scanin() {
         .then((res) => {
           if (res.data != "") {
             type = res.data[0].typeid;
-
           } else {
             type = "";
           }
@@ -175,12 +200,24 @@ function fn_Scanin() {
         });
       return type;
     } else if (option == "getDttable") {
-      setDdlDataInState(false);
       await axios
         .get(`/Sparepart/api/common/GetDttableAll`)
         .then((res) => {
           setDtdata(res.data);
           setDtDataState(true);
+        })
+        .catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err,
+          });
+        });
+    } else if (option == "DDL") {
+      await axios
+        .get(`/Sparepart/api/common/getData?strType=DDL&strPlantCode=${fac}`)
+        .then((res) => {
+          setDdlData(res.data);
         })
         .catch((err) => {
           Swal.fire({
@@ -206,11 +243,15 @@ function fn_Scanin() {
           });
         });
       return dtData;
-    }else if (option == "DDL") {
+    } else if (option == "getIDUser") {
+      let dtData = [];
       await axios
-        .get(`/Sparepart/api/common/getData?strType=DDL&strPlantCode=${fac}`)
+        .get(`/Sparepart/api/common/getCheckIdCodeUser?empcode=${params.user}`)
         .then((res) => {
-          setDdlData(res.data);
+          dtData = res.data;
+          if (res.data.length > 0) {
+            setDdlFacValue(res.data[0].cost_center);
+          }
         })
         .catch((err) => {
           Swal.fire({
@@ -219,22 +260,29 @@ function fn_Scanin() {
             text: err,
           });
         });
+      return dtData;
     }
   }
-
   return {
-    txtScanValue,
-    setTxtScanValue,
-    handleScantxtValue_Change,
-    filteredDataSource,
+    txtScanoutValue,
+    setTxtScanoutValue,
+    handleScanouttxtValue_Change,
     DtDataState,
-    ddlvalue,
-    setDdlValue,
-    ddlDataInState,
-    setDdlDataInState,
+    ddlvalueout,
+    setDdlValueout,
+    ddlData,
+    ddlDataOutState,
+    setDdlDataOutState,
+    ddlFacValue,
+    setDdlFacValue,
+    ddlFacRequire,
+    setDdlFacRequire,
+    filteredDataSource2,
     columns,
-    ddlData
+    user,
+    setuser,
+    handleScantxtIDUserValue_Change,
   };
 }
 
-export { fn_Scanin };
+export { fn_ScanOut };
