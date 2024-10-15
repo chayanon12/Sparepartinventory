@@ -36,7 +36,7 @@ function fn_CcheckSerial() {
       title: "Itams Name",
       dataIndex: "type_name",
       key: "type_name",
-      width: 100,
+      width: 150,
     },
     {
       title: "Serial Number",
@@ -48,13 +48,13 @@ function fn_CcheckSerial() {
       title: "Item Name",
       dataIndex: "item_name",
       key: "item_name",
-      width: 120,
+      width: 150,
     },
     {
       title: "Mac Address",
       dataIndex: "mac_address",
       key: "mac_address",
-      width: 120,
+      width: 180,
     },
     {
       title: "Items Status",
@@ -87,32 +87,32 @@ function fn_CcheckSerial() {
       title: "Scan In Date",
       dataIndex: "scan_in_date",
       key: "scan_in_date",
-      width: 300,
+      width: 200,
     },
     {
       title: "Scan Out Date",
       dataIndex: "scan_out_date",
       key: "scan_out_date",
-      width: 300,
+      width: 200,
     },
 
     {
       title: "Admin Scan In",
       dataIndex: "admin_id",
       key: "admin_id",
-      width: 120,
+      width: 150,
     },
     {
       title: "Admin Scan Out",
       dataIndex: "admin_out_id",
       key: "admin_out_id",
-      width: 120,
+      width: 150,
     },
     {
       title: "User Receive",
       dataIndex: "user_dept",
       key: "user_dept",
-      
+      width: 150,
     },
   ];
   const onSearch = async () => {

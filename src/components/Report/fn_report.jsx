@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { notification, DatePicker, Tag } from "antd";
+import ExcelJS from "exceljs";
 import axios from "axios";
+import { saveAs } from "file-saver";
 function fn_report() {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
@@ -44,7 +46,7 @@ function fn_report() {
       title: "Itams Name",
       dataIndex: "type_name",
       key: "type_name",
-      width: 100,
+      width: 130,
     },
     {
       title: "Serial Number",
@@ -62,43 +64,43 @@ function fn_report() {
       title: "Mac Address",
       dataIndex: "mac_address",
       key: "mac_address",
-      width: 120,
+      width: 180,
     },
 
     {
       title: "Scan In Date",
       dataIndex: "scan_in_date",
       key: "scan_in_date",
-      width: 300,
+      width: 200,
     },
     {
       title: "Scan Out Date",
       dataIndex: "scan_out_date",
       key: "scan_out_date",
-      width: 300,
+      width: 200,
     },
 
     {
       title: "Admin Scan In",
       dataIndex: "admin_id",
       key: "admin_id",
-      width: 120,
+      width: 150,
     },
     {
       title: "Admin Scan Out",
       dataIndex: "admin_out_id",
       key: "admin_out_id",
-      width: 120,
+      width: 150,
     },
     {
       title: "User Receive",
       dataIndex: "user_id",
-      key: "user_dept",
+      key: "user_id",
     },
     {
       title: "User Receive Dept",
-      dataIndex: "user_id",
-      key: "user_dept",
+      dataIndex: "dept",
+      key: "dept",
     },
   ];
   const movementTypeOption = [
@@ -168,12 +170,12 @@ function fn_report() {
           });
         } else {
           setDtDataState(false);
-            notification.error({
-                message: "Error",
-                description: "No Data Found",
-                placement: "bottomRight",
-                duration: 3,
-            });
+          notification.error({
+            message: "Error",
+            description: "No Data Found",
+            placement: "bottomRight",
+            duration: 3,
+          });
         }
       }
     } catch (error) {
@@ -185,6 +187,74 @@ function fn_report() {
       });
     }
   }
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  }
+  const exportExcelFile = () => {
+    console.log(DtData.length);
+    if (DtData.length <= 0) {
+      notification.error({
+        message: "Error",
+        description: "Please Search Data First",
+        placement: "bottomRight",
+        duration: 3,
+      });
+      return;
+    }
+
+    const workbook = new ExcelJS.Workbook();
+    const sheet = workbook.addWorksheet("My Sheet");
+    sheet.properties.defaultRowHeight = 20;
+
+    const excelColumns = columns.map((col) => ({
+      header: col.title,
+      key: col.dataIndex,
+      width: 20,
+      style: { alignment: { horizontal: "center" } },
+    }));
+
+    sheet.columns = excelColumns;
+    excelColumns.forEach((column, index) => {
+      const cell = sheet.getCell(1, index + 1);
+      cell.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "FFFF00" },
+      };
+      cell.border = {
+        top: { style: "thin" },
+        left: { style: "thin" },
+        bottom: { style: "thin" },
+        right: { style: "thin" },
+      };
+    });
+    DtData.forEach((data) => {
+      const row = sheet.addRow(data);
+      row.eachCell({ includeEmpty: true }, (cell) => {
+        cell.border = {
+          top: { style: "thin" },
+          left: { style: "thin" },
+          bottom: { style: "thin" },
+          right: { style: "thin" },
+        };
+      });
+    });
+    workbook.xlsx
+      .writeBuffer()
+      .then((buffer) => {
+        const blob = new Blob([buffer], { type: "application/octet-stream" });
+        const formattedDateFrom = dateFrom ? formatDate(dateFrom) :'';
+        const formattedDateTo = dateTo ? formatDate(dateTo) : '';
+        saveAs(
+          blob,
+          `SpaerPartsReport :${formattedDateFrom } To ${formattedDateTo}.xlsx`
+        );
+      })
+      .catch((error) => {
+        console.error("Error writing excel file:", error);
+      });
+  };
   return {
     movementTypeOption,
     movemoentTypeSelected,
@@ -201,6 +271,7 @@ function fn_report() {
     onSearch,
     columns,
     DtData,
+    exportExcelFile,
   };
 }
 

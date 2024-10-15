@@ -58,7 +58,7 @@ function CheckSerial() {
             className="TableCheckSerial"
             columns={columns}
             dataSource={DtData}
-            scroll={{ x: 100 * 5 }}
+            scroll={{ x: 'max-content' }}
             pagination={{
               pageSize: 6,
             }}

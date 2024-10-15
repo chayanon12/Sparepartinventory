@@ -27,7 +27,7 @@ function addtype() {
                   sx={{ marginLeft: 2, width: 300 }}
                   size="small"
                   id="itemname"
-                  label="Input new item name"
+                  // label="Input new item name"
                     value={txtItemName}
                     onChange={(e) => setTxtItemName(e.target.value)}
                     onKeyDown={(e) => {
@@ -45,7 +45,7 @@ function addtype() {
                   sx={{ marginLeft: 2, width: 300 }}
                   size="small"
                   id="itemtype"
-                  label="Input new item type"
+                  // label="Input new item type"
                     value={txtItemType}
                     onChange={(e) => setTxtItemType(e.target.value)}
                     onKeyDown={(e) => {

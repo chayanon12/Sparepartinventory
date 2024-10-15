@@ -23,6 +23,8 @@
     "apexcharts": "^3.52.0",
     "axios": "^1.7.3",
     "dayjs": "^1.11.12",
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "moment": "^2.30.1",

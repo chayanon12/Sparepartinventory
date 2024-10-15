@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button, Card, Flex, Select, Input, Table, Tag } from "antd";
 import { FileSearchOutlined, FileExcelOutlined } from "@ant-design/icons";
-import "../components/Common/StyleCommon.css";
+// import "../components/Common/StyleCommon.css";
+import '../Common/StyleCommon.css';
 import "./report.css";
 import { fn_report } from "./fn_report";
 function report() {
@@ -20,7 +21,8 @@ function report() {
     DtDataState,
     onSearch,
     DtData,
-    columns
+    columns,
+    exportExcelFile
   } = fn_report();
   return (
     <Flex gap="10px">
@@ -102,7 +104,7 @@ function report() {
             style={{ backgroundColor: "#006600", borderColor: "#006600" }}
             iconPosition={"end"}
             icon={<FileExcelOutlined />}
-            // onClick={exportExcelFile}
+            onClick={exportExcelFile}
           >
             Export
           </Button>
@@ -112,8 +114,7 @@ function report() {
              className="ModifyDataTable"
             columns={columns}
             dataSource={DtData}
-            scroll={{ x: 100 * 5 }}
-
+            scroll={{ x: 'max-content'}}
             pagination={{
               pageSize: 6,
             }}
