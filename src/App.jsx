@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login Page/login";
-import MainPage from "./components/MainPage/MainPage"; // import MainPage ที่แยกออกมา
+import MainPage from "./components/MainPage/MainPage"; 
 import axios from "axios";
 
 function App() {
   const backendUrl = import.meta.env.VITE_SERVICE_URL;
   axios.defaults.baseURL = backendUrl;
   const [switchValue, setSwitchValue] = useState(true);
-  const [page, setPage] = useState("1");
 
   useEffect(() => {
     const getIp = async () => {
@@ -34,7 +33,7 @@ function App() {
           path="/SparepartinventorySystem/mainPage"
           element={
             <ProtectedRoute
-              element={<MainPage switchValue={switchValue} setSwitchValue={setSwitchValue} page={page} setPage={setPage} />}
+              element={<MainPage switchValue={switchValue} setSwitchValue={setSwitchValue} />}
             />
           }
         />

@@ -87,7 +87,7 @@ function ScanIn({ state }) {
               id="txtScan"
               label="Scan in serial number"
               value={txtScanValue}
-              onChange={(e) => setTxtScanValue(e.target.value)}
+              onChange={(e) => setTxtScanValue(e.target.value.trim())}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleScantxtValue_Change();

@@ -1,4 +1,4 @@
-Main app
+/* Main app
 .header {
   padding-top: 12px;
   background: #fff;
@@ -14,12 +14,9 @@ Main app
 
 .dark-theme .ant-layout {
   background-color: #111d2c;
-  /* background-color: #001529; */
   color: #ffffff;
   height: 100vh;
 }
-
-/* Sider */
 .sider {
   height: 100vh;
   position: sticky !important;
@@ -38,7 +35,6 @@ Main app
   flex-direction: column;
   gap: 10px;
   font-weight: 500;
-  /* justify-content: center; */
 }
 .menu-bar .ant-menu-item:hover {
   background-color: #4f6f52 !important;
@@ -49,7 +45,6 @@ Main app
   color: #fff !important;
 }
 
-/* header */
 .header-icons {
   background: #d2e3c8;
   padding: 8px;
@@ -64,7 +59,6 @@ Main app
 .custom-switch {
   background-color: #020a5b !important;
 }
-/* btn */
 .ant-btn:hover {
   color: #4f6f52 !important;
   border-color: #4f6f52 !important;
@@ -91,7 +85,6 @@ Main app
 .gray--color {
   color: rgb(182, 181, 181) !important;
 }
-/* style={{ maxWidth: 300, width: 300, height: 150 ,fontSize: "35px", fontWeight: "bold",padding:'0px' }} */
 .smallCard .ant-card-body {
   padding: 10px 24px 24px 24px !important;
 }
@@ -123,4 +116,4 @@ Main app
 
 .TableDashboard th,td{
   text-align: center !important;
-}
+} */

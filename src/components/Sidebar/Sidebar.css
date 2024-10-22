@@ -1,3 +1,4 @@
+Main app
 .header {
   padding-top: 12px;
   background: #fff;
@@ -8,19 +9,14 @@
 }
 .light-theme .ant-layout {
   background-color: #ffffff;
-  /* height: 100vh; */
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .dark-theme .ant-layout {
   background-color: #111d2c;
-  /* background-color: #001529; */
   color: #ffffff;
-  /* height: 100vh; */
-  min-height: 100vh;
+  height: 100vh;
 }
-
-/* Sider */
 .sider {
   height: 100vh;
   position: sticky !important;
@@ -39,7 +35,6 @@
   flex-direction: column;
   gap: 10px;
   font-weight: 500;
-  /* justify-content: center; */
 }
 .menu-bar .ant-menu-item:hover {
   background-color: #4f6f52 !important;
@@ -50,7 +45,6 @@
   color: #fff !important;
 }
 
-/* header */
 .header-icons {
   background: #d2e3c8;
   padding: 8px;
@@ -65,7 +59,6 @@
 .custom-switch {
   background-color: #020a5b !important;
 }
-/* btn */
 .ant-btn:hover {
   color: #4f6f52 !important;
   border-color: #4f6f52 !important;
@@ -92,7 +85,6 @@
 .gray--color {
   color: rgb(182, 181, 181) !important;
 }
-/* style={{ maxWidth: 300, width: 300, height: 150 ,fontSize: "35px", fontWeight: "bold",padding:'0px' }} */
 .smallCard .ant-card-body {
   padding: 10px 24px 24px 24px !important;
 }
@@ -124,38 +116,4 @@
 
 .TableDashboard th,td{
   text-align: center !important;
-}
-@media (max-width: 768px) {
-  .header {
-    padding-top: 8px;
-  }
-  .content {
-    margin: 5px 8px;
-    padding: 10px;
-  }
-  .sider {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .menu-bar {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  .smallCard {
-    width: 100%;
-    height: auto;
-    font-size: 20px;
-  }
-  .MainCard {
-    width: 100% !important;
-  }
-  .flex-container {
-    display: flex;
-    flex-direction: column;
-  }
-}
-.flex-container {
-  display: flex;
-  gap: 24px; /* Adjust gap as needed */
 }

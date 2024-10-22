@@ -46,7 +46,7 @@ function Header({ onSwitchChange, theme, page }) {
           : page === "4"
           ? "Barcode Generate"
           : page === "5"
-          ? "Check Items"
+          ? "Add Broken Items"
           : page === "6"
           ? "Modify Items"
           : page === "7"

@@ -1,4 +1,4 @@
-import { Layout, Button, Flex } from "antd";
+import { Layout, Button, Flex, Row, Col ,theme } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Sidebar from "../Sidebar/Sidebar";
 import CustomHeader from "../Header/Header";
@@ -14,12 +14,15 @@ import { useState } from "react";
 // import "./App.css";
 import './MainPage.css';
 
-const MainPage = ({ switchValue, setSwitchValue, page, setPage }) => {
+const MainPage = ({ switchValue, setSwitchValue }) => {
   const { Sider, Content, Header } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const [hoverEnabled, setHoverEnabled] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const [page, setPage] = useState("1");
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
   const btnStyleOpen = {
     fontSize: "16px",
     width: "50px",
@@ -95,6 +98,7 @@ const MainPage = ({ switchValue, setSwitchValue, page, setPage }) => {
         <Content className="content">
           <Flex gap="large">{contentMap[page] || <SecondContent />}</Flex>
         </Content>
+       
       </Layout>
     </Layout>
   );

@@ -16,7 +16,7 @@ function fn_report() {
   const { RangePicker } = DatePicker;
   const columns = [
     {
-      title: "Items Status",
+      title: "Stock Status",
       dataIndex: "product_status",
       key: "product_status",
       width: 120,
@@ -38,6 +38,32 @@ function fn_report() {
             color={backgroundColor}
           >
             {text}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "Items Status",
+      dataIndex: "item_broken_flg",
+      key: "item_broken_flg",
+      width: 120,
+      render: (text, record, index) => {
+        const backgroundColor =
+          record.item_broken_flg === "Y"
+            ? "#f50"
+            : record.item_broken_flg != "Y"
+            ? "#87d068"
+            : "transparent";
+        return (
+          <Tag
+            style={{
+              width: 100,
+              textAlign: "center",
+              padding: "0px 0px 0px 0px",
+            }}
+            color={backgroundColor}
+          >
+            {text == "Y" ? "Broken" : "Good"}
           </Tag>
         );
       },
@@ -230,7 +256,13 @@ function fn_report() {
       };
     });
     DtData.forEach((data) => {
+      if (data.item_broken_flg === "Y") {
+        data.item_broken_flg = "Broken";
+      }else{
+        data.item_broken_flg = "Good";
+      }
       const row = sheet.addRow(data);
+
       row.eachCell({ includeEmpty: true }, (cell) => {
         cell.border = {
           top: { style: "thin" },
@@ -244,11 +276,11 @@ function fn_report() {
       .writeBuffer()
       .then((buffer) => {
         const blob = new Blob([buffer], { type: "application/octet-stream" });
-        const formattedDateFrom = dateFrom ? formatDate(dateFrom) :'';
-        const formattedDateTo = dateTo ? formatDate(dateTo) : '';
+        const formattedDateFrom = dateFrom ? formatDate(dateFrom) : "";
+        const formattedDateTo = dateTo ? formatDate(dateTo) : "";
         saveAs(
           blob,
-          `SpaerPartsReport :${formattedDateFrom } To ${formattedDateTo}.xlsx`
+          `SpaerPartsReport :${formattedDateFrom} To ${formattedDateTo}.xlsx`
         );
       })
       .catch((error) => {

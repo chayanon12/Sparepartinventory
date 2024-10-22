@@ -105,7 +105,7 @@ function ScanOut() {
               disabled
               label="Dept."
               value={ddlFacValue}
-              onChange={(e) => setDdlFacValue(e.target.value)}
+              onChange={(e) => setDdlFacValue(e.target.value.trim())}
             />
             <TextField
               size="small"
@@ -113,7 +113,7 @@ function ScanOut() {
               className="ScanOutSerialTextF"
               label="Scan out serial number"
               value={txtScanoutValue}
-              onChange={(e) => setTxtScanoutValue(e.target.value)}
+              onChange={(e) => setTxtScanoutValue(e.target.value.trim())}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleScanouttxtValue_Change();

@@ -18,3 +18,7 @@
 .TableCheckSerial td {
   overflow: auto !important;
 }
+.btnError{
+  background-color: #ff0000 !important;
+  color: white !important;
+}

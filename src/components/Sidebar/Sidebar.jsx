@@ -20,7 +20,7 @@ import {
   SignatureOutlined,
   ToolOutlined 
 } from "@ant-design/icons";
-
+import "./Sidebar.css";
 function Sidebar({ collapsed, theme, pageChange }) {
   return (
     <>
@@ -47,8 +47,8 @@ function Sidebar({ collapsed, theme, pageChange }) {
           { key: "2", icon: <ScanOutlined />, label: "Scan In" },
           { key: "3", icon: <LoginOutlined />, label: "Scan Out" },
           { key: "4", icon: <PrinterOutlined />, label: "Barcode Genarate" },
-          { key: "5", icon: <SearchOutlined />, label: "Check Items" },
-          { key: "6", icon:<ToolOutlined />, label: "Modify items" },
+          { key: "5", icon: <ToolOutlined />, label: "Add Broken Item" },
+          { key: "6", icon:<SearchOutlined />, label: "Modify items" },
           { key: "7", icon: <SignatureOutlined />, label: "Add Type" },
           { key: "8", icon: <FileSearchOutlined />, label: "Report" },
         ]}

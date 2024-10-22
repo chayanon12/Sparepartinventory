@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Flex, Select, Input, Table, Tag } from "antd";
-import './CheckSerial.css';
+import { Button, Tag, Input, Popconfirm, notification } from "antd";
+import "./CheckSerial.css";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { DeleteOutlined } from "@ant-design/icons";
 function fn_CcheckSerial() {
   const [serialNumber, setSerialNumber] = useState("");
   const [DtDataState, setDtDataState] = useState(false);
   const [DtData, setDtData] = useState([]);
   const [ddlItems, setDdlItems] = useState([]);
   const [ddlItemsValue, setDdlItemsValue] = useState({
-    lable:'ALL',
-    value:0
+    lable: "ALL",
+    value: 0,
   });
   const { Search } = Input;
   useEffect(() => {
@@ -56,8 +57,35 @@ function fn_CcheckSerial() {
       key: "mac_address",
       width: 180,
     },
+    ,
     {
       title: "Items Status",
+      dataIndex: "item_broken_flg",
+      key: "item_broken_flg",
+      width: 120,
+      render: (text, record, index) => {
+        const backgroundColor =
+          record.item_broken_flg === "Y"
+            ? "#f50"
+            : record.item_broken_flg != "Y"
+            ? "#87d068"
+            : "transparent";
+        return (
+          <Tag
+            style={{
+              width: 100,
+              textAlign: "center",
+              padding: "0px 0px 0px 0px",
+            }}
+            color={backgroundColor}
+          >
+            {text == "Y" ? "Broken" : "Good"}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "Stock Status",
       dataIndex: "product_status",
       key: "product_status",
       width: 120,
@@ -114,7 +142,58 @@ function fn_CcheckSerial() {
       key: "user_dept",
       width: 150,
     },
+    {
+      title: "broken equipment",
+      width: 180,
+      fixed: "right",
+      render: (text) => (
+        <Popconfirm
+          title="Delete the task"
+          description="Are you sure to delete this task?"
+          okText="Yes"
+          cancelText="No"
+          onConfirm={() => handleButtonClick(text, "Y")}
+        >
+          <Button className="btnError">
+            <DeleteOutlined />
+          </Button>
+        </Popconfirm>
+      ),
+    },
   ];
+  const handleButtonClick = async (text, flg) => {
+    try {
+      const res = await axios.get(
+        `/Sparepart/api/common/setBrokenItem?Serial=${text.serial_number}&Flg=${flg}`
+      );
+  
+      console.log('Response data:', res.data.state);
+      if (res.data.state === "Success") {
+        notification.success({
+          message: "Success",
+          description: "Data Already Updated",
+          placement: "bottomRight",
+          duration: 3,
+        });
+      } else {
+        notification.error({
+          message: res.data.message,
+          description: "Error To Update Data",
+          placement: "bottomRight",
+          duration: 3,
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
+
+      notification.error({
+        message: "Error",
+        description: error.message,
+        placement: "bottomRight",
+        duration: 3,
+      });
+    }
+  };
   const onSearch = async () => {
     if (serialNumber == "" && ddlItemsValue == "") {
       Swal.fire({
@@ -128,13 +207,13 @@ function fn_CcheckSerial() {
       const res = await axios.get(`/Sparepart/api/common/getCheckSerial`, {
         params: {
           serial_number: serialNumber,
-          items:ddlItemsValue
+          items: ddlItemsValue,
         },
       });
       if (res.data != "") {
         setDtDataState(true);
         setDtData(res.data);
-      }else{
+      } else {
         setDtDataState(false);
         Swal.fire({
           icon: "error",
@@ -160,7 +239,8 @@ function fn_CcheckSerial() {
     DtData,
     Search,
     ddlItems,
-    ddlItemsValue, setDdlItemsValue
+    ddlItemsValue,
+    setDdlItemsValue,
   };
 }
 
