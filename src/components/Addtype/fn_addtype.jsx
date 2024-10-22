@@ -297,7 +297,6 @@ function fn_addtype() {
     submitData,
     form,
     EditableCell,
-    data,
     mergedColumns,
     cancel,
     txtAbbr, setTxtAbbr
