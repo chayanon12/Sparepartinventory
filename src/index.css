@@ -5,8 +5,17 @@
   padding: 0;
   font-family: 'Poppins', sans-serif;
 }
-body{
-    /* background: #dde6ed; */
-    background: #e2f0fa;
-    /* background-color: white; */
+
+body {
+  background: #e2f0fa;
+}
+
+@media (max-width: 768px) {
+  body {
+    background: #f0e2fa;
+  }
+}
+
+html{
+  background-color: #e2f0fa !important;
 }

@@ -1,0 +1,31 @@
+.menu-bar-newarr .ant-menu-item:hover {
+  /* background-color: #4f6f52 !important; */
+  background: #0491e9ef !important;
+  color: #fff !important;
+}
+.menu-bar-newarr .ant-menu-item-selected {
+  /* background: #4f6f5282 !important; */
+  background: #0491e9ef !important;
+  color: #fff !important;
+}
+.menu-bar-newarr .ant-menu-title-content {
+  color: white !important;
+}
+.menu-bar-newarr svg {
+  color: white !important;
+}
+.logoSidebar {
+  color: #4f6f52 !important;
+  margin: 30px 0;
+  font-size: 1.5rem;
+}
+.menu-bar-newarr {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 500;
+  background: #15202b;
+}
+.FlexSidebar{
+    background: #15202b;
+}

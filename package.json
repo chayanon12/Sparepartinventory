@@ -14,6 +14,7 @@
     "@ant-design/icons": "^5.4.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@fontsource/roboto": "^5.1.0",
     "@mui/icons-material": "^5.16.6",
     "@mui/material": "^5.16.7",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
@@ -37,9 +38,11 @@
     "react-qr-barcode-scanner": "^2.0.0",
     "react-qr-code": "^2.0.15",
     "react-router-dom": "^6.26.2",
+    "react-vanilla-tilt": "^1.0.0",
     "recharts": "^2.12.7",
     "styled-components": "^6.1.12",
-    "sweetalert2": "^11.12.4"
+    "sweetalert2": "^11.12.4",
+    "vanilla-tilt": "^1.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

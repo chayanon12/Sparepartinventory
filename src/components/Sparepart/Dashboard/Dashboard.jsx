@@ -104,7 +104,6 @@ function SecondContent() {
                   style={{
                     width: "100px",
                     height: "100px",
-                    // marginLeft: "40px",
                   }}
                 />
                 <h1 >Spare Part Inventory</h1>

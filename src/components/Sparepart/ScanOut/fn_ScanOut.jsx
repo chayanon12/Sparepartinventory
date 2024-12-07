@@ -75,7 +75,7 @@ function fn_ScanOut() {
     if (txtScanoutValue !== "") {
       const splicedValue = txtScanoutValue.slice(0, 3);
       type = await submitData("getTypeid", splicedValue);
-      if (type !== "" && user !== "") {
+      if (user !== "") {
         await submitData("submit", {
           Itemid: type,
           Serial: txtScanoutValue,
@@ -106,6 +106,12 @@ function fn_ScanOut() {
         }
       }
     } else {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Please Key Serial Number",
+      })
+      
       document.getElementById("txtScan").focus();
     }
   };

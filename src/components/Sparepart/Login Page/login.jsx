@@ -8,10 +8,9 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import Swal from "sweetalert2";
 import CircularProgress from "@mui/material/CircularProgress";
-import axios from "axios";
-import wrench from "../../assets/wrench.png";
+import wrench from "../../../assets/wrench.png";
+
 import { fn_login } from "./fn_login";
 function HomePage() {
   const {
@@ -46,7 +45,8 @@ function HomePage() {
               SE Service System <img src={wrench} width={40} height={40} />
             </h1>
             <p style={{ fontSize: "24px", margin: "auto" }}>
-              Spare Parts Inventory{" "}
+              {/* Spare Parts Inventory{" "} */}
+              Store Inventory Management System
             </p>
           </div>
         </Grid>

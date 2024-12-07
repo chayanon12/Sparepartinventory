@@ -1,0 +1,22 @@
+.siderNewArrival {
+  min-height: 100vh !important;
+  /* position: sticky !important; */
+  left: 0;
+  bottom: 0;
+  top: 10;
+  min-width: 100vh;
+  background: #15202b;
+}
+.headerNewArrival {
+  min-width: 100vh;
+  background: #15202b;
+}
+.contentNewArrival {
+  color: white;
+  border-left: 2px solid #353f4a;
+  border-top: 2px solid #353f4a;
+  border-top-left-radius: 10px !important;
+}
+
+
+

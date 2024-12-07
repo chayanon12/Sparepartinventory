@@ -44,13 +44,22 @@ function fn_login() {
             localStorage.setItem("user_empcode", res.data.value.user_emp_id);
 
             Swal.close();
-            Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
-              (result) => {
-                if (result.isConfirmed) {
-                  navigate("/SparepartinventorySystem/mainPage");
-                }
-              }
-            );
+            // Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
+            //   (result) => {
+            //     if (result.isConfirmed) {
+            //       navigate("/SparepartinventorySystem/selectpage");
+            //     }
+            //   }
+            // );
+            Swal.fire({
+              title: "Success",
+              text: "เข้าสู่ระบบสำเร็จ",
+              icon: "success",
+              timer: 2000, 
+              showConfirmButton: false
+            }).then(() => {
+              navigate("/SparepartinventorySystem/selectpage");
+            });
           } else if (res.status === 400) {
             Swal.fire("ผิดพลาด", "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง", "error");
             setLoginId("");

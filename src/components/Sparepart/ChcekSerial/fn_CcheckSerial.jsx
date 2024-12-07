@@ -169,6 +169,7 @@ function fn_CcheckSerial() {
   
       console.log('Response data:', res.data.state);
       if (res.data.state === "Success") {
+        await onSearch();
         notification.success({
           message: "Success",
           description: "Data Already Updated",

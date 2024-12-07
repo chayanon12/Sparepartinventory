@@ -95,7 +95,7 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
           />
           <CustomHeader onSwitchChange={setSwitchValue} theme={switchValue} page={page} />
         </Header>
-        <Content className="content">
+        <Content className="content" >
           <Flex gap="large">{contentMap[page] || <SecondContent />}</Flex>
         </Content>
        

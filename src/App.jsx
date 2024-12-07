@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./components/Login Page/login";
-import MainPage from "./components/MainPage/MainPage"; 
+import Login from "./components/Sparepart/Login Page/login";
+import SparePart from "./components/Sparepart/MainPage/MainPage"; 
+import Selectsystem from "./components/Sparepart/SelectSystemPage/selectsystem";
+import NewArrivalItems from "./components/NewArrival/Home/Homepage";
 import axios from "axios";
 
 function App() {
@@ -29,11 +31,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/SparepartinventorySystem" element={<Login />} />
+        <Route path="/SparepartinventorySystem/selectpage" element={<Selectsystem />} />
+        <Route path="/SparepartinventorySystem/newarrival" element={<NewArrivalItems />} />
         <Route
-          path="/SparepartinventorySystem/mainPage"
+          path="/SparepartinventorySystem/Sparepart"
           element={
             <ProtectedRoute
-              element={<MainPage switchValue={switchValue} setSwitchValue={setSwitchValue} />}
+              element={<SparePart switchValue={switchValue} setSwitchValue={setSwitchValue} />}
             />
           }
         />

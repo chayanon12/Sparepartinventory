@@ -1,9 +1,10 @@
 import { Flex, Menu } from "antd";
 import React from "react";
 import { FaLeaf } from "react-icons/fa6";
-import LogoFullImg from "../../assets/Fujikura.png";
+// import LogoFullImg from "../../assets/Fujikura.png";
+import LogoFullImg from "../../../assets/Fujikura.png";
 // import LogoFullImg from "../assets/Fujikura.png";
-import LogoCutimage from "../../assets/FujikuraF.png";
+import LogoCutimage from "../../../assets/FujikuraF.png";
 
 import {
   UserOutlined,
