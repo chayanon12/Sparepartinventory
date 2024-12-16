@@ -116,7 +116,9 @@ function report() {
             dataSource={DtData}
             scroll={{ x: 'max-content'}}
             pagination={{
-              pageSize: 6,
+              showSizeChanger: true,
+              pageSizeOptions: ['6','10', '20', '50', '100',DtData.length.toString()],
+              defaultPageSize:6
             }}
           />
         )}

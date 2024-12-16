@@ -6,6 +6,6 @@ RUN npm install -g serve
 
 WORKDIR /usr/src/app
 
-COPY dist /app/dist
+COPY dist /usr/src/app/dist/
 
-CMD ["serve", "-s", "dist", "-l", "4003"]
+CMD ["serve", "-s", "dist", "-l", "9001"]

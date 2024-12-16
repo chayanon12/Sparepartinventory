@@ -5,8 +5,10 @@ import LogoCutimage from "../../../assets/FujikuraF.png";
 import axios from "axios";
 import * as AntIcons from "@ant-design/icons";
 import "./Sidebar.css";
-function Sidebar({ collapsed, theme, pageChange }) {
+
+function Sidebar({ collapsed, theme, pageChange}) {
   const [menuData, setMenuData] = useState([]);
+
   const getDataFunction = async (type, params = null) => {
     try {
       if (params) {
@@ -21,10 +23,12 @@ function Sidebar({ collapsed, theme, pageChange }) {
       return [];
     }
   };
+
   const getIcon = (iconName) => {
     const IconComponent = AntIcons[iconName];
     return IconComponent ? <IconComponent /> : null;
   };
+
   async function pageload() {
     const menu_data = await getDataFunction("getmenuname");
     const mappedMenuData = menu_data.map((item) => ({
@@ -34,17 +38,22 @@ function Sidebar({ collapsed, theme, pageChange }) {
     }));
     setMenuData(mappedMenuData);
   }
+
   useEffect(() => {
     pageload();
   }, []);
+
   return (
     <>
+      {/* {console.log('setPage prop:', setPage)} */}
+
       <Flex align="center" justify="center" className="FlexSidebar">
         <div className="logoSidebar">
           <img
             src={collapsed ? LogoCutimage : LogoFullImg}
             width={collapsed ? "40px" : "180px"}
             height="40px"
+            alt="Logo"
           />
         </div>
       </Flex>
@@ -53,6 +62,7 @@ function Sidebar({ collapsed, theme, pageChange }) {
         style={{ color: "white" }}
         defaultSelectedKeys={["1"]}
         items={menuData}
+        onClick={(e) => pageChange(e.key)}
       />
     </>
   );

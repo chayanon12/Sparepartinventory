@@ -7,7 +7,7 @@ export default defineConfig({
   base: '/SparepartinventorySystem',
   server:{
     host: true,
-    strictPort: true, //บังคับ port
+    strictPort: true, 
     port: 9001
     
   }

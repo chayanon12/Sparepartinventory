@@ -18,4 +18,5 @@ body {
 
 html{
   background-color: #e2f0fa !important;
+  overflow: hidden !important;
 }

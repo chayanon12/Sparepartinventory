@@ -5,7 +5,7 @@
 }
 .content {
   margin: 5px 16px;
-  padding: 20px;
+  padding: 10px;
   min-width:100vh;
 }
 .light-theme .ant-layout {
