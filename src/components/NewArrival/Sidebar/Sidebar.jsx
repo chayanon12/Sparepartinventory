@@ -59,7 +59,7 @@ function Sidebar({ collapsed, theme, pageChange}) {
       </Flex>
       <Menu
         className="menu-bar-newarr"
-        style={{ color: "white" }}
+        style={{ color: "white",fontWeight:"500",fontSize:"15px",fontFamily:"poppins" }}
         defaultSelectedKeys={["1"]}
         items={menuData}
         onClick={(e) => pageChange(e.key)}

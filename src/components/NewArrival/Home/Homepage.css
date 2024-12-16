@@ -6,16 +6,17 @@
   bottom: 0;
   top: 10;
   min-width: 100vh;
-  background: #15202b;
+  background: #061018;
 }
 .headerNewArrival {
   padding-top: 8px !important;
   min-width: 100vh;
-  background: #15202b;
+  background: #061018;
 }
 .contentNewArrival {
-  margin: 5px 8px;
-  padding: 10px;
+  /* margin: 5px 8px; */
+  /* padding: 10px; */
+  
 
   color: white;
   border-left: 2px solid #353f4a;

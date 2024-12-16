@@ -42,7 +42,7 @@ function HeaderNew({ onSwitchChange, theme, page }) {
      <Flex
           align="center"
           justify="space-between"
-          style={{ background: theme === true ? "#fff" : "#15202B" }}
+          style={{ background: theme === true ? "#fff" : "#061018" }}
         >
           <Typography.Title
             level={2}
@@ -56,19 +56,17 @@ function HeaderNew({ onSwitchChange, theme, page }) {
               : page === "3"
               ? "Scan Out"
               : page === "4"
-              ? "Barcode Generate"
-              : page === "5"
               ? "Add Broken Items"
-              : page === "6"
+              : page === "5"
               ? "Modify Items"
-              : page === "7"
+              : page === "6"
               ? "Add Type"
               : "Report"}
           </Typography.Title>
           <Flex align="center" gap="1rem">
             <Flex align="center" gap="10px">
               <Dropdown menu={{ items }} placement="bottom">
-                <Button style={{ backgroundColor:"#15202B",color: "white" }}>
+                <Button style={{ backgroundColor:"#061018",color: "white" }}>
                   <Avatar
                     icon={<UserOutlined />}
                     style={{
@@ -84,7 +82,7 @@ function HeaderNew({ onSwitchChange, theme, page }) {
               </Dropdown>
               <Button
                 icon={<BlockOutlined />}
-                style={{ backgroundColor: "#15202B", color: "white" }}
+                style={{ backgroundColor: "#061018", color: "white" }}
                 onClick={onSwitchChange2}
               >
                 Switch Program

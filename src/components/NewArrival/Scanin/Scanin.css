@@ -10,9 +10,19 @@
   max-height: auto;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   max-height: 610px !important;
-  width: 1250px !important;
+  /* width: 1250px !important; */
+  min-width: 100vh;
   max-height: 630px;
   margin: 0 auto;
   overflow: auto;
-  background: #15202b;
+  background: #061018;
+  margin-left: 30px !important;
+  margin-top: 30px !important;
+  border: none;
+}
+.SecondCardNew{
+  background: #d95933;
+  /* background: #121d2b; */
+  border: none;
+  margin-top: 10px;
 }

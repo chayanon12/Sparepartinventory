@@ -8,7 +8,9 @@ import "./Homepage.css";
 import ScanOut from "../Scanout/Scanout";
 import ScanIn from "../Scanin/Scanin";
 import Report from "../Report/Report";
+import ModifyItems from '../ModifyItems/ModifyItems';
 import GenarateBarcode from "../GenerateBarcode/GenerateBarcode";
+import Addtype from '../Addtype/Addtype';
 function Homepage({switchValue, setSwitchValue }) {
   const { Sider, Content, Header } = Layout;
   const [collapsed, setCollapsed] = useState(false);
@@ -39,10 +41,9 @@ function Homepage({switchValue, setSwitchValue }) {
     2: <ScanIn state={open} />,
     3: <ScanOut state={open} />,
     4: <GenarateBarcode state={open} />,
-    // 5: <CheckSerial state={open} />,
-    // 6: <ModifyItems state={open} />,
-    // 7: <Addtype state={open} />,
-    8: <Report state={open} />,
+    5: <ModifyItems state={open} />,
+    6: <Addtype state={open} />,
+    7: <Report state={open} />,
   };
   return (
     <Layout >
@@ -54,7 +55,7 @@ function Homepage({switchValue, setSwitchValue }) {
       >
         <Sidebar collapsed={collapsed} pageChange={setPage} />
       </Sider>
-      <Layout style={{ background: "#15202B", minWidth: "100vh"}}>
+      <Layout style={{ background: "#121d2b", minWidth: "100vh"}}>
         <Header className="headerNewArrival">
         <Button
             type="text"
