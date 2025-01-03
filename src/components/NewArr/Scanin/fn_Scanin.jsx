@@ -50,7 +50,9 @@ function fn_Scanin() {
     let type = "";
     if (txtScanValue !== "") {
       const splicedValue = txtScanValue.slice(0, 3);
-      type = await submitData("getTypeid", splicedValue);
+      if (ddlvalue == null){
+        type = await submitData("getTypeid", splicedValue);
+      }      
 
       if (type !== "") {
         await submitData("submit", {

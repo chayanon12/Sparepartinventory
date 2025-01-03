@@ -75,7 +75,7 @@ function ScanOut() {
               className="ScanOutUserIdTextF"
               size="small"
               id="txtScanIDUser"
-              label="Scan In ID Code (User)"
+              label="User ID Code"
               value={user}
               onChange={(e) => setuser(e.target.value)}
               onBlur={handleScantxtIDUserValue_Change}

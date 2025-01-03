@@ -42,32 +42,32 @@ function fn_report() {
         );
       },
     },
-    {
-      title: "Items Status",
-      dataIndex: "item_broken_flg",
-      key: "item_broken_flg",
-      width: 120,
-      render: (text, record, index) => {
-        const backgroundColor =
-          record.item_broken_flg === "Y"
-            ? "#f50"
-            : record.item_broken_flg != "Y"
-            ? "#87d068"
-            : "transparent";
-        return (
-          <Tag
-            style={{
-              width: 100,
-              textAlign: "center",
-              padding: "0px 0px 0px 0px",
-            }}
-            color={backgroundColor}
-          >
-            {text == "Y" ? "Broken" : "Good"}
-          </Tag>
-        );
-      },
-    },
+    // {
+    //   title: "Items Status",
+    //   dataIndex: "item_broken_flg",
+    //   key: "item_broken_flg",
+    //   width: 120,
+    //   render: (text, record, index) => {
+    //     const backgroundColor =
+    //       record.item_broken_flg === "Y"
+    //         ? "#f50"
+    //         : record.item_broken_flg != "Y"
+    //         ? "#87d068"
+    //         : "transparent";
+    //     return (
+    //       <Tag
+    //         style={{
+    //           width: 100,
+    //           textAlign: "center",
+    //           padding: "0px 0px 0px 0px",
+    //         }}
+    //         color={backgroundColor}
+    //       >
+    //         {text == "Y" ? "Broken" : "Good"}
+    //       </Tag>
+    //     );
+    //   },
+    // },
     {
       title: "Itams Name",
       dataIndex: "type_name",
@@ -182,7 +182,7 @@ function fn_report() {
         }
       } else if (type == "getDataReport") {
         const res = await axios.get(
-          `/Sparepart/api/common/getDataReport?typename=${ddlItemsselected}&dept=${ddlCostcenterSelected}&movementtype=${movemoentTypeSelected}&datefrom=${dateFrom}&dateto=${dateTo}`
+          `/newarrival/api/getDataReportNewArr?typename=${ddlItemsselected}&dept=${ddlCostcenterSelected}&movementtype=${movemoentTypeSelected}&datefrom=${dateFrom}&dateto=${dateTo}`
         );
         console.log(res.data);
         if (res.data.length > 0) {
