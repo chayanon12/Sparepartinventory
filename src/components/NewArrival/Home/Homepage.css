@@ -1,25 +1,33 @@
 .siderNewArrival {
   min-height: 100vh !important;
-  /* position: sticky !important; */
   overflow: hidden !important;
   left: 0;
   bottom: 0;
   top: 10;
   min-width: 100vh;
-  background: #061018;
 }
 .headerNewArrival {
   padding-top: 8px !important;
   min-width: 100vh;
-  background: #061018;
+  background: #fff;
 }
 .contentNewArrival {
-  /* margin: 5px 8px; */
-  /* padding: 10px; */
-  
-
-  color: white;
-  border-left: 2px solid #353f4a;
-  border-top: 2px solid #353f4a;
+  /* border-left: 2px solid #353f4a;
+  border-top: 2px solid #353f4a; */
+  margin: 5px 16px;
+  padding: 10px;
+  min-width:100vh;
   border-top-left-radius: 10px !important;
+}
+.light-theme .ant-layout {
+  background-color: #ffffff;
+  min-height: 100vh;
+  min-width: 100vh;
+
+}
+.dark-theme .ant-layout {
+  /* background-color: #111d2c; */
+  color: #ffffff;
+  min-height: 100vh;
+  min-width: 100vh;
 }

@@ -15,6 +15,7 @@ function Homepage({switchValue, setSwitchValue }) {
   const { Sider, Content, Header } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const [page, setPage] = useState("1");
+  const [open, setOpen] = useState(true);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -46,8 +47,9 @@ function Homepage({switchValue, setSwitchValue }) {
     7: <Report state={open} />,
   };
   return (
-    <Layout >
+    <Layout className={switchValue === false ? "dark-theme" : ""}>
       <Sider
+      theme={switchValue ? "light" : "dark"}  
         trigger={null}
         collapsible
         collapsed={collapsed}
@@ -69,7 +71,7 @@ function Homepage({switchValue, setSwitchValue }) {
             }}
             style={collapsed ? btnStyleClose : btnStyleOpen}
           />
-          <HeaderNew />
+          <HeaderNew onSwitchChange={setSwitchValue} theme={switchValue} page={page} setPage={setPage}/>
         </Header>
         <Content className="contentNewArrival">
           <Flex gap="large">

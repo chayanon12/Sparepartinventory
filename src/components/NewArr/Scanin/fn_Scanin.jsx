@@ -97,7 +97,7 @@ function fn_Scanin() {
               strSerialNo: params.Serial,
               strAdminId: params.Admin,
               strID: params.ID,
-              strItemFlg: "OLD",
+              strItemFlg: "NEW",
             },
           },
           {
@@ -178,7 +178,7 @@ function fn_Scanin() {
     } else if (option == "getDttable") {
       setDdlDataInState(false);
       await axios
-        .get(`/Sparepart/api/common/GetDttableAll?strType=`)
+        .get(`/Sparepart/api/common/GetDttableAll?strType=NEW`)
         .then((res) => {
           setDtdata(res.data);
           setDtDataState(true);
@@ -209,7 +209,7 @@ function fn_Scanin() {
       return dtData;
     }else if (option == "DDL") {
       await axios
-        .get(`/Sparepart/api/common/getData?strType=DDL&strPlantCode=${fac}`)
+        .get(`/Sparepart/api/common/getData?strType=DDLNEW&strPlantCode=${fac}`)
         .then((res) => {
           setDdlData(res.data);
         })

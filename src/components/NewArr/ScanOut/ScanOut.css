@@ -1,0 +1,33 @@
+.ScanOutImg{
+    width: 50px !important;
+    height: 50px !important;
+}
+.ScanOutFirstDiv{
+    display: flex;
+    margin-top: 10px;
+    gap:10px;
+}
+.ScanOutAutocomplete{
+  width: 200px;
+  margin-left: 50px;
+}
+.ScanOutUserIdTextF{
+    width: 200px !important;
+}
+.ScanOutSerialTextF{
+    margin-left: 50px !important;
+    width: 350px;
+}
+.ScanOutRemark{
+    width: 470px;
+}
+.ScanOutbtn{
+   margin-left: 5px;
+   height: 40px;
+}
+.ScanOutbtnCancel{
+    margin-left: 5px;
+    height: 40px;
+    background: red !important;
+    color: white !important;
+}

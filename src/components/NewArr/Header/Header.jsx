@@ -1,4 +1,3 @@
-import React from "react";
 import {
   NotificationOutlined,
   MessageOutlined,
@@ -7,20 +6,24 @@ import {
   MoonFilled,
   DownOutlined,
   LoginOutlined,
+  WindowsOutlined,
   BlockOutlined,
 } from "@ant-design/icons";
-import { Avatar, Flex, Switch, Typography, Dropdown, Button } from "antd";
-import { useNavigate } from "react-router-dom";
 
-function HeaderNew({ onSwitchChange, theme, page, setPage }) {
+import { Avatar, Flex, Switch, Typography, Card, Dropdown, Button } from "antd";
+import Search from "antd/es/input/Search";
+import React, { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+
+function Header({ onSwitchChange, theme, page }) {
+  const [check, setCheck] = useState(true);
+  const Pagename = "New Arrivals Inventory System";
   const userName = localStorage.getItem("username");
   const userSurname = localStorage.getItem("surname");
   const navigate = useNavigate();
-
   const onSwitchChange2 = () => {
     navigate("/SparepartinventorySystem/selectpage");
   };
-
   const items = [
     {
       key: "1",
@@ -36,36 +39,35 @@ function HeaderNew({ onSwitchChange, theme, page, setPage }) {
       ),
     },
   ];
-
   return (
     <Flex
       align="center"
       justify="space-between"
-      style={{ background: theme === true ? "#fff" : "#061018" }}
+      style={{ background: theme === true ? "#fff" : "#001529" }}
     >
       <Typography.Title
         level={2}
         type="secondary"
-        style={{ color: "white", marginTop: "2px" }}
+        style={{ color: theme === false ? "#fff" : "#3f4840ea" }}
       >
         {page === "1"
-          ? "Dashboard"
+          ? "Dashboard" + "  (" + Pagename + ")"
           : page === "2"
-          ? "Scan In"
+          ? "Scan In" + "  (" + Pagename + ")"
           : page === "3"
-          ? "Scan Out"
+          ? "Scan Out" + "  (" + Pagename + ")"
           : page === "4"
-          ? "Add Broken Items"
+          ? "Barcode Generate" + "  (" + Pagename + ")"
           : page === "5"
-          ? "Modify Items"
+          ? "Modify Items" + "  (" + Pagename + ")"
           : page === "6"
-          ? "Add Type"
-          : "Report"}
+          ? "Add Type" + "  (" + Pagename + ")"
+          : "Report" + "  (" + Pagename + ")"}
       </Typography.Title>
       <Flex align="center" gap="1rem">
         <Flex align="center" gap="10px">
           <Dropdown menu={{ items }} placement="bottom">
-            <Button style={{ backgroundColor: "#061018", color: "white" }}>
+            <Button>
               <Avatar
                 icon={<UserOutlined />}
                 style={{
@@ -81,7 +83,7 @@ function HeaderNew({ onSwitchChange, theme, page, setPage }) {
           </Dropdown>
           <Button
             icon={<BlockOutlined />}
-            style={{ backgroundColor: "#061018", color: "white" }}
+            style={{ backgroundColor: "#fde3cf", color: "#f56a00" }}
             onClick={onSwitchChange2}
           >
             Switch Program
@@ -89,10 +91,11 @@ function HeaderNew({ onSwitchChange, theme, page, setPage }) {
           <Switch
             checkedChildren={<SunOutlined />}
             unCheckedChildren={<MoonFilled />}
-            checked={theme}
+            checked={check}
             className="custom-switch"
-            onChange={(checked) => {
-              onSwitchChange(checked);
+            onChange={() => {
+              setCheck(!check);
+              onSwitchChange(!check);
             }}
           />
         </Flex>
@@ -101,4 +104,4 @@ function HeaderNew({ onSwitchChange, theme, page, setPage }) {
   );
 }
 
-export default HeaderNew;
+export default Header;

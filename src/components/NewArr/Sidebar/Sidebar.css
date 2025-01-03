@@ -1,0 +1,134 @@
+.header {
+  padding-top: 12px;
+  background: #fff;
+}
+.content {
+  margin: 5px 16px;
+  padding: 20px;
+}
+.light-theme .ant-layout {
+  background-color: #ffffff;
+  height: 100vh;
+}
+
+.dark-theme .ant-layout {
+  background-color: #111d2c;
+  color: #ffffff;
+  height: 100vh;
+}
+.sider {
+  height: 100vh;
+  position: sticky !important;
+  left: 0;
+  bottom: 0;
+  top: 10;
+}
+
+.logo {
+  color: #4f6f52 !important;
+  margin: 30px 0;
+  font-size: 1.5rem;
+}
+.menu-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 500;
+}
+.menu-bar .ant-menu-item:hover {
+  background-color: #4f6f52 !important;
+  color: #fff !important;
+}
+.ant-menu-item-selected {
+  background: #4f6f5282 !important;
+  color: #fff !important;
+}
+
+.header-icons {
+  background: #d2e3c8;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 15px;
+  color: #4f6f52;
+  cursor: pointer;
+}
+.custom-switch.ant-switch-checked {
+  background-color: #f39c12 !important;
+}
+.custom-switch {
+  background-color: #020a5b !important;
+}
+.ant-btn:hover {
+  color: #4f6f52 !important;
+  border-color: #4f6f52 !important;
+}
+.ant-btn-primary {
+  background: #4f6f52 ;
+}
+.ant-btn-primary:hover {
+  background: #173a1a !important;
+  color: #fff !important;
+}
+.primary-color {
+  color: #4f6f52 !important;
+}
+.primary--light--color {
+  color: #739072 !important;
+}
+.secondary--color {
+  color: #86a789 !important;
+}
+.light--color {
+  color: #d2e3c8 !important;
+}
+.gray--color {
+  color: rgb(182, 181, 181) !important;
+}
+.smallCard .ant-card-body {
+  padding: 10px 24px 24px 24px !important;
+}
+.smallCard {
+  width: 300px;
+  height: 150px;
+  font-size: 35px;
+  font-weight: bold;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.MainCard {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  width: 1500 !important;
+  max-height: "auto";
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 9s linear infinite;
+}
+
+.TableDashboard th,td{
+  text-align: center !important;
+}
+
+@media (max-width: 768px) {
+  .sider {
+    height: auto;
+    position: relative;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .menu-bar {
+    flex-direction: row;
+    gap: 5px;
+  }
+}

@@ -45,8 +45,6 @@ function Sidebar({ collapsed, theme, pageChange}) {
 
   return (
     <>
-      {/* {console.log('setPage prop:', setPage)} */}
-
       <Flex align="center" justify="center" className="FlexSidebar">
         <div className="logoSidebar">
           <img
@@ -58,8 +56,9 @@ function Sidebar({ collapsed, theme, pageChange}) {
         </div>
       </Flex>
       <Menu
+       theme={theme == true ? "light" : "dark"}
         className="menu-bar-newarr"
-        style={{ color: "white",fontWeight:"500",fontSize:"15px",fontFamily:"poppins" }}
+        // style={{ color: "white",fontWeight:"500",fontSize:"15px",fontFamily:"poppins" }}
         defaultSelectedKeys={["1"]}
         items={menuData}
         onClick={(e) => pageChange(e.key)}

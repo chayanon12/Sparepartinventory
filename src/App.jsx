@@ -4,13 +4,13 @@ import Login from "./components/Sparepart/Login Page/login";
 import SparePart from "./components/Sparepart/MainPage/MainPage"; 
 import Selectsystem from "./components/SelectSystemPage/selectsystem";
 import NewArrivalItems from "./components/NewArrival/Home/Homepage";
+import NewArr from "./components/NewArr/MainPage/MainPage";
 import axios from "axios";
 
 function App() {
   const backendUrl = import.meta.env.VITE_SERVICE_URL;
   axios.defaults.baseURL = backendUrl;
   const [switchValue, setSwitchValue] = useState(true);
-
   useEffect(() => {
     const getIp = async () => {
       const response = await axios.get("/Sparepart/api/common/getIPaddress");
@@ -34,10 +34,18 @@ function App() {
         <Route path="/SparepartinventorySystem/selectpage" element={<Selectsystem />} />
         {/* <Route path="/SparepartinventorySystem/newarrival" element={<NewArrivalItems />} /> */}
         <Route
-          path="/SparepartinventorySystem/newarrival"
+          path="/SparepartinventorySystem/newarr"
           element={
             <ProtectedRoute
               element={<NewArrivalItems switchValue={switchValue} setSwitchValue={setSwitchValue} />}
+            />
+          }
+        />
+          <Route
+          path="/SparepartinventorySystem/newarrival"
+          element={
+            <ProtectedRoute
+              element={<NewArr switchValue={switchValue} setSwitchValue={setSwitchValue} />}
             />
           }
         />

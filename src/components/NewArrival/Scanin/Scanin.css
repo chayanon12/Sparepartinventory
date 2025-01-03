@@ -20,9 +20,13 @@
   margin-top: 30px !important;
   border: none;
 }
-.SecondCardNew{
+.SecondCardNewWhiteTheme{
+  background: White;
+  border: none;
+  margin-top: 10px;
+}
+.SecondCardNewDarkTheme{
   background: #d95933;
-  /* background: #121d2b; */
   border: none;
   margin-top: 10px;
 }
