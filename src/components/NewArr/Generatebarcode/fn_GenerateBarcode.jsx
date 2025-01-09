@@ -51,7 +51,7 @@ function fn_GenerateBarcode() {
         });
     } else if (type == "DDL") {
       await axios
-        .get(`/Sparepart/api/common/getData?strType=DDL&strPlantCode=${fac}`)
+        .get(`/Sparepart/api/common/getData?strType=DDLNEW&strPlantCode=${fac}`)
         .then((res) => {
           setDdlData(res.data);
         })

@@ -192,6 +192,7 @@ function fn_addtype() {
       await getdata("addType", {
         type_name: txtItemName,
         type_product: txtItemType,
+        type_abbr: txtAbbr
       });
       clearTxt();
     }else{
@@ -227,6 +228,7 @@ function fn_addtype() {
         const res = await axios.post("/Sparepart/api/common/addNewType", {
           type_name: params.type_name,
           type_product: params.type_product,
+          type_abbr:params.type_abbr
         });
         if (res.data.state === "Success") {
           notification.success({
@@ -283,6 +285,7 @@ function fn_addtype() {
   function clearTxt() {
     setTxtItemName("");
     setTxtItemType("");
+    setTxtAbbr("");
   }
 
   return {

@@ -1,14 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
+import { notification } from "antd";
 function fn_Scanin() {
   const fac = import.meta.env.VITE_FAC;
   const [txtScanValue, setTxtScanValue] = useState("");
+  const [txtSerial, setTxtSerial] = useState([]);
   const [DtData2, setDtdata] = useState([]);
   const [DtDataState, setDtDataState] = useState(false);
   const [ddlvalue, setDdlValue] = useState(null);
   const [ddlDataInState, setDdlDataInState] = useState(false);
   const [ddlData, setDdlData] = useState([]);
+  const current_date = dayjs().format("YYYY-MM-DD");
+  const [date, setDate] = useState(current_date);
+  const [requestpo, setRequestpo] = useState("");
+  const [txtSerialState, setTxtSerialState] = useState(true);
+  const [totalSerial, setTotalSerial] = useState(0);
   const columns = [
     {
       title: "Serial Number",
@@ -41,6 +49,22 @@ function fn_Scanin() {
       key: "update_date",
     },
   ];
+  const handleDateChange = (date) => {
+    const formatted_date = dayjs(date);
+    const now = dayjs();
+
+    if (formatted_date.isBefore(now)) {
+      setDate(formatted_date.format("YYYY-MM-DD"));
+    } else {
+      setDate("");
+      notification.error({
+        message: "Error",
+        description: "Please select date before today",
+        duration: 2,
+        placement: "bottomRight",
+      });
+    }
+  };
   const filteredDataSource = DtData2.filter((item) => item.status === "IN");
   useEffect(() => {
     submitData("DDL", "");
@@ -50,9 +74,9 @@ function fn_Scanin() {
     let type = "";
     if (txtScanValue !== "") {
       const splicedValue = txtScanValue.slice(0, 3);
-      if (ddlvalue == null){
+      if (ddlvalue == null) {
         type = await submitData("getTypeid", splicedValue);
-      }      
+      }
 
       if (type !== "") {
         await submitData("submit", {
@@ -85,7 +109,28 @@ function fn_Scanin() {
       document.getElementById("txtScan").focus();
     }
   };
-
+  const btnExecute_Click = () => {
+    if (totalSerial == 0) {
+      notification.error({
+        message: "Error",
+        description: "Please scan serial number",
+        duration: 2,
+        placement: "bottomRight",
+      });
+      document.getElementById('txtTotalSerial').focus();
+    } else {
+      setTxtSerialState(true);
+    }
+  };
+  const btnCancel_Click = () => {
+    setTxtSerialState(false);
+    setTxtScanValue("");
+    setDate(current_date);
+    setRequestpo("");
+    setTotalSerial(0);
+    setDdlValue(null);
+    document.getElementById("single-autocomplete").focus();
+  };
   async function submitData(option, params) {
     if (option == "submit") {
       axios
@@ -109,7 +154,6 @@ function fn_Scanin() {
           }
         )
         .then((response) => {
-
           if (response.data.result === "Success" || response.status === 200) {
             Swal.fire({
               icon: "success",
@@ -164,7 +208,6 @@ function fn_Scanin() {
         .then((res) => {
           if (res.data != "") {
             type = res.data[0].typeid;
-
           } else {
             type = "";
           }
@@ -209,7 +252,7 @@ function fn_Scanin() {
           });
         });
       return dtData;
-    }else if (option == "DDL") {
+    } else if (option == "DDL") {
       await axios
         .get(`/Sparepart/api/common/getData?strType=DDLNEW&strPlantCode=${fac}`)
         .then((res) => {
@@ -224,7 +267,25 @@ function fn_Scanin() {
         });
     }
   }
-
+  const handletxtSerialChange = (index, event) => {
+    const newValues = [...txtSerial];
+    newValues[index] = event.target.value.trim();
+    setTxtSerial(newValues);
+    if (event.key === "Enter") {
+      try {
+        document.getElementById(`txtSerial_${index + 1}`).focus();
+      } catch (error) {
+        // alert("error");
+        saveData();
+        event.target.blur();
+      }
+    }
+  };
+  async function saveData(){
+    console.log(txtSerial);
+    setTxtSerial('');
+    setTxtSerialState(false);
+  }
   return {
     txtScanValue,
     setTxtScanValue,
@@ -236,7 +297,20 @@ function fn_Scanin() {
     ddlDataInState,
     setDdlDataInState,
     columns,
-    ddlData
+    ddlData,
+    date,
+    setDate,
+    handleDateChange,
+    totalSerial,
+    setTotalSerial,
+    requestpo,
+    setRequestpo,
+    txtSerialState,
+    setTxtSerialState,
+    btnExecute_Click,
+    btnCancel_Click,
+    handletxtSerialChange,
+    txtSerial, setTxtSerial
   };
 }
 

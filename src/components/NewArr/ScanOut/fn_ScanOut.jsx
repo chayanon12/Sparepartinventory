@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { notification } from "antd";
 function fn_ScanOut() {
   const fac = import.meta.env.VITE_FAC;
   const [txtScanoutValue, setTxtScanoutValue] = useState("");
@@ -71,15 +72,28 @@ function fn_ScanOut() {
       // document.getElementById("txtScanIDUser").focus();
     }
   };
+  
   const handleScanouttxtValue_Change = async () => {
     let type = "";
-
+    if (Remark == ''){
+      notification.error({
+        message: "Please Key Remark",
+        description: "remark is required",
+        placement: "bottomRight",
+        duration: 3,
+      });
+      document.getElementById("txtScanOutRemark").focus();
+      return;
+    }
     if (txtScanoutValue !== "") {
+      console.log("ddlvalueout", ddlvalueout);
       const splicedValue = txtScanoutValue.slice(0, 3);
-      type = await submitData("getTypeid", splicedValue);
+      if(ddlvalueout == null){
+        type = await submitData("getTypeid", splicedValue);
+      }      
       if (user !== "") {
         await submitData("submit", {
-          Itemid: type,
+          Itemid: type == "" ? ddlvalueout.typeid : type,
           Serial: txtScanoutValue,
           Admin: localStorage.getItem("username"),
           movement: "OUT",
@@ -112,6 +126,7 @@ function fn_ScanOut() {
           }
         }
         if (ddlvalueout == null) {
+          
           setDdlDataOutState(true);
           Swal.fire({
             icon: "error",
@@ -120,7 +135,7 @@ function fn_ScanOut() {
           }).then(() => {
             document.getElementById("txtScanIDUser").focus();
           });
-        } else {
+        } else {                                                                           
           await submitData("submit", {
             Itemid: ddlvalueout.typeid,
             Serial: txtScanoutValue,
@@ -150,7 +165,16 @@ function fn_ScanOut() {
     setuser("");
     setusername("");
     setRemark("");
+    setDtDataState(false);
   };
+  function resetTxtfield(){
+    setuser("");
+    setusername("");
+    setRemark("");
+    setDdlFacValue("");
+    setTxtScanoutValue("");
+    submitData("getDttable", "");
+  }
   async function submitData(option, params) {
     if (option == "submit") {
       axios
@@ -167,6 +191,7 @@ function fn_ScanOut() {
               strUserDept: params.UserDept,
               strUserName: params.UserName,
               strRemark: params.Remark,
+              strItemFlg:'NEW'
             },
           },
           {
@@ -182,8 +207,7 @@ function fn_ScanOut() {
               title: "Success",
               text: "Data has been saved",
             }).then(() => {
-              setTxtScanoutValue("");
-              submitData("getDttable", "");
+              resetTxtfield();
             });
           } else if (response.status === 203) {
             Swal.fire({
@@ -191,8 +215,7 @@ function fn_ScanOut() {
               title: "Error",
               text: "Serial number already exists",
             }).then(() => {
-              setTxtScanoutValue("");
-              submitData("getDttable", "");
+              resetTxtfield();
             });
           } else if (response.status === 204) {
             Swal.fire({
@@ -200,8 +223,7 @@ function fn_ScanOut() {
               title: "Error",
               text: "Serial number already Out of stock",
             }).then(() => {
-              setTxtScanoutValue("");
-              submitData("getDttable", "");
+              resetTxtfield();
             });
           } else if (response.status === 205) {
             Swal.fire({
@@ -209,7 +231,7 @@ function fn_ScanOut() {
               title: "Error",
               text: "Type is Wrong Please select again!",
             }).then(() => {
-              submitData("getDttable", "");
+              resetTxtfield();
             });
           }
           setDdlValueout(null);

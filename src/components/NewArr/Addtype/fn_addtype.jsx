@@ -69,7 +69,7 @@ function fn_addtype() {
         newData.splice(index, 1, { ...item, ...row });
         console.log(newData[index]);
         console.log(newData[index].type_abbr.toString().length);
-        if(newData[index].type_abbr.toString().length > 3){
+        if(newData[index].type_abbr.toString().length > 4){
           notification.error({
             message: "Error",
             description: "ABBR should be 3 characters",
@@ -180,7 +180,7 @@ function fn_addtype() {
 
   const submitData = async () => {
     if (txtItemName !== "" && txtItemType !== "" && txtAbbr !== "") {
-      if (txtAbbr.length > 3) {
+      if (txtAbbr.length > 4) {
         notification.error({
           message: "Error",
           description: "ABBR should be 3 characters",
@@ -192,6 +192,7 @@ function fn_addtype() {
       await getdata("addType", {
         type_name: txtItemName,
         type_product: txtItemType,
+        type_abbr: txtAbbr
       });
       clearTxt();
     }else{
@@ -206,9 +207,9 @@ function fn_addtype() {
 
   async function getdata(type, params) {
     try {
-      if (type === "getTypeData") {
+      if (type === "getTypeData") { //already modify
         setDtDataState(false);
-        const res = await axios.get("/Sparepart/api/common/getType");
+        const res = await axios.get("/newarrival/api/getTypeNewArr");
         if (res.data !== "") {
           setDtData(res.data);
           setData(
@@ -223,10 +224,11 @@ function fn_addtype() {
             duration: 3,
           });
         }
-      } else if (type === "addType") {
-        const res = await axios.post("/Sparepart/api/common/addNewType", {
+      } else if (type === "addType") { //already modify
+        const res = await axios.post("/newarrival/api/insertnewtypeNewArr", { 
           type_name: params.type_name,
           type_product: params.type_product,
+          type_abbr:params.type_abbr
         });
         if (res.data.state === "Success") {
           notification.success({
@@ -283,6 +285,7 @@ function fn_addtype() {
   function clearTxt() {
     setTxtItemName("");
     setTxtItemType("");
+    setTxtAbbr("");
   }
 
   return {
