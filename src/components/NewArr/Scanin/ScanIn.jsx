@@ -38,14 +38,16 @@ function ScanIn({ state }) {
     handleDateChange,
     totalSerial,
     setTotalSerial,
-    requestpo,
-    setRequestpo,
+    requestno, setRequestno,
     txtSerialState,
     btnExecute_Click,
     btnCancel_Click,
     handletxtSerialChange,
     txtSerial,
     setTxtSerial,
+    totalSerialState,
+    handle_RequestNO_Change,
+    saveData
   } = fn_Scanin();
   return (
     <div>
@@ -77,9 +79,21 @@ function ScanIn({ state }) {
               gap: 10,
             }}
           >
+              <TextField
+              size="small"
+              id="txtRequestNO"
+              label="Request No."
+              value={requestno}
+              onChange={(e) => setRequestno(e.target.value.trim())}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handle_RequestNO_Change(e.target.value.trim());
+                }
+              }}
+            />
             <Autocomplete
               id="single-autocomplete"
-              sx={{ width: 200 }}
+              sx={{ width: 320 }}
               value={ddlvalue}
               size="small"
               onChange={(event, newValue) => {
@@ -106,19 +120,20 @@ function ScanIn({ state }) {
               InputLabelProps={{ shrink: true }}
               onChange={(e) => handleDateChange(e.target.value)}
             />
-            <TextField
-              size="small"
-              id="txtRequestPO"
-              label="PO Request"
-              value={requestpo}
-              onChange={(e) => setRequestpo(e.target.value.trim())}
-            />
+          
             <TextField
               id="txtTotalSerial"
               size="small"
+              disabled={totalSerialState}
+              style={{ width: 90 }}
               label="Total Serial"
               value={totalSerial}
-              onChange={(e) => setTotalSerial(e.target.value)}
+              onChange={(e) => setTotalSerial(e.target.value.replace(/[^0-9]/g, ""))}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  btnExecute_Click();
+                }
+              }}
             />
             <Button
               type="primary"
@@ -135,171 +150,85 @@ function ScanIn({ state }) {
               Clear
             </Button>
           </div>
-          <div
-            style={{
-              marginTop: 10,
-              display: "flex",
-              marginLeft: "50px",
-              gap: 10,
-              width: "1200px",
-              justifyContent: "left",
-            }}
-          >
-            {txtSerialState && (
-              <Table className="ScaninSerialTable" component={Card}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>No</TableCell>
-                    <TableCell>Serial Number</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {Array.from({ length: totalSerial }).map((_, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell>
-                        {/* <TextField
-                          size="small"
-                          id={`txtSerial_${index}`}
-                          className="txtSerialScanIn"
-                          sx={{width:300,padding:'0px 0px 0px 0px'}}
-                          value={txtSerial[index] || ""}
-                          onChange={(e) => handletxtSerialChange(index, e)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              handletxtSerialChange(index, e);
-                            }
-                          }}
-                        /> */}
-                        <input
-                          type="text"
-                          id={`txtSerial_${index}`}
-                          style={{
-                            width: "98%",
-                            textTransform: "uppercase",
-                            padding: "2px 2px 2px 2px",
-                            borderRadius: "2px",
-                            border: "1px solid #ccc",
-                          }}
-                          value={txtSerial[index] || ""}
-                          onChange={(e) => handletxtSerialChange(index, e)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              handletxtSerialChange(index, e);
-                            }
-                          }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  <TableRow >
-                    <TableCell colSpan={2} >
-                      <Button>Save</Button>
-                      &nbsp;
-                      <Button>Submit</Button>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            )}
-            
-            {/* {txtSerialState && (
-              <>
-                {Array.from({
-                  length: Math.ceil(totalSerial / (totalSerial < 10 ? 5 : 10)),
-                }).map((_, tableIndex) => (
-                  <div
-                    style={{ display: "inline-block", marginRight: 20 }}
-                    key={tableIndex}
-                  >
-                    <Table className="ScaninSerialTable" component={Card}>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>No</TableCell>
-                          <TableCell>Serial Number</TableCell>
+          <table style={{marginLeft:50}}>
+            <tr>
+              <td
+               style={{
+                textAlign: "center",
+                width: "300px",
+                padding: "0",
+                margin: '0',
+                verticalAlign: "top",
+                paddingTop:'25px'
+              }}
+              >
+                {" "}
+                {txtSerialState && (
+                  <Table className="ScaninSerialTable" component={Card}>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>No</TableCell>
+                        <TableCell>Serial Number</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {Array.from({ length: totalSerial }).map((_, index) => (
+                        <TableRow key={index}>
+                          <TableCell>{index + 1}</TableCell>
+                          <TableCell>
+                            <input
+                              type="text"
+                              id={`txtSerial_${index}`}
+                              style={{
+                                width: "98%",
+                                padding: "2px 2px 2px 2px",
+                                borderRadius: "2px",
+                                border: "1px solid #ccc",
+                              }}
+                              value={txtSerial[index] || ""}
+                              
+                              onChange={(e) => handletxtSerialChange(index, e)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  handletxtSerialChange(index, e);
+                                }
+                              }}
+                            />
+                          </TableCell>
                         </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {Array.from({ length: totalSerial < 10 ? 5 : 10 }).map(
-                          (_, rowIndex) => {
-                            const index =
-                              tableIndex * (totalSerial < 10 ? 5 : 10) +
-                              rowIndex;
-                            if (index < totalSerial) {
-                              return (
-                                <TableRow key={index}>
-                                  <TableCell>{index + 1}</TableCell>
-                                  <TableCell>
-                                    <TextField
-                                      size="small"
-                                      id={`txtSerial_${index}`}
-                                      value={txtSerial[index] || ''}
-                                      onChange={(e) =>
-                                        handletxtSerialChange(index, e)
-                                      }
-                                      onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                          handletxtSerialChange(index, e);
-                                        }
-                                      }}
-                                    />
-                                  </TableCell>
-                                </TableRow>
-                              );
-                            }
-                            return null;
-                          }
-                        )}
-                      </TableBody>
-                    </Table>
-                  </div>
-                ))}
-              </>
-            )} */}
-
-            {/* <TextField
-              sx={{ width: 400 }}
-              size="small"
-              id="txtScan"
-              label="Scan in serial number"
-              value={txtScanValue}
-              onChange={(e) => setTxtScanValue(e.target.value.trim())}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleScantxtValue_Change();
-                }
+                      ))}
+                      <TableRow>
+                        <TableCell colSpan={2}>
+                          <Button onClick={saveData}>Save</Button>
+                          &nbsp;
+                          <Button>Submit</Button>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                )}
+              </td>
+              <td
+              style={{
+                verticalAlign: "top",
+                minHeight:'100px',
+                width: "900px",
               }}
-            />
-            <Button
-              type="primary"
-              style={{ marginLeft: 10, height: 40 }}
-              onClick={handleScantxtValue_Change}
-            >
-              Submit
-            </Button> */}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "10px",
-              gap: 20,
-            }}
-          >
-            {/* <Button>Save</Button>
-            <Button>Submit</Button> */}
-          </div>
-
-          {DtDataState && (
-            <AntdTable
-              className="TableAll"
-              columns={columns}
-              dataSource={filteredDataSource}
-              pagination={{
-                pageSize: 6,
-              }}
-            />
-          )}
+              >
+                {DtDataState && (
+                  <AntdTable
+                    className="TableAllScainNewarr"
+                    shadow-2-up
+                    columns={columns}
+                    dataSource={filteredDataSource}
+                    pagination={{
+                      pageSize: 6,
+                    }}
+                  />
+                )}
+              </td>
+            </tr>
+          </table>
         </AntdCard>
       </Flex>
     </div>

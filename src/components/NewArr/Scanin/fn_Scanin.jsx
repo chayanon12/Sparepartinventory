@@ -5,18 +5,22 @@ import dayjs from "dayjs";
 import { notification } from "antd";
 function fn_Scanin() {
   const fac = import.meta.env.VITE_FAC;
-  const [txtScanValue, setTxtScanValue] = useState("");
+  const [txtScanValue, setTxtScanValue] = useState("");  
+  const [ddlvalue, setDdlValue] = useState(null);    
+  const [requestno, setRequestno] = useState("");
+  const [totalSerial, setTotalSerial] = useState(0);
+  //dtData
   const [txtSerial, setTxtSerial] = useState([]);
   const [DtData2, setDtdata] = useState([]);
-  const [DtDataState, setDtDataState] = useState(false);
-  const [ddlvalue, setDdlValue] = useState(null);
+  const [ddlData, setDdlData] = useState([]);  
+  //States
   const [ddlDataInState, setDdlDataInState] = useState(false);
-  const [ddlData, setDdlData] = useState([]);
-  const current_date = dayjs().format("YYYY-MM-DD");
+  const [DtDataState, setDtDataState] = useState(false);
+  const [txtSerialState, setTxtSerialState] = useState(false);
+  const [totalSerialState, setTotalSerialState] = useState(false);
+
+  const current_date = dayjs().format("YYYY-MM-DD");  
   const [date, setDate] = useState(current_date);
-  const [requestpo, setRequestpo] = useState("");
-  const [txtSerialState, setTxtSerialState] = useState(true);
-  const [totalSerial, setTotalSerial] = useState(0);
   const columns = [
     {
       title: "Serial Number",
@@ -49,6 +53,9 @@ function fn_Scanin() {
       key: "update_date",
     },
   ];
+  function SetFocus(txtFile) {
+    document.getElementById(txtFile).focus();
+  }
   const handleDateChange = (date) => {
     const formatted_date = dayjs(date);
     const now = dayjs();
@@ -106,30 +113,71 @@ function fn_Scanin() {
         }
       }
     } else {
-      document.getElementById("txtScan").focus();
+      SetFocus("txtScan");
     }
   };
-  const btnExecute_Click = () => {
-    if (totalSerial == 0) {
+  const handle_RequestNO_Change = async (e) => {
+    console.log(e);
+    if (e == "") {
+      SetFocus("txtRequestNO");
+      return;
+    }
+    let requestNumberdata = await submitData("getdataRequestNo", requestno);
+    console.log(requestNumberdata);
+    if (requestNumberdata.length < 1) {
       notification.error({
         message: "Error",
-        description: "Please scan serial number",
+        description: "Not Found Data Please Type Again",
         duration: 2,
         placement: "bottomRight",
       });
-      document.getElementById('txtTotalSerial').focus();
+      setRequestno("");
+      SetFocus("txtRequestNO");
     } else {
+      setTotalSerial(requestNumberdata.amount);
+      console.log(requestNumberdata.item_type);
+      setDdlValue({ typename: requestNumberdata.item_type });
+      SetFocus("txtTotalSerial");
+    }
+  };
+  const btnExecute_Click = async () => {
+    if (requestno == "") {
+      notification.error({
+        message: "Error",
+        description: "Please input request number",
+        duration: 2,
+        placement: "bottomRight",
+      });
+      SetFocus("txtRequestNO");
+      return;
+    }
+    if (totalSerial != 0) {
       setTxtSerialState(true);
+      setTotalSerialState(true);
+      setTimeout(() => {
+        SetFocus("txtSerial_0");
+      }, 200);
+    } else {
+      notification.error({
+        message: "Error",
+        description: "Request number not found",
+        duration: 2,
+        placement: "bottomRight",
+      });
+      SetFocus("txtTotalSerial");
     }
   };
   const btnCancel_Click = () => {
     setTxtSerialState(false);
     setTxtScanValue("");
     setDate(current_date);
-    setRequestpo("");
+    setRequestno("");
     setTotalSerial(0);
     setDdlValue(null);
-    document.getElementById("single-autocomplete").focus();
+    setDtDataState(false);
+    setTotalSerialState(false);
+    setTxtSerial([]);
+    SetFocus("txtRequestNO");
   };
   async function submitData(option, params) {
     if (option == "submit") {
@@ -265,6 +313,22 @@ function fn_Scanin() {
             text: err,
           });
         });
+    } else if (option == "getdataRequestNo") {
+      let data = [];
+      await axios
+        .get(`/newarrival/api/getdataRequestNumber?strRequestNumber=${params}`)
+        .then((res) => {
+          data = res.data;
+        })
+        .catch((err) => {
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
+          });
+        });
+      return data;
     }
   }
   const handletxtSerialChange = (index, event) => {
@@ -273,18 +337,41 @@ function fn_Scanin() {
     setTxtSerial(newValues);
     if (event.key === "Enter") {
       try {
-        document.getElementById(`txtSerial_${index + 1}`).focus();
+        SetFocus("txtSerial_" + (index + 1));
       } catch (error) {
-        // alert("error");
         saveData();
         event.target.blur();
       }
     }
   };
-  async function saveData(){
+  async function saveData() {
     console.log(txtSerial);
-    setTxtSerial('');
-    setTxtSerialState(false);
+    let data = await preparedata(); 
+    console.log(data);
+    setTxtSerial("");
+    setTxtSerialState(true);
+    setDtDataState(true);
+  }
+  async function preparedata() {
+    // strPlantCode: fac,
+    //           strItemId: params.Itemid,
+    //           strMovementType: params.movement,
+    //           strSerialNo: params.Serial,
+    //           strAdminId: params.Admin,
+    //           strID: params.ID,
+    //           strItemFlg: "NEW",
+    let data = [];
+    console.log(ddlvalue)
+    for(let i = 0; i < totalSerial; i++){
+      data.push({
+        seq: i + 1,
+        strSerialNo: txtSerial[i],
+        strAdminId: localStorage.getItem("username"),
+        strItemId:ddlvalue.typeid,
+        strPlantCode: fac,
+      });
+    }
+    return data;
   }
   return {
     txtScanValue,
@@ -303,14 +390,18 @@ function fn_Scanin() {
     handleDateChange,
     totalSerial,
     setTotalSerial,
-    requestpo,
-    setRequestpo,
+    requestno,
+    setRequestno,
     txtSerialState,
     setTxtSerialState,
     btnExecute_Click,
     btnCancel_Click,
     handletxtSerialChange,
-    txtSerial, setTxtSerial
+    txtSerial,
+    setTxtSerial,
+    totalSerialState,
+    handle_RequestNO_Change,
+    saveData,
   };
 }
 

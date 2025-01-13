@@ -9,7 +9,7 @@ import {
   WindowsOutlined,
   BlockOutlined,
 } from "@ant-design/icons";
-
+import NewrrImg from "/src/assets/comnew3D.png";
 import { Avatar, Flex, Switch, Typography, Card, Dropdown, Button } from "antd";
 import Search from "antd/es/input/Search";
 import React, { useState } from "react";
@@ -43,13 +43,26 @@ function Header({ onSwitchChange, theme, page }) {
     <Flex
       align="center"
       justify="space-between"
-      style={{ background: theme === true ? "#fff" : "#001529" }}
+      style={{ background: theme === true ? "#fff" : "#001529" ,marginLeft: "20px"}}
     >
       <Typography.Title
         level={2}
         type="secondary"
-        style={{ color: theme === false ? "#fff" : "#3f4840ea" }}
+        style={{
+          display: "flex", // ใช้ Flexbox จัดเรียง
+          alignItems: "center", // จัดให้อยู่ในแนวกลาง
+          color: theme === false ? "#fff" : "#3f4840ea",
+          gap: "10px", // เพิ่มระยะห่างระหว่างรูปและข้อความ
+        }}
       >
+        {/* <img
+          src={NewrrImg}
+          alt="Sun Icon"
+          style={{
+            width: "50px", 
+            height: "30px",
+          }}
+        /> */}
         {page === "1"
           ? "Dashboard" + "  (" + Pagename + ")"
           : page === "2"
@@ -64,6 +77,7 @@ function Header({ onSwitchChange, theme, page }) {
           ? "Add Type" + "  (" + Pagename + ")"
           : "Report" + "  (" + Pagename + ")"}
       </Typography.Title>
+
       <Flex align="center" gap="1rem">
         <Flex align="center" gap="10px">
           <Dropdown menu={{ items }} placement="bottom">

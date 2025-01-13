@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Sparepart/Login Page/login";
 import SparePart from "./components/Sparepart/MainPage/MainPage"; 
 import Selectsystem from "./components/SelectSystemPage/selectsystem";
-import NewArrivalItems from "./components/NewArrival/Home/Homepage";
+// import NewArrivalItems from "./components/NewArrival/Home/Homepage";
 import NewArr from "./components/NewArr/MainPage/MainPage";
 import axios from "axios";
 
@@ -32,15 +32,7 @@ function App() {
       <Routes>
         <Route path="/SparepartinventorySystem" element={<Login />} />
         <Route path="/SparepartinventorySystem/selectpage" element={<Selectsystem />} />
-        {/* <Route path="/SparepartinventorySystem/newarrival" element={<NewArrivalItems />} /> */}
-        <Route
-          path="/SparepartinventorySystem/newarr"
-          element={
-            <ProtectedRoute
-              element={<NewArrivalItems switchValue={switchValue} setSwitchValue={setSwitchValue} />}
-            />
-          }
-        />
+      
           <Route
           path="/SparepartinventorySystem/newarrival"
           element={

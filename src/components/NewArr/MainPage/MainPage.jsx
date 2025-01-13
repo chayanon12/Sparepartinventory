@@ -11,6 +11,7 @@ import ModifyItems from "../ModifyItems/ModifyItems";
 import Addtype from "../Addtype/addtype";
 import Report from "../Report/report";
 import { useState } from "react";
+import NewrrImg from "../../../assets/comnew3D.png";
 // import "./App.css";
 import './MainPage.css';
 
@@ -80,7 +81,7 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
           className="header"
           style={{ background: switchValue === false ? "#001529" : "" }}
         >
-          <Button
+          {/* <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => {
@@ -91,8 +92,29 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
               }
             }}
             style={collapsed ? btnStyleClose : btnStyleOpen}
-          />
-          <CustomHeader onSwitchChange={setSwitchValue} theme={switchValue} page={page} />
+          /> */}
+           <Button
+          type="text"
+          icon={
+            <img
+              src={NewrrImg}
+              alt="Sun Icon"
+              style={{
+                width: "50px",
+                height: "30px",
+              }}
+            />
+          }
+          onClick={() => {
+            setCollapsed(!collapsed);
+            setHoverEnabled(!hoverEnabled);
+            if (open === false) {
+              setOpen(true);
+            }
+          }}
+          style={collapsed ? btnStyleClose : btnStyleOpen}
+        />
+          <CustomHeader  onSwitchChange={setSwitchValue} theme={switchValue} page={page} />
         </Header>
         <Content className="content" >
           <Flex gap="large">{contentMap[page] || <SecondContent />}</Flex>
