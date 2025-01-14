@@ -38,7 +38,8 @@ function ScanIn({ state }) {
     handleDateChange,
     totalSerial,
     setTotalSerial,
-    requestno, setRequestno,
+    requestno,
+    setRequestno,
     txtSerialState,
     btnExecute_Click,
     btnCancel_Click,
@@ -47,7 +48,12 @@ function ScanIn({ state }) {
     setTxtSerial,
     totalSerialState,
     handle_RequestNO_Change,
-    saveData
+    saveData,
+    txtItemTypeState,
+    txtRequestNOState,
+    txtdataState,
+    txtSerialGet,
+    DtData2
   } = fn_Scanin();
   return (
     <div>
@@ -67,7 +73,7 @@ function ScanIn({ state }) {
               src={Scanner}
               alt="Scanner"
               style={{ width: "50px", height: "50px" }}
-            />{" "}
+            />
             <h1 style={{ fontSize: "35px", color: "#4f6f52" }}>Scan In</h1>
           </div>
 
@@ -79,11 +85,12 @@ function ScanIn({ state }) {
               gap: 10,
             }}
           >
-              <TextField
+            <TextField
               size="small"
               id="txtRequestNO"
               label="Request No."
               value={requestno}
+              disabled={txtRequestNOState}
               onChange={(e) => setRequestno(e.target.value.trim())}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -96,12 +103,17 @@ function ScanIn({ state }) {
               sx={{ width: 320 }}
               value={ddlvalue}
               size="small"
+              disabled={txtItemTypeState}
+              options={ddlData}
+              getOptionLabel={(option) => option.typename}
+              isOptionEqualToValue={(option, value) =>
+                option.typename === value.typename
+              }
               onChange={(event, newValue) => {
+                console.log("newValue", newValue);
                 setDdlValue(newValue);
                 setDdlDataInState(false);
               }}
-              options={ddlData}
-              getOptionLabel={(option) => option.typename}
               renderInput={(params) => (
                 <TextField
                   id="autoComplete"
@@ -117,10 +129,11 @@ function ScanIn({ state }) {
               type="date"
               label="Date"
               value={date}
+              disabled={txtdataState}
               InputLabelProps={{ shrink: true }}
               onChange={(e) => handleDateChange(e.target.value)}
             />
-          
+
             <TextField
               id="txtTotalSerial"
               size="small"
@@ -128,7 +141,9 @@ function ScanIn({ state }) {
               style={{ width: 90 }}
               label="Total Serial"
               value={totalSerial}
-              onChange={(e) => setTotalSerial(e.target.value.replace(/[^0-9]/g, ""))}
+              onChange={(e) =>
+                setTotalSerial(e.target.value.replace(/[^0-9]/g, ""))
+              }
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   btnExecute_Click();
@@ -150,17 +165,17 @@ function ScanIn({ state }) {
               Clear
             </Button>
           </div>
-          <table style={{marginLeft:50}}>
+          <table style={{ marginLeft: 50 }}>
             <tr>
               <td
-               style={{
-                textAlign: "center",
-                width: "300px",
-                padding: "0",
-                margin: '0',
-                verticalAlign: "top",
-                paddingTop:'25px'
-              }}
+                style={{
+                  textAlign: "center",
+                  width: "300px",
+                  padding: "0",
+                  margin: "0",
+                  verticalAlign: "top",
+                  paddingTop: "25px",
+                }}
               >
                 {" "}
                 {txtSerialState && (
@@ -186,13 +201,13 @@ function ScanIn({ state }) {
                                 border: "1px solid #ccc",
                               }}
                               value={txtSerial[index] || ""}
-                              
                               onChange={(e) => handletxtSerialChange(index, e)}
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                   handletxtSerialChange(index, e);
                                 }
                               }}
+                              disabled={txtSerialGet.includes(txtSerial[index])} 
                             />
                           </TableCell>
                         </TableRow>
@@ -209,18 +224,18 @@ function ScanIn({ state }) {
                 )}
               </td>
               <td
-              style={{
-                verticalAlign: "top",
-                minHeight:'100px',
-                width: "900px",
-              }}
+                style={{
+                  verticalAlign: "top",
+                  minHeight: "100px",
+                  width: "900px",
+                }}
               >
                 {DtDataState && (
                   <AntdTable
                     className="TableAllScainNewarr"
                     shadow-2-up
                     columns={columns}
-                    dataSource={filteredDataSource}
+                    dataSource={DtData2}
                     pagination={{
                       pageSize: 6,
                     }}

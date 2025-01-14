@@ -11,7 +11,6 @@ import Boxnew from "/src/assets/boxnewarr.png";
 function SecondContent() {
   const { count, time, DtData, columns, formattedDate, DtDataAction,formattedTime } =
     fn_dashboard();
-  console.log(DtData,'DtData');
   const combinedData = {};
   DtData.forEach((item) => {
     if (!combinedData[item.type_name]) {
