@@ -9,8 +9,8 @@ function fn_report() {
   const [ddlItems, setDdlItems] = useState([]);
   const [ddlCostcenterSelected, setDdlCostcenterSelected] = useState("");
   const [ddlCostcenter, setDdlCostcenter] = useState([]);
-  const [ddlItemsselected, setDdlItemsselected] = useState("ALL");
-  const [movemoentTypeSelected, setMovementTypeSelected] = useState("ALL");
+  const [ddlItemsselected, setDdlItemsselected] = useState("All");
+  const [movemoentTypeSelected, setMovementTypeSelected] = useState("All");
   const [DtDataState, setDtDataState] = useState(false);
   const [DtData, setDtData] = useState([]);
   const { RangePicker } = DatePicker;
@@ -20,6 +20,8 @@ function fn_report() {
       dataIndex: "product_status",
       key: "product_status",
       width: 120,
+      fixed:'left',
+      className: 'no-scroll',
       render: (text, record, index) => {
         const backgroundColor =
           record.product_status === "OUTSTOCK"
@@ -34,6 +36,7 @@ function fn_report() {
               width: 100,
               textAlign: "center",
               padding: "0px 0px 0px 0px",
+              overflow:'hidden'
             }}
             color={backgroundColor}
           >
@@ -47,6 +50,7 @@ function fn_report() {
       dataIndex: "item_broken_flg",
       key: "item_broken_flg",
       width: 120,
+      fixed:'left',
       render: (text, record, index) => {
         const backgroundColor =
           record.item_broken_flg === "Y"
@@ -60,6 +64,7 @@ function fn_report() {
               width: 100,
               textAlign: "center",
               padding: "0px 0px 0px 0px",
+              overflow:'hidden'
             }}
             color={backgroundColor}
           >
@@ -72,13 +77,25 @@ function fn_report() {
       title: "Itams Name",
       dataIndex: "type_name",
       key: "type_name",
-      width: 130,
+      width: 200,
+      fixed:'left',
     },
     {
       title: "Serial Number",
       dataIndex: "serial_number",
       key: "serial_number",
       width: 150,
+      fixed: 'left',
+      className: 'no-scroll',
+      render: (text) => (
+        <div style={{ 
+          whiteSpace: 'nowrap', 
+          overflow: 'hidden', 
+          textOverflow: 'ellipsis' 
+        }}>
+          {text}
+        </div>
+      ),
     },
     {
       title: "Item Name",
@@ -92,7 +109,24 @@ function fn_report() {
       key: "mac_address",
       width: 180,
     },
-
+    {
+      title: "Desktop Monitor Serial",
+      dataIndex: "desktopmonitor",
+      key: "desktopmonitor",
+      width: 230,
+    },
+    {
+      title: "Old Desktop Serial",
+      dataIndex: "olddesktopserial",
+      key: "olddesktopserial",
+      width: 180,
+    },
+    {
+      title: "User Contact",
+      dataIndex: "usercontact",
+      key: "usercontact",
+      width: 180,
+    },
     {
       title: "Scan In Date",
       dataIndex: "scan_in_date",
@@ -124,14 +158,24 @@ function fn_report() {
       key: "user_id",
     },
     {
+      title: "User Receive name",
+      dataIndex: "username",
+      key: "username",
+    },
+    {
       title: "User Receive Dept",
       dataIndex: "dept",
       key: "dept",
     },
+    {
+      title: "Remark",
+      dataIndex: "remark",
+      key: "remark",
+    },
   ];
   const movementTypeOption = [
     {
-      value: "ALL",
+      value: "All",
       label: "All",
     },
     {

@@ -9,129 +9,262 @@ function fn_report() {
   const [ddlItems, setDdlItems] = useState([]);
   const [ddlCostcenterSelected, setDdlCostcenterSelected] = useState("");
   const [ddlCostcenter, setDdlCostcenter] = useState([]);
-  const [ddlItemsselected, setDdlItemsselected] = useState("ALL");
-  const [movemoentTypeSelected, setMovementTypeSelected] = useState("ALL");
+  const [ddlItemsselected, setDdlItemsselected] = useState("All");
+  const [movemoentTypeSelected, setMovementTypeSelected] = useState("All");
   const [DtDataState, setDtDataState] = useState(false);
   const [DtData, setDtData] = useState([]);
   const { RangePicker } = DatePicker;
-  const columns = [
-    {
-      title: "Stock Status",
-      dataIndex: "product_status",
-      key: "product_status",
-      width: 120,
-      render: (text, record, index) => {
-        const backgroundColor =
-          record.product_status === "OUTSTOCK"
-            ? "#f50"
-            : record.product_status !== "OUTSTOCK"
-            ? "#87d068"
-            : "transparent";
+  // const columns = [
+  //   {
+  //     title: "Stock Status",
+  //     dataIndex: "product_status",
+  //     key: "product_status",
+  //     width: 120,
+  //     render: (text, record, index) => {
+  //       const backgroundColor =
+  //         record.product_status === "OUTSTOCK"
+  //           ? "#f50"
+  //           : record.product_status !== "OUTSTOCK"
+  //           ? "#87d068"
+  //           : "transparent";
 
-        return (
-          <Tag
-            style={{
-              width: 100,
-              textAlign: "center",
-              padding: "0px 0px 0px 0px",
-            }}
-            color={backgroundColor}
-          >
-            {text}
-          </Tag>
-        );
+  //       return (
+  //         <Tag
+  //           style={{
+  //             width: 100,
+  //             textAlign: "center",
+  //             padding: "0px 0px 0px 0px",
+  //           }}
+  //           color={backgroundColor}
+  //         >
+  //           {text}
+  //         </Tag>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     title: "Itams Name",
+  //     dataIndex: "type_name",
+  //     key: "type_name",
+  //     width: 130,
+  //   },
+  //   {
+  //     title: "Serial Number",
+  //     dataIndex: "serial_number",
+  //     key: "serial_number",
+  //     width: 150,
+  //   },
+  //   {
+  //     title: "Item Name",
+  //     dataIndex: "item_name",
+  //     key: "item_name",
+  //     width: 120,
+  //   },
+  //   {
+  //     title: "Mac Address",
+  //     dataIndex: "mac_address",
+  //     key: "mac_address",
+  //     width: 180,
+  //   },
+
+  //   {
+  //     title: "Scan In Date",
+  //     dataIndex: "scan_in_date",
+  //     key: "scan_in_date",
+  //     width: 200,
+  //   },
+  //   {
+  //     title: "Scan Out Date",
+  //     dataIndex: "scan_out_date",
+  //     key: "scan_out_date",
+  //     width: 200,
+  //   },
+
+  //   {
+  //     title: "Admin Scan In",
+  //     dataIndex: "admin_id",
+  //     key: "admin_id",
+  //     width: 150,
+  //   },
+  //   {
+  //     title: "Admin Scan Out",
+  //     dataIndex: "admin_out_id",
+  //     key: "admin_out_id",
+  //     width: 150,
+  //   },
+  //   {
+  //     title: "User Receive",
+  //     dataIndex: "user_id",
+  //     key: "user_id",
+  //   },
+  //   {
+  //     title: "User Receive Dept",
+  //     dataIndex: "dept",
+  //     key: "dept",
+  //   },
+  // ];
+   const columns = [
+      {
+        title: "Stock Status",
+        dataIndex: "product_status",
+        key: "product_status",
+        width: 120,
+        fixed:'left',
+        className: 'no-scroll',
+        render: (text, record, index) => {
+          const backgroundColor =
+            record.product_status === "OUTSTOCK"
+              ? "#f50"
+              : record.product_status !== "OUTSTOCK"
+              ? "#87d068"
+              : "transparent";
+  
+          return (
+            <Tag
+              style={{
+                width: 100,
+                textAlign: "center",
+                padding: "0px 0px 0px 0px",
+                overflow:'hidden'
+              }}
+              color={backgroundColor}
+            >
+              {text}
+            </Tag>
+          );
+        },
       },
-    },
-    // {
-    //   title: "Items Status",
-    //   dataIndex: "item_broken_flg",
-    //   key: "item_broken_flg",
-    //   width: 120,
-    //   render: (text, record, index) => {
-    //     const backgroundColor =
-    //       record.item_broken_flg === "Y"
-    //         ? "#f50"
-    //         : record.item_broken_flg != "Y"
-    //         ? "#87d068"
-    //         : "transparent";
-    //     return (
-    //       <Tag
-    //         style={{
-    //           width: 100,
-    //           textAlign: "center",
-    //           padding: "0px 0px 0px 0px",
-    //         }}
-    //         color={backgroundColor}
-    //       >
-    //         {text == "Y" ? "Broken" : "Good"}
-    //       </Tag>
-    //     );
-    //   },
-    // },
-    {
-      title: "Itams Name",
-      dataIndex: "type_name",
-      key: "type_name",
-      width: 130,
-    },
-    {
-      title: "Serial Number",
-      dataIndex: "serial_number",
-      key: "serial_number",
-      width: 150,
-    },
-    {
-      title: "Item Name",
-      dataIndex: "item_name",
-      key: "item_name",
-      width: 120,
-    },
-    {
-      title: "Mac Address",
-      dataIndex: "mac_address",
-      key: "mac_address",
-      width: 180,
-    },
-
-    {
-      title: "Scan In Date",
-      dataIndex: "scan_in_date",
-      key: "scan_in_date",
-      width: 200,
-    },
-    {
-      title: "Scan Out Date",
-      dataIndex: "scan_out_date",
-      key: "scan_out_date",
-      width: 200,
-    },
-
-    {
-      title: "Admin Scan In",
-      dataIndex: "admin_id",
-      key: "admin_id",
-      width: 150,
-    },
-    {
-      title: "Admin Scan Out",
-      dataIndex: "admin_out_id",
-      key: "admin_out_id",
-      width: 150,
-    },
-    {
-      title: "User Receive",
-      dataIndex: "user_id",
-      key: "user_id",
-    },
-    {
-      title: "User Receive Dept",
-      dataIndex: "dept",
-      key: "dept",
-    },
-  ];
+      {
+        title: "Items Status",
+        dataIndex: "item_broken_flg",
+        key: "item_broken_flg",
+        width: 120,
+        fixed:'left',
+        render: (text, record, index) => {
+          const backgroundColor =
+            record.item_broken_flg === "Y"
+              ? "#f50"
+              : record.item_broken_flg != "Y"
+              ? "#87d068"
+              : "transparent";
+          return (
+            <Tag
+              style={{
+                width: 100,
+                textAlign: "center",
+                padding: "0px 0px 0px 0px",
+                overflow:'hidden'
+              }}
+              color={backgroundColor}
+            >
+              {text == "Y" ? "Broken" : "Good"}
+            </Tag>
+          );
+        },
+      },
+      {
+        title: "Itams Name",
+        dataIndex: "type_name",
+        key: "type_name",
+        width: 200,
+        fixed:'left',
+      },
+      {
+        title: "Serial Number",
+        dataIndex: "serial_number",
+        key: "serial_number",
+        width: 150,
+        fixed: 'left',
+        className: 'no-scroll',
+        render: (text) => (
+          <div style={{ 
+            whiteSpace: 'nowrap', 
+            overflow: 'hidden', 
+            textOverflow: 'ellipsis' 
+          }}>
+            {text}
+          </div>
+        ),
+      },
+      {
+        title: "Item Name",
+        dataIndex: "item_name",
+        key: "item_name",
+        width: 120,
+      },
+      {
+        title: "Mac Address",
+        dataIndex: "mac_address",
+        key: "mac_address",
+        width: 180,
+      },
+      {
+        title: "Desktop Monitor Serial",
+        dataIndex: "desktopmonitor",
+        key: "desktopmonitor",
+        width: 230,
+      },
+      {
+        title: "Old Desktop Serial",
+        dataIndex: "olddesktopserial",
+        key: "olddesktopserial",
+        width: 180,
+      },
+      {
+        title: "User Contact",
+        dataIndex: "usercontact",
+        key: "usercontact",
+        width: 180,
+      },
+      {
+        title: "Scan In Date",
+        dataIndex: "scan_in_date",
+        key: "scan_in_date",
+        width: 200,
+      },
+      {
+        title: "Scan Out Date",
+        dataIndex: "scan_out_date",
+        key: "scan_out_date",
+        width: 200,
+      },
+  
+      {
+        title: "Admin Scan In",
+        dataIndex: "admin_id",
+        key: "admin_id",
+        width: 150,
+      },
+      {
+        title: "Admin Scan Out",
+        dataIndex: "admin_out_id",
+        key: "admin_out_id",
+        width: 150,
+      },
+      {
+        title: "User Receive",
+        dataIndex: "user_id",
+        key: "user_id",
+      },
+      {
+        title: "User Receive name",
+        dataIndex: "username",
+        key: "username",
+      },
+      {
+        title: "User Receive Dept",
+        dataIndex: "dept",
+        key: "dept",
+      },
+      {
+        title: "Remark",
+        dataIndex: "remark",
+        key: "remark",
+      },
+    ];
   const movementTypeOption = [
     {
-      value: "ALL",
+      value: "All",
       label: "All",
     },
     {
@@ -157,7 +290,7 @@ function fn_report() {
   async function getdata(type, params) {
     try {
       if (type == "getItem") {
-        const res = await axios.get(`/Sparepart/api/common/getProductItems`);
+        const res = await axios.get(`/newarrival/api/getProductItemsNewArr`);
         if (res.data != "") {
           setDdlItems(res.data);
         } else {

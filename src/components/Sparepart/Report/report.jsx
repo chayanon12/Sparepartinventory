@@ -111,7 +111,7 @@ function report() {
         </div>
         {DtDataState && (
           <Table
-             className="ModifyDataTable"
+             className="reportTable"
             columns={columns}
             dataSource={DtData}
             scroll={{ x: 'max-content'}}

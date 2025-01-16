@@ -135,7 +135,7 @@ function fn_ScanOut() {
               ID: user,
               UserDept: ddlFacValue,
               UserName: username,
-            Remark: remark,
+              Remark: remark,
               strItemFlg: "OLD",
             });
           } else {
@@ -188,6 +188,8 @@ function fn_ScanOut() {
               strAdminId: params.Admin,
               strID: params.ID,
               strUserDept: params.UserDept,
+              strUserName: params.UserName,
+              strRemark: params.Remark,
               strItemFlg: params.strItemFlg,
             },
           },
