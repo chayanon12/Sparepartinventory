@@ -50,20 +50,20 @@ function Header({ onSwitchChange, theme, page }) {
         style={{ color: theme === false ? "#fff" : "#3f4840ea" }}
       >
         {page === "1"
-          ? "Dashboard"
+          ? "Dashboard (Spare Part Inventory System)"
           : page === "2"
-          ? "Scan In"
+          ? "Scan In (Spare Part Inventory System)"
           : page === "3"
-          ? "Scan Out"
+          ? "Scan Out (Spare Part Inventory System)"
           : page === "4"
-          ? "Barcode Generate"
+          ? "Barcode Generate (Spare Part Inventory System)"
           : page === "5"
-          ? "Add Broken Items"
+          ? "Add Broken Items (Spare Part Inventory System)"
           : page === "6"
-          ? "Modify Items"
+          ? "Modify Items (Spare Part Inventory System)"
           : page === "7"
-          ? "Add Type"
-          : "Report"}
+          ? "Add Type (Spare Part Inventory System) "
+          : "Report (Spare Part Inventory System)"}
       </Typography.Title>
       <Flex align="center" gap="1rem">
         <Flex align="center" gap="10px">
@@ -92,11 +92,11 @@ function Header({ onSwitchChange, theme, page }) {
           <Switch
             checkedChildren={<SunOutlined />}
             unCheckedChildren={<MoonFilled />}
-            checked={check}
+            checked={theme}
             className="custom-switch"
             onChange={() => {
-              setCheck(!check);
-              onSwitchChange(!check);
+              // setCheck(!check);
+              onSwitchChange(!theme);
             }}
           />
         </Flex>

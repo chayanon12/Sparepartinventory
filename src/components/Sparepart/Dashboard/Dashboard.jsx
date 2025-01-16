@@ -37,7 +37,7 @@ function SecondContent() {
       data: outCountData,
     },
     {
-      // name: "Total Quantity ",
+
       name: "Items remaining",
       data: quantityData,
     },

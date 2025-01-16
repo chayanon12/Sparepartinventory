@@ -25,11 +25,13 @@ function fn_CcheckSerial() {
       }
     } catch (error) {
       setDtDataState(false);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.message,
+      notification.error({
+        message: "Error",
+        description: err.message,
+        duration: 2,
+        placement: "bottomRight",
       });
+     
     }
   }
   const columns = [
@@ -197,11 +199,13 @@ function fn_CcheckSerial() {
   };
   const onSearch = async () => {
     if (serialNumber == "" && ddlItemsValue == "") {
-      Swal.fire({
-        icon: "warning",
-        title: "Warning",
-        text: "Please Select items or Input Serial Number",
+      notification.error({
+        message: "Warning",
+        description: "Please Select items or Input Serial Number",
+        placement: "bottomRight",
+        duration: 2,
       });
+     
       return;
     }
     try {
@@ -216,19 +220,23 @@ function fn_CcheckSerial() {
         setDtData(res.data);
       } else {
         setDtDataState(false);
-        Swal.fire({
-          icon: "error",
-          title: "error",
-          text: "No Data Found",
+        notification.error({
+          message: "Warning",
+          description: "No Data Found",
+          placement: "bottomRight",
+          duration: 2,
         });
+       
       }
     } catch (error) {
       setDtDataState(false);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.message,
+      notification.error({
+        message: "Error",
+        description: error.message,
+        placement: "bottomRight",
+        duration: 2,
       });
+      
     }
   };
   return {

@@ -105,11 +105,11 @@ function Header({ onSwitchChange, theme, page }) {
           <Switch
             checkedChildren={<SunOutlined />}
             unCheckedChildren={<MoonFilled />}
-            checked={check}
+            checked={theme}
             className="custom-switch"
             onChange={() => {
-              setCheck(!check);
-              onSwitchChange(!check);
+              // setCheck(!check);
+              onSwitchChange(!theme);
             }}
           />
         </Flex>

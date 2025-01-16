@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import { notification } from "antd";
 function fn_GenerateBarcode() {
   const qrRef = useRef();
   const fac = import.meta.env.VITE_FAC;
@@ -43,10 +44,11 @@ function fn_GenerateBarcode() {
           setSnNumber(res.data);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
     } else if (type == "DDL") {
@@ -56,11 +58,13 @@ function fn_GenerateBarcode() {
           setDdlData(res.data);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
+        
         });
     }
   }
@@ -89,11 +93,14 @@ function fn_GenerateBarcode() {
   }
   const handleGeneClick = async () => {
     if (ddlvalue == null) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please select a type to generate",
+      notification.error({
+        message: "Error",
+        description: "Please select a type to generate",
+        duration: 2,
+        placement: "bottomRight",
       });
+
+     
       return;
     } else if (quantity == "") {
       setQuantityState(true);
@@ -146,11 +153,13 @@ function fn_GenerateBarcode() {
 
   const exportPdf = async () => {
     if (selectedItems && selectedItems.size === 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please select at least one item to export",
+      notification.error({
+        message: "Error",
+        description: "Please select at least one item to export",
+        duration: 2,
+        placement: "bottomRight",
       });
+     
       return;
     }
   
