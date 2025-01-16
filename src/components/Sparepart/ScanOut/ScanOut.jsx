@@ -98,7 +98,12 @@ function ScanOut() {
               className="ScanOutUserIdTextF"
               label="Dept."
               value={ddlFacValue}
-              onChange={(e) => setDdlFacValue(e.target.value.trim())}
+              onChange={(e) => {
+                const input = e.target.value.trim();
+                if (input.length <= 4) {
+                  setDdlFacValue(input);
+                }}
+              }
             />
 
             {/* <Button

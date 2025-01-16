@@ -400,7 +400,7 @@ function fn_ScanOut() {
         .then((res) => {
           dtData = res.data;
           if (res.data.length > 0) {
-            setDdlFacValue(res.data[0].cost_center);
+            setDdlFacValue(res.data[0].cost_center.substring(0, 4));
             setusername(res.data[0].ename);
           }
         })
