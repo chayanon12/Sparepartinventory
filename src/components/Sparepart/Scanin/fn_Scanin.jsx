@@ -1,3 +1,4 @@
+import { Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -10,6 +11,63 @@ function fn_Scanin() {
   const [ddlDataInState, setDdlDataInState] = useState(false);
   const [ddlData, setDdlData] = useState([]);
   const columns = [
+    {
+      title: "Stock Status",
+      dataIndex: "product_status",
+      key: "product_status",
+      width: 120,
+      // fixed:'left',
+      render: (text, record, index) => {
+        const backgroundColor =
+          record.product_status === "OUTSTOCK"
+            ? "#f50"
+            : record.product_status !== "OUTSTOCK"
+            ? "#87d068"
+            : "transparent";
+
+        return (
+          <Tag
+            style={{
+              width: 100,
+              textAlign: "center",
+              padding: "0px 0px 0px 0px",
+              overflow:'hidden'
+            }}
+            color={backgroundColor}
+          >
+            {text}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "Items Status",
+      dataIndex: "item_broken_flg",
+      key: "item_broken_flg",
+      width: 120,
+      // fixed:'left',
+      render: (text, record, index) => {
+        const backgroundColor =
+          record.item_broken_flg === "Y"
+            ? "#f50"
+            : record.item_broken_flg != "Y"
+            ? "#87d068"
+            : "transparent";
+        return (
+          <Tag
+            style={{
+              width: 100,
+              textAlign: "center",
+              padding: "0px 0px 0px 0px",
+              overflow:'hidden'
+            }}
+            color={backgroundColor}
+          >
+            {text == "Y" ? "Broken" : "Good"}
+          </Tag>
+        );
+      },
+    },
     {
       title: "Serial Number",
       dataIndex: "serial_number",
@@ -84,6 +142,7 @@ function fn_Scanin() {
     }
   };
 
+
   async function submitData(option, params) {
     if (option == "submit") {
       axios
@@ -115,7 +174,8 @@ function fn_Scanin() {
               text: "Data has been saved",
             }).then(() => {
               setTxtScanValue("");
-              submitData("getDttable", "");
+              // submitData("getDttable", "");
+              submitData("getDatawithSerial", params.Serial);
             });
           } else if (response.status === 203) {
             Swal.fire({
@@ -178,7 +238,7 @@ function fn_Scanin() {
     } else if (option == "getDttable") {
       setDdlDataInState(false);
       await axios
-        .get(`/Sparepart/api/common/GetDttableAll?strType=`)
+        .get(`/Sparepart/api/common/GetDttableAll?strType=${params}`)
         .then((res) => {
           setDtdata(res.data);
           setDtDataState(true);
@@ -207,7 +267,7 @@ function fn_Scanin() {
           });
         });
       return dtData;
-    }else if (option == "DDL") {
+    } else if (option == "DDL") {
       await axios
         .get(`/Sparepart/api/common/getData?strType=DDL&strPlantCode=${fac}`)
         .then((res) => {
@@ -220,6 +280,25 @@ function fn_Scanin() {
             text: err,
           });
         });
+    } else if(option == 'getDatawithSerial'){
+      let dtData = [];
+      await axios
+        .get(
+          `/Sparepart/api/common/GetDttableFixSerial?plantCode=${fac}&serial=${params}`
+        )
+        .then((res) => {
+          dtData = res.data;
+          setDtdata(res.data);
+          setDtDataState(true);
+        })
+        .catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err,
+          });
+        });
+      return dtData;
     }
   }
 
