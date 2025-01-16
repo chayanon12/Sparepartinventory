@@ -42,19 +42,19 @@ function selectsystem() {
           store Inventory management system
         </text>
       </svg>
-      <a href="/SparepartinventorySystem/Sparepart">
+      <a href="/InventorymanagementSystem/Sparepart">
         <div className="CardBox" ref={spareRef}>
           <h2 className="Cardname">Spare Parts Inventory</h2>
-          <a href="/SparepartinventorySystem/Sparepart" className="goto">
+          <a href="/InventorymanagementSystem/Sparepart" className="goto">
             GO TO
           </a>
           <img src={Sparepart} className="product" />
         </div>
       </a>
-      <a href="/SparepartinventorySystem/newarrival">
+      <a href="/InventorymanagementSystem/newarrival">
         <div className="CardBox" ref={newItemsRef}>
           <h2 className="Cardname">New Arrival Inventory</h2>
-          <a href="/SparepartinventorySystem/newarrival" className="goto">
+          <a href="/InventorymanagementSystem/newarrival" className="goto">
             GO TO
           </a>
           <img src={NewItems} className="product" />

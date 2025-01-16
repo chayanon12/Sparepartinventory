@@ -58,7 +58,7 @@ function fn_login() {
               timer: 2000, 
               showConfirmButton: false
             }).then(() => {
-              navigate("/SparepartinventorySystem/selectpage");
+              navigate("/InventorymanagementSystem/selectpage");
             });
           } else if (res.status === 400) {
             Swal.fire("ผิดพลาด", "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง", "error");

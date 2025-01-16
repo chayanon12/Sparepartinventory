@@ -31,6 +31,11 @@ function ScanOut() {
     user,
     setuser,
     handleScantxtIDUserValue_Change,
+    setusername,
+    username,
+    remark,
+    setRemark,
+    btnCancel
   } = fn_ScanOut();
   useEffect(() => {
     if (user == "") {
@@ -71,7 +76,7 @@ function ScanOut() {
               className="ScanOutUserIdTextF"
               size="small"
               id="txtScanIDUser"
-              label="Scan In ID Code (User)"
+              label="User ID Code"
               value={user}
               onChange={(e) => setuser(e.target.value)}
               onBlur={handleScantxtIDUserValue_Change}
@@ -81,32 +86,30 @@ function ScanOut() {
                 }
               }}
             />
-            {/* <Select
-              id="ddlFac"
-              showSearch
-              placeholder="Select Dept"
-              optionFilterProp="label"
-              value={ddlFacValue}
-              status={ddlFacRequire == true ? "error" : "success"}
-              onChange={(event, newValue) => {
-                setDdlFacValue(newValue);
-                setDdlFacRequire(false);
-              }}
-              options={ddlFac.map((item) => ({
-                // label: item.cc_ctr,
-                label: `${item.cc_ctr} : ${item.cc_desc}`,
-                value: item.cc_ctr,
-              }))}
-              style={{ width: 200, height: 40 }}
-            ></Select> */}
             <TextField
               size="small"
               className="ScanOutUserIdTextF"
-              disabled
+              label="User Name"
+              value={username}
+              onChange={(e) => setusername(e.target.value.trim())}
+            />
+            <TextField
+              size="small"
+              className="ScanOutUserIdTextF"
               label="Dept."
               value={ddlFacValue}
               onChange={(e) => setDdlFacValue(e.target.value.trim())}
             />
+
+            {/* <Button
+              type="primary"
+              className="ScanOutbtn"
+              onClick={handleScanouttxtValue_Change}
+            >
+              Submit
+            </Button> */}
+          </div>
+          <div className="ScanOutFirstDiv">
             <TextField
               size="small"
               id="txtScanOut"
@@ -120,13 +123,32 @@ function ScanOut() {
                 }
               }}
             />
-
+            <TextField
+              size="small"
+              id="txtScanOutRemark"
+              className="ScanOutRemark"
+              label="Remark"
+              value={remark}
+              onChange={(e) => setRemark(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleScanouttxtValue_Change();
+                }
+              }}
+            />
             <Button
               type="primary"
               className="ScanOutbtn"
               onClick={handleScanouttxtValue_Change}
             >
               Submit
+            </Button>
+            <Button
+              type="primary"
+              className="ScanOutbtnCancel"
+              onClick={btnCancel}
+            >
+              Cancel
             </Button>
           </div>
           {DtDataState && (

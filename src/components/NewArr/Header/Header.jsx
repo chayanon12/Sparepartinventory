@@ -22,14 +22,14 @@ function Header({ onSwitchChange, theme, page }) {
   const userSurname = localStorage.getItem("surname");
   const navigate = useNavigate();
   const onSwitchChange2 = () => {
-    navigate("/SparepartinventorySystem/selectpage");
+    navigate("/InventorymanagementSystem/selectpage");
   };
   const items = [
     {
       key: "1",
       label: (
         <a
-          href="/SparepartinventorySystem/"
+          href="/InventorymanagementSystem/"
           style={{ display: "flex", alignItems: "center" }}
           onClick={() => localStorage.clear()}
         >

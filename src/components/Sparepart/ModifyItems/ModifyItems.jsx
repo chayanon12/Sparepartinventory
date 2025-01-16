@@ -20,7 +20,13 @@ function ModifyItems() {
     UpdatebtnDisable,
     DtDataState,
     DtData,
-    columns
+    columns,
+    DesktopMonitor,
+    setDesktopMonitor,
+    olddesktopserial,
+    setOlddesktopserial,
+    usercontact,
+    setUsercontact,
   } = fn_ModifyItems();
   return (
     <Flex gap="10px">
@@ -76,6 +82,40 @@ function ModifyItems() {
                   value={fixAssetsCode}
                 />
               </td>
+              
+            </tr>
+            &nbsp;
+            <tr>
+              <td className="ModifyTd">Desktop Monitor : </td>
+              <td>
+                <Input
+                  className="ModifyDataTextF"
+                  id="txtDesktopMonitor"
+                  type="text"
+                  onChange={(e) => setDesktopMonitor(e.target.value)}
+                  value={DesktopMonitor}
+                />
+              </td>
+              <td className="ModifyTd">OLD PC Serial : </td>
+              <td>
+                <Input
+                  className="ModifyDataTextF"
+                  id="txtOldDesktopSerial"
+                  type="text"
+                  onChange={(e) => setOlddesktopserial(e.target.value)}
+                  value={olddesktopserial}
+                />
+              </td>
+              <td className="ModifyTd">User Contact : </td>
+              <td>
+                <Input
+                  className="ModifyDataTextF"
+                  id="txtUserContact"
+                  type="text"
+                  onChange={(e) => setUsercontact(e.target.value)}
+                  value={usercontact}
+                />
+              </td>
               <td>
                 <Button
                   type="primary"
@@ -88,13 +128,15 @@ function ModifyItems() {
             </tr>
           </table>
         </div>
+        <div className="divModifyData">
+          <table></table>
+        </div>
         {DtDataState && (
           <Table
-             className="ModifyDataTable"
+            className="ModifyDataTable"
             columns={columns}
             dataSource={DtData}
             scroll={{ x: 100 * 5 }}
-
             pagination={{
               pageSize: 6,
             }}

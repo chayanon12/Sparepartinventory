@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import axios from "axios";
+import {notification} from "antd";
 import Swal from "sweetalert2";
 function fn_ScanOut() {
   const fac = import.meta.env.VITE_FAC;
@@ -12,6 +13,8 @@ function fn_ScanOut() {
   const [ddlDataOutState, setDdlDataOutState] = useState(false);
   const [ddlFacRequire, setDdlFacRequire] = useState(false);
   const [user, setuser] = useState("");
+  const [username, setusername] = useState("");
+  const [remark, setRemark] = useState("");
   const columns = [
     {
       title: "Serial Number",
@@ -69,50 +72,106 @@ function fn_ScanOut() {
       document.getElementById("txtScanIDUser").focus();
     }
   };
+  const btnCancel = () => {
+    setuser("");
+    setusername("");
+    setDdlFacValue("");
+    setTxtScanoutValue("");
+    setRemark("");
+    setDdlValueout(null);
+    setDdlDataOutState(false);
+    setDdlFacRequire(false);
+    document.getElementById("txtScanIDUser").focus();
+  };
   const handleScanouttxtValue_Change = async () => {
     let type = "";
-
+    if (remark == "") {
+      notification.error({
+        message: "Please Key Remark",
+        description: "remark is required",
+        placement: "bottomRight",
+        duration: 3,
+      });
+      document.getElementById("txtScanOutRemark").focus();
+      return;
+    }
     if (txtScanoutValue !== "") {
       const splicedValue = txtScanoutValue.slice(0, 3);
-      type = await submitData("getTypeid", splicedValue);
+      if (ddlvalueout == null) {
+        type = await submitData("getTypeid", splicedValue);
+      } 
+      console.log(type, "type", ddlvalueout);
+      if(type == '' && ddlvalueout == null){
+        notification.error({
+          message: "Please select type",
+          description: "Type is required",
+          placement: "bottomRight",
+          duration: 3,
+        });
+        return;
+      }
       if (user !== "") {
         await submitData("submit", {
-          Itemid: type,
+          Itemid: type == "" ? ddlvalueout.typeid : type,
           Serial: txtScanoutValue,
           Admin: localStorage.getItem("username"),
           movement: "OUT",
           ID: user,
           UserDept: ddlFacValue,
+          UserName: username,
+          Remark: remark,
+          strItemFlg: "OLD",
         });
       } else {
-        if (ddlvalueout == null) {
-          setDdlDataOutState(true);
+        if (txtScanoutValue !== "") {
+          const splicedValue = txtScanoutValue.slice(0, 3);
+          type = await submitData("getTypeid", splicedValue);
+          if (user !== "" && type !== "") {
+            await submitData("submit", {
+              Itemid: type == "" ? ddlvalueout.typeid : type,
+              Serial: txtScanoutValue,
+              Admin: localStorage.getItem("username"),
+              movement: "OUT",
+              ID: user,
+              UserDept: ddlFacValue,
+              UserName: username,
+            Remark: remark,
+              strItemFlg: "OLD",
+            });
+          } else {
+            if (ddlvalueout == null) {
+              setDdlDataOutState(true);
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Please select type",
+              }).then(() => {
+                document.getElementById("txtScanIDUser").focus();
+              });
+            } else {
+              await submitData("submit", {
+                Itemid: ddlvalueout.typeid,
+                Serial: txtScanoutValue,
+                Admin: localStorage.getItem("username"),
+                movement: "OUT",
+                ID: user,
+                UserDept: ddlFacValue,
+                UserName: username,
+                Remark: remark,
+                strItemFlg: "OLD",
+              });
+            }
+          }
+        } else {
           Swal.fire({
             icon: "error",
             title: "Error",
-            text: "Please select type",
-          }).then(() => {
-            document.getElementById("txtScanIDUser").focus();
+            text: "Please Key Serial Number",
           });
-        } else {
-          await submitData("submit", {
-            Itemid: ddlvalueout.typeid,
-            Serial: txtScanoutValue,
-            Admin: localStorage.getItem("username"),
-            movement: "OUT",
-            ID: user,
-            UserDept: ddlFacValue,
-          });
+
+          document.getElementById("txtScan").focus();
         }
       }
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Please Key Serial Number",
-      })
-      
-      document.getElementById("txtScan").focus();
     }
   };
   async function submitData(option, params) {
@@ -128,7 +187,8 @@ function fn_ScanOut() {
               strSerialNo: params.Serial,
               strAdminId: params.Admin,
               strID: params.ID,
-              strUserDept: params.UserDept
+              strUserDept: params.UserDept,
+              strItemFlg: params.strItemFlg,
             },
           },
           {
@@ -163,6 +223,9 @@ function fn_ScanOut() {
               text: "Serial number already Out of stock",
             }).then(() => {
               setTxtScanoutValue("");
+              setTimeout(() => {
+                document.getElementById("txtScan").focus();
+              }, 200);
               submitData("getDttable", "");
             });
           } else if (response.status === 205) {
@@ -174,7 +237,7 @@ function fn_ScanOut() {
               submitData("getDttable", "");
             });
           }
-          setDdlValueout(null);
+          // setDdlValueout(null);
           setDdlFacValue(null);
         })
         .catch((error) => {
@@ -257,6 +320,7 @@ function fn_ScanOut() {
           dtData = res.data;
           if (res.data.length > 0) {
             setDdlFacValue(res.data[0].cost_center);
+            setusername(res.data[0].ename);
           }
         })
         .catch((err) => {
@@ -288,6 +352,11 @@ function fn_ScanOut() {
     user,
     setuser,
     handleScantxtIDUserValue_Change,
+    username,
+    setusername,
+    remark,
+    setRemark,
+    btnCancel
   };
 }
 

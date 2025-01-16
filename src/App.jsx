@@ -8,7 +8,8 @@ import NewArr from "./components/NewArr/MainPage/MainPage";
 import axios from "axios";
 
 function App() {
-  const backendUrl = import.meta.env.VITE_SERVICE_URL;
+  // const backendUrl = import.meta.env.VITE_SERVICE_URL;
+  const backendUrl = `http://${window.location.hostname}:9002`;
   axios.defaults.baseURL = backendUrl;
   const [switchValue, setSwitchValue] = useState(true);
   useEffect(() => {
@@ -20,7 +21,7 @@ function App() {
   }, []);
 
   const ProtectedRoute = ({ element }) => {
-    return isAuthenticated() ? element : <Navigate to="/SparepartinventorySystem" />;
+    return isAuthenticated() ? element : <Navigate to="/InventorymanagementSystem" />;
   };
 
   const isAuthenticated = () => {
@@ -30,11 +31,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/SparepartinventorySystem" element={<Login />} />
-        <Route path="/SparepartinventorySystem/selectpage" element={<Selectsystem />} />
+        <Route path="/InventorymanagementSystem" element={<Login />} />
+        <Route path="/InventorymanagementSystem/selectpage" element={<Selectsystem />} />
       
           <Route
-          path="/SparepartinventorySystem/newarrival"
+          path="/InventorymanagementSystem/newarrival"
           element={
             <ProtectedRoute
               element={<NewArr switchValue={switchValue} setSwitchValue={setSwitchValue} />}
@@ -42,7 +43,7 @@ function App() {
           }
         />
         <Route
-          path="/SparepartinventorySystem/Sparepart"
+          path="/InventorymanagementSystem/Sparepart"
           element={
             <ProtectedRoute
               element={<SparePart switchValue={switchValue} setSwitchValue={setSwitchValue} />}

@@ -69,7 +69,6 @@ function fn_ScanOut() {
         });
       }
     } else {
-      // document.getElementById("txtScanIDUser").focus();
     }
   };
   
@@ -101,6 +100,7 @@ function fn_ScanOut() {
           UserDept: ddlFacValue,
           UserName: username,
           Remark: Remark,
+          strItemFlg: "NEW",
         });
       } else {
         if (username == "" || user == "" || ddlFacValue == "") {
@@ -114,6 +114,7 @@ function fn_ScanOut() {
               UserDept: "",
               UserName: "",
               Remark: Remark,
+              strItemFlg: "NEW",
             });
           } else {
             Swal.fire({
@@ -145,6 +146,7 @@ function fn_ScanOut() {
             UserDept: ddlFacValue,
             UserName: username,
             Remark: Remark,
+            strItemFlg: "NEW",
           });
         }
       }
@@ -234,7 +236,7 @@ function fn_ScanOut() {
               resetTxtfield();
             });
           }
-          setDdlValueout(null);
+          // setDdlValueout(null);
           setDdlFacValue(null);
         })
         .catch((error) => {
