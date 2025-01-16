@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useTransition } from "react";
 import axios from "axios";
-import {notification} from "antd";
-import Swal from "sweetalert2";
+import { notification, Tag } from "antd";
 function fn_ScanOut() {
   const fac = import.meta.env.VITE_FAC;
   const [txtScanoutValue, setTxtScanoutValue] = useState("");
@@ -16,6 +15,63 @@ function fn_ScanOut() {
   const [username, setusername] = useState("");
   const [remark, setRemark] = useState("");
   const columns = [
+    {
+      title: "Stock Status",
+      dataIndex: "product_status",
+      key: "product_status",
+      width: 120,
+      // fixed:'left',
+      render: (text, record, index) => {
+        const backgroundColor =
+          record.product_status === "OUTSTOCK"
+            ? "#f50"
+            : record.product_status !== "OUTSTOCK"
+            ? "#87d068"
+            : "transparent";
+
+        return (
+          <Tag
+            style={{
+              width: 100,
+              textAlign: "center",
+              padding: "0px 0px 0px 0px",
+              overflow: "hidden",
+            }}
+            color={backgroundColor}
+          >
+            {text}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "Items Status",
+      dataIndex: "item_broken_flg",
+      key: "item_broken_flg",
+      width: 120,
+      // fixed:'left',
+      render: (text, record, index) => {
+        const backgroundColor =
+          record.item_broken_flg === "Y"
+            ? "#f50"
+            : record.item_broken_flg != "Y"
+            ? "#87d068"
+            : "transparent";
+        return (
+          <Tag
+            style={{
+              width: 100,
+              textAlign: "center",
+              padding: "0px 0px 0px 0px",
+              overflow: "hidden",
+            }}
+            color={backgroundColor}
+          >
+            {text == "Y" ? "Broken" : "Good"}
+          </Tag>
+        );
+      },
+    },
     {
       title: "Serial Number",
       dataIndex: "serial_number",
@@ -59,14 +115,14 @@ function fn_ScanOut() {
       if (dtData.length > 0) {
         document.getElementById("txtScanOut").focus();
       } else {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "ID Code is Wrong",
-        }).then(() => {
-          setuser("");
-          document.getElementById("txtScanIDUser").focus();
+        notification.error({
+          message: "Error",
+          description: "ID Code is Wrong",
+          placement: "bottomRight",
+          duration: 3,
         });
+        setuser("");
+        document.getElementById("txtScanIDUser").focus();
       }
     } else {
       document.getElementById("txtScanIDUser").focus();
@@ -81,8 +137,16 @@ function fn_ScanOut() {
     setDdlValueout(null);
     setDdlDataOutState(false);
     setDdlFacRequire(false);
+    setDtDataState(false);
     document.getElementById("txtScanIDUser").focus();
   };
+  function clearData() {
+    setuser("");
+    setusername("");
+    setDdlFacValue("");
+    setTxtScanoutValue("");
+    setRemark("");
+  }
   const handleScanouttxtValue_Change = async () => {
     let type = "";
     if (remark == "") {
@@ -92,16 +156,29 @@ function fn_ScanOut() {
         placement: "bottomRight",
         duration: 3,
       });
-      document.getElementById("txtScanOutRemark").focus();
+      document.getElementById("txtScanOutRemark").focus();      
+      return;
+    }
+    if (remark != ''){
+      console.log("remark",remark, "txtScanoutValue",txtScanoutValue)
+      if(txtScanoutValue == ''){
+        notification.error({
+          message: "Please Key Serial Number",
+          description: "Serial number is required",
+          placement: "bottomRight",
+          duration: 3,
+        });
+        document.getElementById("txtScanOut").focus();
+      }
       return;
     }
     if (txtScanoutValue !== "") {
       const splicedValue = txtScanoutValue.slice(0, 3);
       if (ddlvalueout == null) {
         type = await submitData("getTypeid", splicedValue);
-      } 
+      }
       console.log(type, "type", ddlvalueout);
-      if(type == '' && ddlvalueout == null){
+      if (type == "" && ddlvalueout == null) {
         notification.error({
           message: "Please select type",
           description: "Type is required",
@@ -141,13 +218,13 @@ function fn_ScanOut() {
           } else {
             if (ddlvalueout == null) {
               setDdlDataOutState(true);
-              Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "Please select type",
-              }).then(() => {
-                document.getElementById("txtScanIDUser").focus();
+              notification.error({
+                message: "Error",
+                description: "Please select type",
+                duration: 2,
+                placement: "bottomRight",
               });
+              document.getElementById("txtScanIDUser").focus();
             } else {
               await submitData("submit", {
                 Itemid: ddlvalueout.typeid,
@@ -163,15 +240,16 @@ function fn_ScanOut() {
             }
           }
         } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Please Key Serial Number",
+          notification.error({
+            message: "Error",
+            description: "Please Key Serial Number",
+            duration: 2,
+            placement: "bottomRight",
           });
-
           document.getElementById("txtScan").focus();
         }
       }
+      clearData();
     }
   };
   async function submitData(option, params) {
@@ -201,53 +279,50 @@ function fn_ScanOut() {
         )
         .then((response) => {
           if (response.data.result === "Success" || response.status === 200) {
-            Swal.fire({
-              icon: "success",
-              title: "Success",
-              text: "Data has been saved",
-            }).then(() => {
-              setTxtScanoutValue("");
-              submitData("getDttable", "");
+            notification.success({
+              message: "Success",
+              description: "Data has been saved",
+              duration: 2,
+              placement: "bottomRight",
             });
+            setTxtScanoutValue("");
+            submitData("getDatawithSerial", params.Serial);
           } else if (response.status === 203) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Serial number already exists",
-            }).then(() => {
-              setTxtScanoutValue("");
-              submitData("getDttable", "");
+            notification.error({
+              message: "Error",
+              description: "Serial number already exists",
+              duration: 2,
+              placement: "bottomRight",
             });
+            setTxtScanoutValue("");
+            document.getElementById("txtScan").focus();
           } else if (response.status === 204) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Serial number already Out of stock",
-            }).then(() => {
-              setTxtScanoutValue("");
-              setTimeout(() => {
-                document.getElementById("txtScan").focus();
-              }, 200);
-              submitData("getDttable", "");
+            notification.error({
+              message: "Error",
+              description: "Serial number already Out of stock",
+              duration: 2,
+              placement: "bottomRight",
             });
+            setTxtScanoutValue("");
+            document.getElementById("txtScan").focus();
           } else if (response.status === 205) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Type is Wrong Please select again!",
-            }).then(() => {
-              submitData("getDttable", "");
+            notification.error({
+              message: "Error",
+              description: "Serial number not found",
+              duration: 2,
+              placement: "bottomRight",
             });
           }
-          // setDdlValueout(null);
           setDdlFacValue(null);
         })
         .catch((error) => {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: error,
+          notification.error({
+            message: "Error",
+            description: error,
+            duration: 2,
+            placement: "bottomRight",
           });
+         
         });
     } else if (option == "getTypeid") {
       let type = "";
@@ -263,10 +338,11 @@ function fn_ScanOut() {
           }
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: error,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
       return type;
@@ -278,10 +354,11 @@ function fn_ScanOut() {
           setDtDataState(true);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: error,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
     } else if (option == "DDL") {
@@ -291,10 +368,11 @@ function fn_ScanOut() {
           setDdlData(res.data);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: error,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
     } else if (option == "getIDAdmin") {
@@ -307,10 +385,11 @@ function fn_ScanOut() {
           dtData = res.data;
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: error,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
       return dtData;
@@ -326,10 +405,31 @@ function fn_ScanOut() {
           }
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: error,
+            duration: 2,
+            placement: "bottomRight",
+          });
+        });
+      return dtData;
+    } else if (option == "getDatawithSerial") {
+      let dtData = [];
+      await axios
+        .get(
+          `/Sparepart/api/common/GetDttableFixSerial?plantCode=${fac}&serial=${params}`
+        )
+        .then((res) => {
+          dtData = res.data;
+          setDtdata(res.data);
+          setDtDataState(true);
+        })
+        .catch((err) => {
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
       return dtData;
@@ -358,7 +458,7 @@ function fn_ScanOut() {
     setusername,
     remark,
     setRemark,
-    btnCancel
+    btnCancel,
   };
 }
 

@@ -1,7 +1,6 @@
-import { Tag } from "antd";
+import { notification, Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 function fn_Scanin() {
   const fac = import.meta.env.VITE_FAC;
   const [txtScanValue, setTxtScanValue] = useState("");
@@ -121,11 +120,14 @@ function fn_Scanin() {
       } else {
         if (ddlvalue == null) {
           setDdlDataInState(true);
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Please select type",
+          notification.error({
+            message: "Error",
+            description: "Please select type",
+            duration: 2,
+            placement: "bottomRight",
           });
+
+        
         } else {
           await submitData("submit", {
             Itemid: ddlvalue.typeid,
@@ -168,50 +170,50 @@ function fn_Scanin() {
         .then((response) => {
 
           if (response.data.result === "Success" || response.status === 200) {
-            Swal.fire({
-              icon: "success",
-              title: "Success",
-              text: "Data has been saved",
-            }).then(() => {
-              setTxtScanValue("");
-              // submitData("getDttable", "");
-              submitData("getDatawithSerial", params.Serial);
+            notification.success({
+              message: "Success",
+              description: "Data has been saved",
+              duration: 2,
+              placement: "bottomRight",
             });
+            setTxtScanValue("");
+            submitData("getDatawithSerial", params.Serial);
           } else if (response.status === 203) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Serial number already exists",
-            }).then(() => {
-              setTxtScanValue("");
-              submitData("getDttable", "");
+            notification.error({
+              message: "Error",
+              description: "Serial number already exists",
+              duration: 2,
+              placement: "bottomRight",
             });
+            setTxtScanValue("");
+            document.getElementById("txtScan").focus();
           } else if (response.status === 204) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Serial number already Out of stock",
-            }).then(() => {
-              setTxtScanValue("");
-              submitData("getDttable", "");
+            notification.error({
+              message: "Error",
+              description: "Serial number already Out of stock",
+              duration: 2,
+              placement: "bottomRight",
             });
+            setTxtScanValue("");
+            document.getElementById("txtScan").focus();
           } else if (response.status === 205) {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Type is Wrong Please select again!",
-            }).then(() => {
-              submitData("getDttable", "");
+            notification.error({
+              message: "Error",
+              description: "Serial number not found",
+              duration: 2,
+              placement: "bottomRight",
             });
           }
           setDdlValue(null);
         })
         .catch((error) => {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: error,
+          notification.error({
+            message: "Error",
+            description: error,
+            duration: 2,
+            placement: "bottomRight",
           });
+
         });
     } else if (option == "getTypeid") {
       let type = "";
@@ -228,10 +230,11 @@ function fn_Scanin() {
           }
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
       return type;
@@ -244,10 +247,11 @@ function fn_Scanin() {
           setDtDataState(true);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
     } else if (option == "getIDAdmin") {
@@ -260,10 +264,11 @@ function fn_Scanin() {
           dtData = res.data;
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
       return dtData;
@@ -274,10 +279,11 @@ function fn_Scanin() {
           setDdlData(res.data);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
     } else if(option == 'getDatawithSerial'){
@@ -292,10 +298,11 @@ function fn_Scanin() {
           setDtDataState(true);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
       return dtData;
