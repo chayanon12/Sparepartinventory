@@ -6,7 +6,7 @@ import Reuse from "/src/assets/reuse.png";
 import { fn_dashboard } from "./fn_dashboard";
 import "./Dashboard.css";
 import Warehouse from "/src/assets/inventory.png";
-
+import Spare3D from "../../../assets/spare3D.png";
 function SecondContent() {
   const { count, time, DtData, columns, formattedDate, DtDataAction,formattedTime } =
     fn_dashboard();
@@ -99,7 +99,7 @@ function SecondContent() {
                 style={{ display: "flex", alignItems: "center", gap: "20px" }}
               >
                 <img
-                  src={Warehouse}
+                  src={Spare3D}
                   alt="Clock Icon"
                   style={{
                     width: "100px",

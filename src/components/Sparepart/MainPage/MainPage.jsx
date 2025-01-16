@@ -1,5 +1,6 @@
 import { Layout, Button, Flex, Row, Col ,theme } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import Spare3D from "../../../assets/spare3D.png";
 import Sidebar from "../Sidebar/Sidebar";
 import CustomHeader from "../Header/Header";
 import ScanIN from "../Scanin/ScanIn";
@@ -81,7 +82,7 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
           className="header"
           style={{ background: switchValue === false ? "#001529" : "" }}
         >
-          <Button
+          {/* <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => {
@@ -92,7 +93,28 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
               }
             }}
             style={collapsed ? btnStyleClose : btnStyleOpen}
-          />
+          /> */}
+           <Button
+                    type="text"
+                    icon={
+                      <img
+                        src={Spare3D}
+                        alt="Sun Icon"
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                        }}
+                      />
+                    }
+                    onClick={() => {
+                      setCollapsed(!collapsed);
+                      setHoverEnabled(!hoverEnabled);
+                      if (open === false) {
+                        setOpen(true);
+                      }
+                    }}
+                    style={collapsed ? btnStyleClose : btnStyleOpen}
+                  />
           <CustomHeader onSwitchChange={setSwitchValue} theme={switchValue} page={page} />
         </Header>
         <Content className="content" >

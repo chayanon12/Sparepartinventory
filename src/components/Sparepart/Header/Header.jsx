@@ -47,7 +47,7 @@ function Header({ onSwitchChange, theme, page }) {
       <Typography.Title
         level={2}
         type="secondary"
-        style={{ color: theme === false ? "#fff" : "#3f4840ea" }}
+        style={{ color: theme === false ? "#fff" : "#3f4840ea" ,marginLeft: "1rem"}}
       >
         {page === "1"
           ? "Dashboard (Spare Part Inventory System)"
