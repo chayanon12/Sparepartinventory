@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import { notification, Tag } from "antd";
-import { render } from "react-dom";
 function fn_Scanin() {
   const fac = import.meta.env.VITE_FAC;
   const [txtScanValue, setTxtScanValue] = useState("");
@@ -126,10 +124,11 @@ function fn_Scanin() {
       } else {
         if (ddlvalue == null) {
           setDdlDataInState(true);
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Please select type",
+          notification.error({
+            message: "Error",
+            description: "Please select type",
+            duration: 2,
+            placement: "bottomRight",
           });
         } else {
           await submitData("submit", {
@@ -367,10 +366,11 @@ function fn_Scanin() {
           }
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
       return type;
@@ -383,10 +383,11 @@ function fn_Scanin() {
           setDtDataState(true);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({  
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
         });
     } else if (option == "getIDAdmin") {
@@ -399,11 +400,13 @@ function fn_Scanin() {
           dtData = res.data;
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
+       
         });
       return dtData;
     } else if (option == "DDL") {
@@ -413,11 +416,13 @@ function fn_Scanin() {
           setDdlData(res.data);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
           });
+          
         });
     } else if (option == "getdataRequestNo") {
       let data = [];

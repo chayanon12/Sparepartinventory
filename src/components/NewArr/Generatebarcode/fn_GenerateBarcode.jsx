@@ -1,9 +1,9 @@
 import axios from "axios";
 import QRCode from "qrcode";
 import React, { useEffect, useRef, useState } from "react";
-import Swal from "sweetalert2";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import { notification } from "antd";
 function fn_GenerateBarcode() {
   const qrRef = useRef();
   const fac = import.meta.env.VITE_FAC;
@@ -43,11 +43,13 @@ function fn_GenerateBarcode() {
           setSnNumber(res.data);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            placement: "bottomRight",
+            duration: 2,
           });
+        
         });
     } else if (type == "DDL") {
       await axios
@@ -56,10 +58,11 @@ function fn_GenerateBarcode() {
           setDdlData(res.data);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            placement: "bottomRight",
+            duration: 2,
           });
         });
     }
@@ -89,11 +92,13 @@ function fn_GenerateBarcode() {
   }
   const handleGeneClick = async () => {
     if (ddlvalue == null) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please select a type to generate",
+      notification.error({
+        message: "Error",
+        description: "Please select a type to generate",
+        placement: "bottomRight",
+        duration: 2,
       });
+    
       return;
     } else if (quantity == "") {
       setQuantityState(true);
@@ -146,10 +151,11 @@ function fn_GenerateBarcode() {
 
   const exportPdf = async () => {
     if (selectedItems && selectedItems.size === 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Please select at least one item to export",
+      notification.error({
+        message: "Error",
+        description: "Please select at least one item to export",
+        placement: "bottomRight",
+        duration: 2,
       });
       return;
     }

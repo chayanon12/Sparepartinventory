@@ -340,7 +340,7 @@ function fn_ScanOut() {
         .catch((err) => {
           notification.error({
             message: "Error",
-            description: error,
+            description: err,
             duration: 2,
             placement: "bottomRight",
           });
@@ -356,7 +356,7 @@ function fn_ScanOut() {
         .catch((err) => {
           notification.error({
             message: "Error",
-            description: error,
+            description: err,
             duration: 2,
             placement: "bottomRight",
           });
@@ -370,7 +370,7 @@ function fn_ScanOut() {
         .catch((err) => {
           notification.error({
             message: "Error",
-            description: error,
+            description: err,
             duration: 2,
             placement: "bottomRight",
           });
@@ -387,7 +387,7 @@ function fn_ScanOut() {
         .catch((err) => {
           notification.error({
             message: "Error",
-            description: error,
+            description: err,
             duration: 2,
             placement: "bottomRight",
           });
@@ -407,7 +407,7 @@ function fn_ScanOut() {
         .catch((err) => {
           notification.error({
             message: "Error",
-            description: error,
+            description: err,
             duration: 2,
             placement: "bottomRight",
           });

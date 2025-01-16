@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
 import moment from "moment";
+import { notification } from "antd";
 
 function fn_dashboard() {
   const fac = import.meta.env.VITE_FAC;
@@ -64,10 +64,11 @@ function fn_dashboard() {
           setCount(res.data[0].count_spare);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            placement: "bottomRight",
+            duration : 2
           });
         });
     } else if (option == "getDttable") {
@@ -77,10 +78,11 @@ function fn_dashboard() {
           setDtdata(res.data);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+          notification.error({
+            message: "Error",
+            description: err,
+            placement: "bottomRight",
+            duration : 2
           });
         });
     } else if (option == "getDttableAction") {
@@ -90,10 +92,11 @@ function fn_dashboard() {
           setDtDataAction(res.data);
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: err,
+         notification.error({
+            message: "Error",
+            description: err,
+            placement: "bottomRight",
+            duration : 2
           });
         });
   }

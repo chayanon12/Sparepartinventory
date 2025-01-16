@@ -81,6 +81,11 @@ function SecondContent() {
     fill: {
       opacity: 1,
     },
+    chart: {
+      animations: {
+        enabled: false,
+      },
+    },
     tooltip: {
       y: {
         formatter: function (val) {
