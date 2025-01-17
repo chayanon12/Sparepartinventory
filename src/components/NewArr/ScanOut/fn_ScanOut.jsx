@@ -174,7 +174,6 @@ function fn_ScanOut() {
       return;
     }
     if (txtScanoutValue !== "") {
-      console.log("ddlvalueout", ddlvalueout);
       const splicedValue = txtScanoutValue.slice(0, 3);
       if(ddlvalueout == null){
         type = await submitData("getTypeid", splicedValue);

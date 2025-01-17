@@ -102,7 +102,7 @@ function SecondContent() {
                   src={Spare3D}
                   alt="Clock Icon"
                   style={{
-                    width: "100px",
+                    width: "120px",
                     height: "100px",
                   }}
                 />

@@ -44,7 +44,6 @@ function fn_ModifyItems() {
     setSerialNumber("");
     document.getElementById("SearchSerial").focus();
   };
-  console.log(DesktopMonitor, olddesktopserial, usercontact);
   async function getdata(type, params) {
     try {
       if (type == "getSearchSerial") {

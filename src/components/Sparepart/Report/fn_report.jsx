@@ -228,7 +228,6 @@ function fn_report() {
         const res = await axios.get(
           `/Sparepart/api/common/getDataReport?typename=${ddlItemsselected}&dept=${ddlCostcenterSelected}&movementtype=${movemoentTypeSelected}&datefrom=${dateFrom}&dateto=${dateTo}`
         );
-        console.log(res.data);
         if (res.data.length > 0) {
           setDtData(res.data);
           setDtDataState(true);
@@ -262,7 +261,6 @@ function fn_report() {
     return `${day}/${month}/${year}`;
   }
   const exportExcelFile = () => {
-    console.log(DtData.length);
     if (DtData.length <= 0) {
       notification.error({
         message: "Error",

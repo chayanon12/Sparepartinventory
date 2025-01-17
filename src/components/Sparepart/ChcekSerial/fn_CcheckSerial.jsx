@@ -168,8 +168,7 @@ function fn_CcheckSerial() {
       const res = await axios.get(
         `/Sparepart/api/common/setBrokenItem?Serial=${text.serial_number}&Flg=${flg}`
       );
-  
-      console.log('Response data:', res.data.state);
+
       if (res.data.state === "Success") {
         await onSearch();
         notification.success({

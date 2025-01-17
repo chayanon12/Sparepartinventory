@@ -160,7 +160,6 @@ function fn_ScanOut() {
       return;
     }
     if (remark != ''){
-      console.log("remark",remark, "txtScanoutValue",txtScanoutValue)
       if(txtScanoutValue == ''){
         notification.error({
           message: "Please Key Serial Number",
@@ -177,7 +176,6 @@ function fn_ScanOut() {
       if (ddlvalueout == null) {
         type = await submitData("getTypeid", splicedValue);
       }
-      console.log(type, "type", ddlvalueout);
       if (type == "" && ddlvalueout == null) {
         notification.error({
           message: "Please select type",

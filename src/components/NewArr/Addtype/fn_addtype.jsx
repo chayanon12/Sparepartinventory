@@ -67,8 +67,6 @@ function fn_addtype() {
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
-        console.log(newData[index]);
-        console.log(newData[index].type_abbr.toString().length);
         if(newData[index].type_abbr.toString().length > 4){
           notification.error({
             message: "Error",
@@ -92,7 +90,12 @@ function fn_addtype() {
         setEditingKey("");
       }
     } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
+      notification.error({
+        message: "Error",
+        description: errInfo,
+        placement: "bottomRight",
+        duration: 3,
+      });
     }
   };
 

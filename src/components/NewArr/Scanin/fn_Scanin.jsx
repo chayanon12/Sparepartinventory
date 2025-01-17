@@ -339,7 +339,6 @@ function fn_Scanin() {
             result = "Type is Wrong Please select again!";
             setTxtScanValue("");
           }
-          console.log(result, "result");
           setDdlValue(null);
         })
         .catch((error) => {
@@ -500,8 +499,6 @@ function fn_Scanin() {
         index === self.findIndex((t) => t.strSerialNo === item.strSerialNo) &&
         !txtSerialGet.includes(item.strSerialNo)
     );
-      console.log(data.length, "data.length", checkExitSerial.amount, "checkExitSerial.amount");
-      console.log(checkExitSerial.amount, "checkExitSerial", dataInsert.length);
     if (parseInt(checkExitSerial.amount) == parseInt(data.length)) {
       //insert Close Status
       alert('CLOSE')
@@ -535,8 +532,6 @@ function fn_Scanin() {
     let SaveDataresult = "";
     
     for (let i = 0; i < dataInsert.length; i++) {
-      console.log(i,'i')
-      console.log(dataInsert[i].strItemId, "dataInsert[i].strItemId");
       SaveDataresult = await submitData("submit", {
         Itemid: dataInsert[i].strItemId,
         Serial: dataInsert[i].strSerialNo,
@@ -548,8 +543,7 @@ function fn_Scanin() {
         remark: "",
       });
     }
-    console.log(dataInsert, "dataInsert");
-    
+   
     setDtDataState(true);
     setDtdata(dataInsert)
 

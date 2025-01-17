@@ -110,7 +110,6 @@ function ScanIn({ state }) {
                 option.typename === value.typename
               }
               onChange={(event, newValue) => {
-                console.log("newValue", newValue);
                 setDdlValue(newValue);
                 setDdlDataInState(false);
               }}

@@ -48,6 +48,9 @@ function SecondContent() {
     chart: {
       type: "bar",
       height: 350,
+      animations: {
+        enabled: false,
+      },
     },
     plotOptions: {
       bar: {
@@ -80,11 +83,6 @@ function SecondContent() {
     },
     fill: {
       opacity: 1,
-    },
-    chart: {
-      animations: {
-        enabled: false,
-      },
     },
     tooltip: {
       y: {
