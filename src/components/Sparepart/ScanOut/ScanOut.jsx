@@ -37,11 +37,11 @@ function ScanOut() {
     setRemark,
     btnCancel
   } = fn_ScanOut();
-  useEffect(() => {
-    if (user == "") {
-      document.getElementById("txtScanIDUser").focus();
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user == "") {
+  //     document.getElementById("txtScanIDUser").focus();
+  //   }
+  // }, [user]);
   return (
     <div>
       {" "}

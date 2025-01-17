@@ -156,11 +156,11 @@ function fn_ScanOut() {
         placement: "bottomRight",
         duration: 3,
       });
-      document.getElementById("txtScanOutRemark").focus();      
+      document.getElementById("txtScanOutRemark").focus();
       return;
     }
-    if (remark != ''){
-      if(txtScanoutValue == ''){
+    if (remark != "") {
+      if (txtScanoutValue == "") {
         notification.error({
           message: "Please Key Serial Number",
           description: "Serial number is required",
@@ -168,6 +168,27 @@ function fn_ScanOut() {
           duration: 3,
         });
         document.getElementById("txtScanOut").focus();
+      } else {
+        if (ddlvalueout !== null) {
+          await submitData("submit", {
+            Itemid: ddlvalueout.typeid ,
+            Serial: txtScanoutValue,
+            Admin: localStorage.getItem("username"),
+            movement: "OUT",
+            // ID: user,
+            // UserDept: ddlFacValue,
+            // UserName: username,
+            Remark: remark,
+            strItemFlg: "OLD",
+          });
+        }else{
+          notification.error({
+            message: "Please select type",
+            description: "Type is required",
+            placement: "bottomRight",
+            duration: 3,
+          });
+        }
       }
       return;
     }
@@ -177,6 +198,7 @@ function fn_ScanOut() {
         type = await submitData("getTypeid", splicedValue);
       }
       if (type == "" && ddlvalueout == null) {
+        alert("x");
         notification.error({
           message: "Please select type",
           description: "Type is required",
@@ -320,7 +342,6 @@ function fn_ScanOut() {
             duration: 2,
             placement: "bottomRight",
           });
-         
         });
     } else if (option == "getTypeid") {
       let type = "";

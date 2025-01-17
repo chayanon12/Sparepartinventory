@@ -9,7 +9,7 @@ import axios from "axios";
 
 function App() {
   // const backendUrl = import.meta.env.VITE_SERVICE_URL;
-  const backendUrl = `http://${window.location.hostname}:9002`;
+  const backendUrl = `http://${window.location.hostname}:4002`;
   axios.defaults.baseURL = backendUrl;
   const [switchValue, setSwitchValue] = useState(true);
   useEffect(() => {
