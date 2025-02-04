@@ -2,7 +2,8 @@ import { notification, Tag } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 function fn_Scanin() {
-  const fac = import.meta.env.VITE_FAC;
+  // const fac = import.meta.env.VITE_FAC;
+  const fac = localStorage.getItem("factory");
   const [txtScanValue, setTxtScanValue] = useState("");
   const [DtData2, setDtdata] = useState([]);
   const [DtDataState, setDtDataState] = useState(false);

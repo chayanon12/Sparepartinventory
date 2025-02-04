@@ -2,7 +2,8 @@ import React, { useEffect, useState, useTransition } from "react";
 import axios from "axios";
 import { notification, Tag } from "antd";
 function fn_ScanOut() {
-  const fac = import.meta.env.VITE_FAC;
+  // const fac = import.meta.env.VITE_FAC;
+  const fac = localStorage.getItem("factory");
   const [txtScanoutValue, setTxtScanoutValue] = useState("");
   const [DtData2, setDtdata] = useState([]);
   const [DtDataState, setDtDataState] = useState(false);
@@ -175,9 +176,9 @@ function fn_ScanOut() {
             Serial: txtScanoutValue,
             Admin: localStorage.getItem("username"),
             movement: "OUT",
-            // ID: user,
-            // UserDept: ddlFacValue,
-            // UserName: username,
+            ID: user,
+            UserDept: ddlFacValue,
+            UserName: username,
             Remark: remark,
             strItemFlg: "OLD",
           });

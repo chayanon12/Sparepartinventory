@@ -4,7 +4,8 @@ import moment from "moment";
 import { notification } from "antd";
 
 function fn_dashboard() {
-  const fac = import.meta.env.VITE_FAC;
+  // const fac = import.meta.env.VITE_FAC;
+  const fac = localStorage.getItem("factory");
   const [count, setCount] = useState([]);
   const [time, setTime] = useState(new Date());
   const [DtData, setDtdata] = useState([]);

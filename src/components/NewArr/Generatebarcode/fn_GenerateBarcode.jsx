@@ -6,7 +6,8 @@ import html2canvas from "html2canvas";
 import { notification } from "antd";
 function fn_GenerateBarcode() {
   const qrRef = useRef();
-  const fac = import.meta.env.VITE_FAC;
+  // const fac = import.meta.env.VITE_FAC;
+  const fac = localStorage.getItem("factory");
   const [ddlData, setDdlData] = useState([]);
   const [ddlvalue, setDdlValue] = useState(null);
   const [snnumber, setSnNumber] = useState([]);
@@ -191,7 +192,12 @@ function fn_GenerateBarcode() {
   
       pdf.save("qrcode_" + strSerial+".pdf");
     } catch (error) {
-      console.error("Error generating QR codes or PDF:", error);
+      notification.error({
+        message: "Error",
+        description: error,
+        placement: "bottomRight",
+        duration: 2,
+      });
     }
   };
   

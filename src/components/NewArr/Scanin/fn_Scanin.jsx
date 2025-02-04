@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { notification, Tag } from "antd";
 function fn_Scanin() {
-  const fac = import.meta.env.VITE_FAC;
+  // const fac = import.meta.env.VITE_FAC;
+  const fac = localStorage.getItem("factory");
   const [txtScanValue, setTxtScanValue] = useState("");
   const [ddlvalue, setDdlValue] = useState(null);
   const [requestno, setRequestno] = useState("");

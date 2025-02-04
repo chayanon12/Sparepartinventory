@@ -42,8 +42,8 @@ function fn_login() {
             localStorage.setItem("username", res.data.value.user_fname);
             localStorage.setItem("surname", res.data.value.user_surname);
             localStorage.setItem("user_empcode", res.data.value.user_emp_id);
-
-            Swal.close();
+            localStorage.setItem("factory",res.data.value.site_comment);
+            Swal.close(); 
             // Swal.fire("Success", "เข้าสู่ระบบสำเร็จ", "success").then(
             //   (result) => {
             //     if (result.isConfirmed) {

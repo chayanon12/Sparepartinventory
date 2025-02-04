@@ -186,7 +186,7 @@ function fn_CcheckSerial() {
         });
       }
     } catch (error) {
-      console.error('Error:', error);
+
 
       notification.error({
         message: "Error",

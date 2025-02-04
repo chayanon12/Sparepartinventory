@@ -415,7 +415,12 @@ function fn_report() {
         );
       })
       .catch((error) => {
-        console.error("Error writing excel file:", error);
+        notification.error({
+          message: "Error",
+          description: "Error writing excel file",
+          placement: "bottomRight",
+          duration: 3,
+        });
       });
   };
   return {

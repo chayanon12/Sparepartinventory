@@ -119,6 +119,7 @@ function SecondContent() {
                 options={options}
                 series={series}
                 type="bar"
+                width={series[0].data.length * 50}
                 height={410}
               />
             </Card>
