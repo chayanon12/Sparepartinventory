@@ -9,6 +9,7 @@ function fn_dashboard() {
   const [count, setCount] = useState([]);
   const [time, setTime] = useState(new Date());
   const [DtData, setDtdata] = useState([]);
+  const [DtDataFixedFac, setDtDataFixedFac] = useState([]);
   const [DtDataAction, setDtDataAction] = useState([]);
   const Date2 = new Date();
   const formattedDate = moment(Date2).format('D MMMM YYYY');
@@ -19,22 +20,22 @@ function fn_dashboard() {
     hour12: false,
   });
   const columns = [
-    {
-      title: "",
-      dataIndex: "type_icon",
-      key: "type_icon",
-      render: (type_icon) => (
-        type_icon ? (
-          <img
-            src={`data:image/png;base64,${type_icon}`}
-            alt="icon"
-            style={{ width: "30px", height: "30px" ,alignItems:'center'}}
-          />
-        ) : (
-          ""
-        )
-      ),
-    },
+    // {
+    //   title: "",
+    //   dataIndex: "type_icon",
+    //   key: "type_icon",
+    //   render: (type_icon) => (
+    //     type_icon ? (
+    //       <img
+    //         src={`data:image/png;base64,${type_icon}`}
+    //         alt="icon"
+    //         style={{ width: "30px", height: "30px" ,alignItems:'center'}}
+    //       />
+    //     ) : (
+    //       ""
+    //     )
+    //   ),
+    // },
     {
       title: "Product",
       dataIndex: "type_name",
@@ -42,7 +43,7 @@ function fn_dashboard() {
 
     },
     {
-      title: "Items remaining",
+      title: "All items remaining",
       dataIndex: "onhands",
       key: "onhands",
     }
@@ -52,6 +53,7 @@ function fn_dashboard() {
     getData("getCount", "");
     getData("getDttable", "");
     getData("getDttableAction", "");
+    getData("getDataTableFixedFac", "");
     const timer = setInterval(() => {
       setTime(new Date());
     }, 1000);
@@ -60,7 +62,7 @@ function fn_dashboard() {
   async function getData(option, params) {
     if (option == "getCount") {
       axios
-        .get(`/Sparepart/api/common/GetCountDashboard`)
+        .get(`/Sparepart/api/common/GetCountDashboard?plantCode=${fac}`)
         .then((res) => {
           setCount(res.data[0].count_spare);
         })
@@ -100,9 +102,23 @@ function fn_dashboard() {
             placement: "bottomRight",
           });
         });
-  }
+    } else if (option == "getDataTableFixedFac"){
+      await axios
+        .get(`/Sparepart/api/common/getDatableFixedFac?plantCode=${fac}`)
+        .then((res) => {
+          setDtDataFixedFac(res.data);
+        })
+        .catch((err) => {
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
+          });
+        });
+    }
 }
-  return { count, time, DtData,columns,formattedDate,DtDataAction,formattedTime };
+  return { count, time, DtData,columns,formattedDate,DtDataAction,formattedTime,DtDataFixedFac };
 }
 
 export { fn_dashboard };

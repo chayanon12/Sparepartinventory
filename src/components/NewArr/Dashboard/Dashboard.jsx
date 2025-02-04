@@ -9,22 +9,29 @@ import "./Dashboard.css";
 import NewrrImg from "/src/assets/comnew3D.png";
 import Boxnew from "/src/assets/boxnewarr.png";
 function SecondContent() {
-  const { count, time, DtData, columns, formattedDate, DtDataAction,formattedTime } =
+  const { count, time, DtData, columns, formattedDate, DtDataAction,formattedTime,DtDataFixedFac } =
     fn_dashboard();
   const combinedData = {};
+  const fac = localStorage.getItem("factory");
   DtData.forEach((item) => {
     if (!combinedData[item.type_name]) {
       combinedData[item.type_name] = { quantity: 0, out_count: 0 };
     }
     combinedData[item.type_name].onhands = item.onhands;
   });
-
-  DtDataAction.forEach((item) => {
+  DtDataFixedFac.forEach((item) => {
     if (!combinedData[item.type_name]) {
       combinedData[item.type_name] = { quantity: 0, out_count: 0 };
     }
-    combinedData[item.type_name].out_count = item.out_count;
+    combinedData[item.type_name].out_count = item.total_in_stock;
   });
+  console.log(DtDataFixedFac);
+  // DtDataAction.forEach((item) => {
+  //   if (!combinedData[item.type_name]) {
+  //     combinedData[item.type_name] = { quantity: 0, out_count: 0 };
+  //   }
+  //   combinedData[item.type_name].out_count = item.out_count;
+  // });
   const categories = Object.keys(combinedData);
   const quantityData = categories.map((cat) => combinedData[cat].onhands);
   const outCountData = categories.map((cat) => combinedData[cat].out_count);
@@ -34,12 +41,12 @@ function SecondContent() {
   }
   const series = [
     {
-      name: "User Service ",
+      name: `Remaining Items on ${fac}`,
       data: outCountData,
     },
     {
       // name: "Total Quantity ",
-      name: "Items remaining",
+      name: "All Items",
       data: quantityData,
     },
   ];
@@ -234,7 +241,7 @@ function SecondContent() {
                   justifyContent: "center",
                 }}
               >
-                Total Items In Sparepart Inventory
+                Total Items In New Arrival Inventory
               </p>
             </Card>
           </div>
