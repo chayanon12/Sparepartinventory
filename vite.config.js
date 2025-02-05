@@ -4,10 +4,10 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/SparepartinventorySystem',
+  base: '/InventorymanagementSystem',
   server:{
     host: true,
-    strictPort: true, //บังคับ port
+    strictPort: true, 
     port: 9001
     
   }

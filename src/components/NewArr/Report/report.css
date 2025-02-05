@@ -1,0 +1,22 @@
+.divReport {
+  display: flex;
+  align-items: center; /* แนวตั้ง */
+  gap: 10px;
+}
+.btnSearch{
+    background-color: rgb(16, 114, 242) !important;
+}
+.reportTableNew{
+  width: auto;
+  margin-top: 20px;
+  min-height: 100px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+  color: red !important;
+  overflow: auto !important;
+}
+.reportTableNew th {
+  max-height: 100px !important;
+  text-align: center !important;
+  background-color: #454545 !important;
+  color: white !important;
+}

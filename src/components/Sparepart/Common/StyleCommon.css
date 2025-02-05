@@ -1,0 +1,14 @@
+.SpareopenCard {
+  animation: collapseCard 0.3s ease forwards;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  width: 98% !important;
+  height: 100%!important;
+  overflow: hidden !important;
+}
+
+@media (max-resolution: 96dpi) {
+  .SpareopenCard {
+    width: 98% !important;
+    height: 100% !important;
+  }
+}
