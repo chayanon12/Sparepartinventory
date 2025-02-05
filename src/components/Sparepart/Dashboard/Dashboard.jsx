@@ -8,8 +8,16 @@ import "./Dashboard.css";
 import Warehouse from "/src/assets/inventory.png";
 import Spare3D from "../../../assets/spare3D.png";
 function SecondContent() {
-  const { count, time, DtData, columns, formattedDate, DtDataAction,formattedTime,DtDataFixedFac } =
-    fn_dashboard();
+  const {
+    count,
+    time,
+    DtData,
+    columns,
+    formattedDate,
+    DtDataAction,
+    formattedTime,
+    DtDataFixedFac,
+  } = fn_dashboard();
   const combinedData = {};
   const fac = localStorage.getItem("factory");
   DtData.forEach((item) => {
@@ -33,19 +41,32 @@ function SecondContent() {
   const categories = Object.keys(combinedData);
   const quantityData = categories.map((cat) => combinedData[cat].onhands);
   const outCountData = categories.map((cat) => combinedData[cat].out_count);
-
+  const [chartHeight, setChartHeight] = useState("400vh");
+  const [tableScrollY, setTableScrollY] = useState(200);
+  const [tablePagination, setTablePagination] = useState(5);
+  useEffect(() => {
+    const dpr = window.devicePixelRatio;
+    if (dpr >= 1.25) {
+      setChartHeight("400vh");
+      setTableScrollY(200);
+      setTablePagination(5);
+    } else {
+      setChartHeight("600vh");
+      setTableScrollY(400);
+      setTablePagination(10);
+    }
+  }, []);
   let countout = 0;
   for (let i = 0; i < categories.length; i++) {
     countout = countout + outCountData[i];
   }
   const series = [
     {
-      name: `Remaining Items on ${fac}`,
+      name: `${fac}`,
       data: outCountData,
     },
     {
-
-      name: `All Items`,
+      name: `All Factory`,
       data: quantityData,
     },
   ];
@@ -53,7 +74,7 @@ function SecondContent() {
   const options = {
     chart: {
       type: "bar",
-      height: 350,
+      width: "100%",
     },
     plotOptions: {
       bar: {
@@ -94,155 +115,180 @@ function SecondContent() {
         },
       },
     },
+    responsive: [
+      {
+        breakpoint: 900,
+        options: {
+          plotOptions: {
+            bar: {
+              horizontal: false,
+            },
+          },
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    ],
   };
 
   return (
-    <>
-      <div style={{ overflow: "" }}>
-        <Flex gap="10px">
-          <div>
-            <Card className="logoCard">
-              <span
-                style={{ display: "flex", alignItems: "center", gap: "20px" }}
-              >
-                <img
-                  src={Spare3D}
-                  alt="Clock Icon"
-                  style={{
-                    width: "120px",
-                    height: "100px",
-                  }}
-                />
-                <h1 >Spare Part Inventory</h1>
-              </span>
-            </Card>
-            <Card className="chartCard">
-              <ReactApexChart
-                style={{ width: "700px" }}
-                options={options}
-                series={series}
-                type="bar"
-                height={410}
-              />
-            </Card>
-          </div>
-          <div>
-            <Card
-              className="dashboardsmallCard"
-              title={
-                <span>
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "20px",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <img
-                      src={Sun}
-                      className="spin"
-                      style={{
-                        width: "60px",
-                        height: "60px",
-                        marginLeft: "8px",
-                      }}
-                      alt="Weather icon"
-                    />
-                  </span>
-                </span>
-              }
-            >
-              <Flex
-                gap="10px"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontSize: "45px",
-                }}
-              >
-                {formattedTime}
-              </Flex>
-              <p
-                style={{
-                  fontSize: "10px",
-                  color: "gray",
-                  fontWeight: "none",
-                  marginLeft: "8px",
-                  marginBottom: "5px",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                {formattedDate}
-              </p>
-            </Card>
-            <Card className="tableData">
-              <Table
-                className="TableDashboard"
-                columns={columns}
-                dataSource={DtData}
-                pagination={{
-                  pageSize: 3,
-                }}
-              />
-            </Card>
-          </div>
-          <div style={{ height: 150 }}>
-            <Card
-              className="dashboardsmallCard"
-              title={
-                <span>
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "20px",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <img
-                      className="spin"
-                      src={Reuse}
-                      style={{
-                        width: "60px",
-                        height: "60px",
-                        marginLeft: "8px",
-                      }}
-                      alt="Reuse icon"
-                    />
-                  </span>
-                </span>
-              }
-            >
-              <Flex
-                gap="10px"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  fontSize: "45px",
-                }}
-              >
-                {count}
-              </Flex>
-              <p
-                style={{
-                  fontSize: "10px",
-                  color: "gray",
-                  fontWeight: "none",
-                  marginLeft: "8px",
-                  marginBottom: "5px",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                Total Items In Sparepart Inventory
-              </p>
-            </Card>
-          </div>
-        </Flex>
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <div style={{ width: "60%" }}>
+        <Card className="SparelogoCard">
+          <span style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <img
+              src={Spare3D}
+              alt="Clock Icon"
+              style={{
+                width: "120px",
+                height: "100px",
+              }}
+            />
+            <h1>Spare Part Inventory</h1>
+          </span>
+        </Card>
+        <Card className="SparechartCard">
+          <ReactApexChart
+            height={chartHeight}
+            options={options}
+            series={series}
+            type="bar"
+          />
+        </Card>
       </div>
-    </>
+      <div
+        style={{
+          width: "40%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          marginLeft: "20px",
+        }}
+      >
+        <div style={{ display: "flex", gap: "20px" }}>
+          <Card
+            className="SparedashboardsmallCard"
+            title={
+              <span>
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "20px",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={Sun}
+                    className="Sparespin"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      marginLeft: "8px",
+                    }}
+                    alt="Weather icon"
+                  />
+                </span>
+              </span>
+            }
+          >
+            <Flex
+              gap="10px"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                fontSize: "45px",
+              }}
+            >
+              {formattedTime}
+            </Flex>
+            <p
+              style={{
+                fontSize: "10px",
+                color: "gray",
+                fontWeight: "none",
+                marginLeft: "8px",
+                marginBottom: "5px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              {formattedDate}
+            </p>
+          </Card>
+          <Card
+            className="SparedashboardsmallCard"
+            title={
+              <span>
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "20px",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    className="Sparespin"
+                    src={Reuse}
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      marginLeft: "8px",
+                    }}
+                    alt="Reuse icon"
+                  />
+                </span>
+              </span>
+            }
+          >
+            <Flex
+              gap="10px"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                fontSize: "45px",
+              }}
+            >
+              {count}
+            </Flex>
+            <p
+              style={{
+                fontSize: "10px",
+                color: "gray",
+                fontWeight: "none",
+                marginLeft: "8px",
+                marginBottom: "5px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              Total Sparepart All Factory
+            </p>
+          </Card>
+        </div>
+        <div>
+          <Card className="SparetableData">
+            <Table
+              className="SpareTableDashboard"
+              columns={columns}
+              dataSource={DtData}
+              pagination={{
+                pageSize: tablePagination,
+              }}
+              scroll={{ y: tableScrollY }}
+            />
+          </Card>
+        </div>
+      </div>
+    </div>
   );
 }
 

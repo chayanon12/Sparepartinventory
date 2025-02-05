@@ -13,7 +13,9 @@ function fn_report() {
   const [movemoentTypeSelected, setMovementTypeSelected] = useState("All");
   const [DtDataState, setDtDataState] = useState(false);
   const [DtData, setDtData] = useState([]);
+  const [ddlFactory, setDdlFactory] = useState('All');
   const { RangePicker } = DatePicker;
+  
   const columns = [
     {
       title: "Stock Status",
@@ -156,11 +158,13 @@ function fn_report() {
       title: "User Receive",
       dataIndex: "user_id",
       key: "user_id",
+      width: 150,
     },
     {
       title: "User Receive name",
       dataIndex: "username",
       key: "username",
+      width: 150,
     },
     {
       title: "User Receive Dept",
@@ -171,6 +175,7 @@ function fn_report() {
       title: "Remark",
       dataIndex: "remark",
       key: "remark",
+      width: 150,
     },
   ];
   const movementTypeOption = [
@@ -351,6 +356,7 @@ function fn_report() {
     columns,
     DtData,
     exportExcelFile,
+    ddlFactory, setDdlFactory
   };
 }
 

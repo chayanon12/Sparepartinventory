@@ -21,6 +21,7 @@
     "@mui/x-charts": "^7.13.0",
     "@mui/x-date-pickers": "^7.12.1",
     "antd": "^5.20.0",
+    "antd-style": "^3.7.1",
     "apexcharts": "^3.52.0",
     "axios": "^1.7.3",
     "dayjs": "^1.11.13",

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Flex, Select, Input, Table, Tag } from "antd";
 import { FileSearchOutlined, FileExcelOutlined } from "@ant-design/icons";
 // import "../components/Common/StyleCommon.css";
-import '../Common/StyleCommon.css';
+import "../Common/StyleCommon.css";
 import "./report.css";
 import { fn_report } from "./fn_report";
 function report() {
@@ -22,7 +22,9 @@ function report() {
     onSearch,
     DtData,
     columns,
-    exportExcelFile
+    exportExcelFile,
+    ddlFactory,
+    setDdlFactory,
   } = fn_report();
   return (
     <Flex gap="10px">
@@ -44,6 +46,33 @@ function report() {
                 .localeCompare((optionB?.label ?? "").toLowerCase())
             }
             options={movementTypeOption}
+          />
+          <label>Factory :</label>
+          <Select
+            defaultValue="----Select----"
+            style={{
+              width: "200px",
+              display: "block",
+              marginTop: "5px",
+              marginLeft: "5px",
+            }}
+            id="txtFSampleSize"
+            value={ddlFactory}
+            onChange={(value) => {
+              setDdlFactory(value);
+              // handleChangeSampleSize(value);
+            }}
+            options={[
+              { value: "All", label: "All" },
+              { value: "N2", label: "N2" },
+              { value: "K1", label: "K1" },
+              { value: "P1", label: "P1" },
+              { value: "BKK", label: "BKK" },
+              { value: "HQ", label: "HQ" },
+              { value: "N1", label: "N1" },
+              { value: "A1", label: "A1" },
+
+            ]}
           />
           <label>Items name:</label>
           <Select
@@ -87,8 +116,12 @@ function report() {
             }))}
             allowClear
           />
-          <label>Date:</label>
+        </div>
+        <div style={{marginTop: "10px"}}>
+          <label>Date :</label>
+          &nbsp;&nbsp;
           <RangePicker onChange={onDateChange} style={{ width: 270 }} />
+          &nbsp;&nbsp;
           <Button
             type="primary"
             className="btnSearch"
@@ -98,7 +131,7 @@ function report() {
           >
             Search
           </Button>
-
+          &nbsp;&nbsp;
           <Button
             type="primary"
             style={{ backgroundColor: "#006600", borderColor: "#006600" }}
@@ -111,15 +144,13 @@ function report() {
         </div>
         {DtDataState && (
           <Table
-             className="reportTable"
+            className="reportTableSpare"
             columns={columns}
             dataSource={DtData}
-            scroll={{ x: 'max-content'}}
-            pagination={{
-              showSizeChanger: true,
-              pageSizeOptions: ['6','10', '20', '50', '100',DtData.length.toString()],
-              defaultPageSize:6
-            }}
+            sticky
+            style={{ marginTop: "10px" }}
+            scroll={{ x: "max-content" ,y: 300 }}
+            pagination={true}
           />
         )}
       </Card>

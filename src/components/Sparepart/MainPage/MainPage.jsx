@@ -1,4 +1,4 @@
-import { Layout, Button, Flex, Row, Col ,theme } from "antd";
+import { Layout, Button, Flex, Row, Col, theme } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import Spare3D from "../../../assets/spare3D.png";
 import Sidebar from "../Sidebar/Sidebar";
@@ -13,7 +13,7 @@ import Addtype from "../Addtype/addtype";
 import Report from "../Report/report";
 import { useState } from "react";
 // import "./App.css";
-import './MainPage.css';
+import "./MainPage.css";
 
 const MainPage = ({ switchValue, setSwitchValue }) => {
   const { Sider, Content, Header } = Layout;
@@ -42,7 +42,7 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
     left: "90px",
     color: switchValue == false ? "white" : "#111d2c",
   };
-  
+
   const contentMap = {
     1: <SecondContent state={open} />,
     2: <ScanIN state={open} />,
@@ -75,16 +75,29 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
           }
         }}
       >
-        <Sidebar collapsed={collapsed} theme={switchValue} pageChange={setPage} />
+        <Sidebar
+          collapsed={collapsed}
+          theme={switchValue}
+          pageChange={setPage}
+        />
       </Sider>
       <Layout>
         <Header
           className="header"
           style={{ background: switchValue === false ? "#001529" : "" }}
         >
-          {/* <Button
+          <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            icon={
+              <img
+                src={Spare3D}
+                alt="Sun Icon"
+                style={{
+                  width: "50px",
+                  height: "50px",
+                }}
+              />
+            }
             onClick={() => {
               setCollapsed(!collapsed);
               setHoverEnabled(!hoverEnabled);
@@ -93,34 +106,16 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
               }
             }}
             style={collapsed ? btnStyleClose : btnStyleOpen}
-          /> */}
-           <Button
-                    type="text"
-                    icon={
-                      <img
-                        src={Spare3D}
-                        alt="Sun Icon"
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                        }}
-                      />
-                    }
-                    onClick={() => {
-                      setCollapsed(!collapsed);
-                      setHoverEnabled(!hoverEnabled);
-                      if (open === false) {
-                        setOpen(true);
-                      }
-                    }}
-                    style={collapsed ? btnStyleClose : btnStyleOpen}
-                  />
-          <CustomHeader onSwitchChange={setSwitchValue} theme={switchValue} page={page} />
+          />
+          <CustomHeader
+            onSwitchChange={setSwitchValue}
+            theme={switchValue}
+            page={page}
+          />
         </Header>
-        <Content className="content" >
+        <Content className="content">
           <Flex gap="large">{contentMap[page] || <SecondContent />}</Flex>
         </Content>
-       
       </Layout>
     </Layout>
   );

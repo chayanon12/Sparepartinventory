@@ -44,25 +44,13 @@ function GenarateBarcode() {
     handleSelect,
     selectedItems,
     selectAll,
-    handleAutocompleteChange
+    handleAutocompleteChange,
   } = fn_GenerateBarcode();
 
   return (
     <div>
-      <Flex
-        direction="column"
-        gap="10px"
-        style={{ width: "100%", padding: "0 10px" }}
-      >
-        <Card
-        className="openCard"
-          style={{
-            width: "1250px",
-            maxHeight: "630px",
-            margin: "0 auto",
-            overflow: "auto",
-          }}
-        >
+      <Flex direction="column" gap="10px">
+        <Card className="openCard">
           <Flex gap={20}>
             <Autocomplete
               id="single-autocomplete"
@@ -70,12 +58,12 @@ function GenarateBarcode() {
               value={ddlvalue}
               onChange={(event, newValue) => {
                 setDdlValue(newValue);
-                handleAutocompleteChange(newValue); 
+                handleAutocompleteChange(newValue);
               }}
               options={ddlData}
               getOptionLabel={(option) => option.typename}
               renderInput={(params) => (
-                <TextField id='autoComplete'{...params} label="Select Type" />
+                <TextField id="autoComplete" {...params} label="Select Type" />
               )}
             />
             <TextField
@@ -85,8 +73,20 @@ function GenarateBarcode() {
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             ></TextField>
-            <Button type="primary" onClick={handleGeneClick} style={{height:'50px',background: '#4f6f52',color:'white'}}>Genarate</Button>
-            <Button  type="primary" onClick={exportPdf} style={{height:'50px',background: '#4f6f52',color:'white'}}>Export Qrcode</Button>
+            <Button
+              type="primary"
+              onClick={handleGeneClick}
+              style={{ height: "50px", background: "#4f6f52", color: "white" }}
+            >
+              Genarate
+            </Button>
+            <Button
+              type="primary"
+              onClick={exportPdf}
+              style={{ height: "50px", background: "#4f6f52", color: "white" }}
+            >
+              Export Qrcode
+            </Button>
           </Flex>
           {snState && (
             <>
@@ -95,9 +95,10 @@ function GenarateBarcode() {
                   <TableHead>
                     <TableRow>
                       <TableCell>
-                        <Checkbox 
-                        checked={selectAll}
-                        onChange={handleSelectAll}/>
+                        <Checkbox
+                          checked={selectAll}
+                          onChange={handleSelectAll}
+                        />
                       </TableCell>
                       <TableCell>Type</TableCell>
                       <TableCell>Serial Number</TableCell>
@@ -108,8 +109,8 @@ function GenarateBarcode() {
                       <TableRow key={index}>
                         <TableCell>
                           <Checkbox
-                           checked={selectedItems.has(item.serial)}
-                           onChange={() => handleSelect(item.serial)}
+                            checked={selectedItems.has(item.serial)}
+                            onChange={() => handleSelect(item.serial)}
                           />
                         </TableCell>
                         <TableCell>{ddlvalue.typename || []}</TableCell>
