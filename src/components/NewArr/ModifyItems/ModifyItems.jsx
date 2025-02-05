@@ -29,7 +29,7 @@ function ModifyItems() {
     setUsercontact,
   } = fn_ModifyItems();
   return (
-    <Flex gap="10px">
+    <div style={{width: "100%"}}>
       <Card className="openCard">
         <Search
           id="SearchSerial"
@@ -139,7 +139,7 @@ function ModifyItems() {
           />
         )}
       </Card>
-    </Flex>
+    </div>
   );
 }
 

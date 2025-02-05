@@ -2,7 +2,6 @@ import axios from "axios";
 import QRCode from "qrcode";
 import React, { useEffect, useRef, useState } from "react";
 import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
 import { notification } from "antd";
 function fn_GenerateBarcode() {
   const qrRef = useRef();
@@ -18,8 +17,16 @@ function fn_GenerateBarcode() {
 
   const [selectAll, setSelectAll] = useState(false);
   const [selectedItems, setSelectedItems] = useState(new Set());
-
-  const itemsPerPage = 5;
+  const [pagination,setPagination] = useState(5);
+  useEffect(() => {
+    const dpr = window.devicePixelRatio;
+    if (dpr >= 1.25) {
+      setPagination(4);
+    } else {
+      setPagination(7);
+    }
+  }, []);
+  const itemsPerPage = pagination;
   const totalPages = Math.ceil(snnumber.length / itemsPerPage);
 
   const displayedItems = snnumber.slice(

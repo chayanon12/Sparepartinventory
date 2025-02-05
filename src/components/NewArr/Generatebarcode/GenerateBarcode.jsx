@@ -44,87 +44,101 @@ function GenarateBarcode() {
     handleSelect,
     selectedItems,
     selectAll,
-    handleAutocompleteChange
+    handleAutocompleteChange,
   } = fn_GenerateBarcode();
 
   return (
-    <div>
-      <Flex
-        direction="column"
-        gap="10px"
-        style={{ width: "100%", padding: "0 10px" }}
-      >
-        <Card
-        className="openCard"
-          style={{
-            width: "1250px",
-            maxHeight: "630px",
-            margin: "0 auto",
-            overflow: "auto",
-          }}
-        >
-          <Flex gap={20}>
-            <Autocomplete
-              id="single-autocomplete"
-              sx={{ width: 300, marginLeft: "50px" }}
-              value={ddlvalue}
-              onChange={(event, newValue) => {
-                setDdlValue(newValue);
-                handleAutocompleteChange(newValue); 
-              }}
-              options={ddlData}
-              getOptionLabel={(option) => option.typename}
-              renderInput={(params) => (
-                <TextField id='autoComplete'{...params} label="Select Type" />
-              )}
-            />
-            <TextField
-              error={quantityState}
-              id="quantity"
-              label="Quantity"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            ></TextField>
-            <Button type="primary" onClick={handleGeneClick} style={{height:'50px',background: '#4f6f52',color:'white'}}>Genarate</Button>
-            <Button  type="primary" onClick={exportPdf} style={{height:'50px',background: '#4f6f52',color:'white'}}>Export Qrcode</Button>
-          </Flex>
-          {snState && (
-            <>
-              <TableContainer component={Paper} className="TableSerial">
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>
-                        <Checkbox 
+    <div style={{ width: "100%" }}>
+      <Card className="openCard">
+        <Flex gap={20}>
+          <Autocomplete
+            id="single-autocomplete"
+            sx={{ width: 300, marginLeft: "50px" }}
+            value={ddlvalue}
+            onChange={(event, newValue) => {
+              setDdlValue(newValue);
+              handleAutocompleteChange(newValue);
+            }}
+            options={ddlData}
+            getOptionLabel={(option) => option.typename}
+            renderInput={(params) => (
+              <TextField id="autoComplete" {...params} label="Select Type" />
+            )}
+          />
+          <TextField
+            error={quantityState}
+            id="quantity"
+            label="Quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          ></TextField>
+          <Button
+            type="primary"
+            onClick={handleGeneClick}
+            style={{ height: "50px", background: "#4f6f52", color: "white" }}
+          >
+            Genarate
+          </Button>
+          <Button
+            type="primary"
+            onClick={exportPdf}
+            style={{ height: "50px", background: "#4f6f52", color: "white" }}
+          >
+            Export Qrcode
+          </Button>
+        </Flex>
+        {snState && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <TableContainer component={Paper} className="TableSerial">
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Checkbox
                         checked={selectAll}
-                        onChange={handleSelectAll}/>
+                        onChange={handleSelectAll}
+                      />
+                    </TableCell>
+                    <TableCell>Type</TableCell>
+                    <TableCell>Serial Number</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {displayedItems.map((item, index) => (
+                    <TableRow key={index}>
+                      <TableCell>
+                        <Checkbox
+                          checked={selectedItems.has(item.serial)}
+                          onChange={() => handleSelect(item.serial)}
+                        />
                       </TableCell>
-                      <TableCell>Type</TableCell>
-                      <TableCell>Serial Number</TableCell>
+                      <TableCell>{ddlvalue.typename || []}</TableCell>
+                      <TableCell>{item.serial}</TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {displayedItems.map((item, index) => (
-                      <TableRow key={index}>
-                        <TableCell>
-                          <Checkbox
-                           checked={selectedItems.has(item.serial)}
-                           onChange={() => handleSelect(item.serial)}
-                          />
-                        </TableCell>
-                        <TableCell>{ddlvalue.typename || []}</TableCell>
-                        <TableCell>{item.serial}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                marginTop: "20px",
+                width: "100%",
+              }}
+            >
               <Stack
                 spacing={2}
                 style={{
-                  marginTop: "20px",
-                  marginLeft: "10px",
-                  alignItems: "end",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  textAlign: "end",
                   maxWidth: "1100px",
                 }}
               >
@@ -135,10 +149,10 @@ function GenarateBarcode() {
                   color="primary"
                 />
               </Stack>
-            </>
-          )}
-        </Card>
-      </Flex>
+            </div>
+          </div>
+        )}
+      </Card>
     </div>
   );
 }

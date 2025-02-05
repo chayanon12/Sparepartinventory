@@ -32,20 +32,12 @@ function addtype() {
     data,
     mergedColumns,
     cancel,
-    txtAbbr, setTxtAbbr
+    txtAbbr,
+    setTxtAbbr,
   } = fn_addtype();
   return (
-    <div>
-      <Flex gap="10px">
-        <Card
-          className="openCard"
-          style={{
-            width: "1250px",
-            maxHeight: "630px",
-            margin: "0 auto",
-            overflow: "auto",
-          }}
-        >
+      <div style={{ width: "100%"}}>
+        <Card className="openCard">
           <table style={{ display: "flex", justifyContent: "center" }}>
             <tr>
               <td>
@@ -140,15 +132,14 @@ function addtype() {
                 bordered
                 dataSource={data}
                 columns={mergedColumns}
-                scroll={{ y: 55 * 5 }}
+                scroll={{ y: 300 }}
                 rowClassName="editable-row"
                 pagination={{ onChange: cancel }}
               />
             </Form>
           )}
         </Card>
-      </Flex>
-    </div>
+      </div>
   );
 }
 
