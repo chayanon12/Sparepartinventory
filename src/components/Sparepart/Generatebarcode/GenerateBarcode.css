@@ -3,14 +3,17 @@
 }
 
 .TableSerial {
+  
   margin-top: 20px;
-  max-height: 500px;
+  max-height: 100% !important;
   max-width: 1000px;
-  margin-left: 100px;
+  /* margin-left: 100px; */
   overflow-y: none;
 }
 .TableSerial th {
   text-align: center;
+  background-color: #454545 !important;
+  color: white !important;
 }
 .TableSerial td {
   text-align: center;

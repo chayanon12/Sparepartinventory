@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Flex, Select, Input, Table, Tag } from "antd";
 import { FileSearchOutlined } from "@ant-design/icons";
 import { fn_CcheckSerial } from "./fn_CcheckSerial";
@@ -14,29 +14,37 @@ function CheckSerial() {
     DtData,
     Search,
     ddlItems,
-    ddlItemsValue, 
-    setDdlItemsValue
+    ddlItemsValue,
+    setDdlItemsValue,
   } = fn_CcheckSerial();
-
+  const [tablesize, setTablesize] = useState(350);
+  useEffect(() => {
+    const dpr = window.devicePixelRatio;
+    if (dpr >= 1.25) {
+      setTablesize(350);
+    } else {
+      setTablesize(590);
+    }
+  }, []);
   return (
-    <Flex gap="10px">
-      <Card className="openCard">
-         <Select
-              id="ddlFac"
-              showSearch
-              placeholder="Select Items"
-              optionFilterProp="label"
-              value={ddlItemsValue}
-              onChange={(event, newValue) => {
-                setDdlItemsValue(newValue);
-              }}
-              options={ddlItems.map((item) => ({
-                label: item.type_name,
-                // label: `${item.cc_ctr} : ${item.cc_desc}`,
-                value: item.type_id,
-              }))}
-              style={{ width: 200, height: 40 }}
-            ></Select>
+    <div style={{ width: "100%" }}>
+      <Card className="SpareopenCard">
+        <Select
+          id="ddlFac"
+          showSearch
+          placeholder="Select Items"
+          optionFilterProp="label"
+          value={ddlItemsValue}
+          onChange={(event, newValue) => {
+            setDdlItemsValue(newValue);
+          }}
+          options={ddlItems.map((item) => ({
+            label: item.type_name,
+            // label: `${item.cc_ctr} : ${item.cc_desc}`,
+            value: item.type_id,
+          }))}
+          style={{ width: 200, height: 40 }}
+        ></Select>
         <Search
           id="SearchSerial"
           placeholder="Input Serial Number"
@@ -58,14 +66,12 @@ function CheckSerial() {
             className="TableCheckSerial"
             columns={columns}
             dataSource={DtData}
-            scroll={{ x: 'max-content' }}
-            pagination={{
-              pageSize: 6,
-            }}
+            scroll={{ x: "max-content", y: tablesize }}
+            pagination={true}
           />
         )}
       </Card>
-    </Flex>
+    </div>
   );
 }
 

@@ -13,17 +13,18 @@ function fn_report() {
   const [movemoentTypeSelected, setMovementTypeSelected] = useState("All");
   const [DtDataState, setDtDataState] = useState(false);
   const [DtData, setDtData] = useState([]);
-  const [ddlFactory, setDdlFactory] = useState('All');
+  const [ddlFactory, setDdlFactory] = useState("All");
+
   const { RangePicker } = DatePicker;
-  
+
   const columns = [
     {
       title: "Stock Status",
       dataIndex: "product_status",
       key: "product_status",
       width: 120,
-      fixed:'left',
-      className: 'no-scroll',
+      fixed: "left",
+      className: "no-scroll",
       render: (text, record, index) => {
         const backgroundColor =
           record.product_status === "OUTSTOCK"
@@ -38,7 +39,7 @@ function fn_report() {
               width: 100,
               textAlign: "center",
               padding: "0px 0px 0px 0px",
-              overflow:'hidden'
+              overflow: "hidden",
             }}
             color={backgroundColor}
           >
@@ -52,7 +53,7 @@ function fn_report() {
       dataIndex: "item_broken_flg",
       key: "item_broken_flg",
       width: 120,
-      fixed:'left',
+      fixed: "left",
       render: (text, record, index) => {
         const backgroundColor =
           record.item_broken_flg === "Y"
@@ -66,7 +67,7 @@ function fn_report() {
               width: 100,
               textAlign: "center",
               padding: "0px 0px 0px 0px",
-              overflow:'hidden'
+              overflow: "hidden",
             }}
             color={backgroundColor}
           >
@@ -76,25 +77,33 @@ function fn_report() {
       },
     },
     {
+      title: "Factory",
+      dataIndex: "plant_code",
+      key: "plant_code",
+      width: 100,
+    },
+    {
       title: "Itams Name",
       dataIndex: "type_name",
       key: "type_name",
       width: 200,
-      fixed:'left',
+      fixed: "left",
     },
     {
       title: "Serial Number",
       dataIndex: "serial_number",
       key: "serial_number",
       width: 150,
-      fixed: 'left',
-      className: 'no-scroll',
+      fixed: "left",
+      className: "no-scroll",
       render: (text) => (
-        <div style={{ 
-          whiteSpace: 'nowrap', 
-          overflow: 'hidden', 
-          textOverflow: 'ellipsis' 
-        }}>
+        <div
+          style={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
           {text}
         </div>
       ),
@@ -164,12 +173,13 @@ function fn_report() {
       title: "User Receive name",
       dataIndex: "username",
       key: "username",
-      width: 150,
+      width: 170,
     },
     {
       title: "User Receive Dept",
       dataIndex: "dept",
       key: "dept",
+      width: 150,
     },
     {
       title: "Remark",
@@ -231,7 +241,7 @@ function fn_report() {
         }
       } else if (type == "getDataReport") {
         const res = await axios.get(
-          `/Sparepart/api/common/getDataReport?typename=${ddlItemsselected}&dept=${ddlCostcenterSelected}&movementtype=${movemoentTypeSelected}&datefrom=${dateFrom}&dateto=${dateTo}`
+          `/Sparepart/api/common/getDataReport?typename=${ddlItemsselected}&dept=${ddlCostcenterSelected}&movementtype=${movemoentTypeSelected}&datefrom=${dateFrom}&dateto=${dateTo}&fac=${ddlFactory}`
         );
         if (res.data.length > 0) {
           setDtData(res.data);
@@ -305,7 +315,7 @@ function fn_report() {
     DtData.forEach((data) => {
       if (data.item_broken_flg === "Y") {
         data.item_broken_flg = "Broken";
-      }else{
+      } else {
         data.item_broken_flg = "Good";
       }
       const row = sheet.addRow(data);
@@ -356,7 +366,8 @@ function fn_report() {
     columns,
     DtData,
     exportExcelFile,
-    ddlFactory, setDdlFactory
+    ddlFactory,
+    setDdlFactory,
   };
 }
 

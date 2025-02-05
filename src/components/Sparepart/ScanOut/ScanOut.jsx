@@ -43,10 +43,8 @@ function ScanOut() {
   //   }
   // }, [user]);
   return (
-    <div>
-      {" "}
-      <Flex gap="10px">
-        <Card className="openCard">
+    // <div styles={{ width: "100%" }}>
+        <Card className="SpareopenCard">
           <div className="Scanhead">
             <img className="ScanOutImg" src={Scanner} alt="Scanner" />
             <h1 style={{ fontSize: "35px", color: "#d40c0ce3" }}>Scan Out</h1>
@@ -167,8 +165,7 @@ function ScanOut() {
             />
           )}
         </Card>
-      </Flex>
-    </div>
+    // </div>
   );
 }
 

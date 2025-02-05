@@ -40,6 +40,8 @@
   width: 30px !important;
   padding: 5px !important;
   text-align: center !important;
+  background-color: #454545 !important;
+  color: white !important;
 }
 .SparelogoCard h1 {
   font-size: 1.875rem;
@@ -59,6 +61,9 @@
 
   .SparetableData {
     height: 550px;
+  }
+  .SpareTableDashboard th{
+    padding: 20px !important;
   }
 }
 

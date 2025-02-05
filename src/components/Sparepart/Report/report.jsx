@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Flex, Select, Input, Table, Tag } from "antd";
 import { FileSearchOutlined, FileExcelOutlined } from "@ant-design/icons";
 // import "../components/Common/StyleCommon.css";
@@ -26,9 +26,18 @@ function report() {
     ddlFactory,
     setDdlFactory,
   } = fn_report();
+  const [tablesize, setTablesize] = useState(300);
+  useEffect(() => {
+    const dpr = window.devicePixelRatio;
+    if (dpr >= 1.25) {
+      setTablesize(300);
+    } else {
+      setTablesize(550);
+    }
+  }, []);
   return (
-    <Flex gap="10px">
-      <Card className="openCard">
+    <div style={{ width: "100%" }}>
+      <Card className="SpareopenCard">
         <div className="divReport">
           <label>Item status:</label>
           <Select
@@ -71,7 +80,6 @@ function report() {
               { value: "HQ", label: "HQ" },
               { value: "N1", label: "N1" },
               { value: "A1", label: "A1" },
-
             ]}
           />
           <label>Items name:</label>
@@ -117,7 +125,7 @@ function report() {
             allowClear
           />
         </div>
-        <div style={{marginTop: "10px"}}>
+        <div style={{ marginTop: "10px" }}>
           <label>Date :</label>
           &nbsp;&nbsp;
           <RangePicker onChange={onDateChange} style={{ width: 270 }} />
@@ -149,12 +157,12 @@ function report() {
             dataSource={DtData}
             sticky
             style={{ marginTop: "10px" }}
-            scroll={{ x: "max-content" ,y: 300 }}
+            scroll={{ x: "max-content", y: tablesize }}
             pagination={true}
           />
         )}
       </Card>
-    </Flex>
+    </div>
   );
 }
 
