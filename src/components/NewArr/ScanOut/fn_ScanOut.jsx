@@ -15,6 +15,7 @@ function fn_ScanOut() {
   const [user, setuser] = useState("");
   const [username, setusername] = useState("");
   const [Remark, setRemark] = useState("");
+  const [userDeptName, setUserDeptName] = useState("");
   // const columns = [
   //   {
   //     title: "Serial Number",
@@ -144,6 +145,7 @@ function fn_ScanOut() {
   const handleScantxtIDUserValue_Change = async () => {
     if (user !== "") {
       let dtData = await submitData("getIDUser", { user: user, flg: "user" });
+      let dtData2 = await submitData("getUserDeptName", user);
 
       if (dtData.length > 0) {
         document.getElementById("txtScanOut").focus();
@@ -190,6 +192,7 @@ function fn_ScanOut() {
           UserName: username,
           Remark: Remark,
           strItemFlg: "NEW",
+          UserDeptName: userDeptName,
         });
       } else {
         if (username == "" || user == "" || ddlFacValue == "") {
@@ -204,6 +207,7 @@ function fn_ScanOut() {
               UserName: "",
               Remark: Remark,
               strItemFlg: "NEW",
+              UserDeptName: userDeptName,
             });
           } else {
             notification.error({
@@ -237,6 +241,7 @@ function fn_ScanOut() {
             UserName: username,
             Remark: Remark,
             strItemFlg: "NEW",
+            UserDeptName: userDeptName,
           });
         }
       }
@@ -283,7 +288,9 @@ function fn_ScanOut() {
               strUserDept: params.UserDept,
               strUserName: params.UserName,
               strRemark: params.Remark,
-              strItemFlg:'NEW'
+              strItemFlg:'NEW',
+              strDeptName: params.UserDeptName,
+              UserDeptName: userDeptName,
             },
           },
           {
@@ -418,7 +425,8 @@ function fn_ScanOut() {
         .then((res) => {
           dtData = res.data;
           if (res.data.length > 0) {
-            setDdlFacValue(res.data[0].cost_center.substring(0, 4));
+            // setDdlFacValue(res.data[0].cost_center.substring(0, 4));
+            setDdlFacValue(res.data[0].cost_center);
             setusername(res.data[0].ename);
           }
         })
@@ -441,6 +449,23 @@ function fn_ScanOut() {
           dtData = res.data;
           setDtdata(res.data);
           setDtDataState(true);
+        })
+        .catch((err) => {
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
+          });
+        });
+      return dtData;
+    } else if (option == "getUserDeptName") {
+      let dtData = [];
+      await axios
+        .get(`/Sparepart/api/common/getUserDeptName?empcode=${params}`)
+        .then((res) => {
+          dtData = res.data;
+          setUserDeptName(res.data[0].deptname);
         })
         .catch((err) => {
           notification.error({

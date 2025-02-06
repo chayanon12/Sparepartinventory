@@ -15,6 +15,7 @@ function fn_ScanOut() {
   const [user, setuser] = useState("");
   const [username, setusername] = useState("");
   const [remark, setRemark] = useState("");
+  const [userDeptName, setUserDeptName] = useState("");
   const columns = [
     {
       title: "Stock Status",
@@ -112,7 +113,7 @@ function fn_ScanOut() {
   const handleScantxtIDUserValue_Change = async () => {
     if (user !== "") {
       let dtData = await submitData("getIDUser", { user: user, flg: "user" });
-
+      let dtData2 = await submitData("getUserDeptName", user);
       if (dtData.length > 0) {
         document.getElementById("txtScanOut").focus();
       } else {
@@ -172,7 +173,7 @@ function fn_ScanOut() {
       } else {
         if (ddlvalueout !== null) {
           await submitData("submit", {
-            Itemid: ddlvalueout.typeid ,
+            Itemid: ddlvalueout.typeid,
             Serial: txtScanoutValue,
             Admin: localStorage.getItem("username"),
             movement: "OUT",
@@ -182,7 +183,7 @@ function fn_ScanOut() {
             Remark: remark,
             strItemFlg: "OLD",
           });
-        }else{
+        } else {
           notification.error({
             message: "Please select type",
             description: "Type is required",
@@ -219,6 +220,7 @@ function fn_ScanOut() {
           UserName: username,
           Remark: remark,
           strItemFlg: "OLD",
+          UserDeptName: userDeptName,
         });
       } else {
         if (txtScanoutValue !== "") {
@@ -235,6 +237,7 @@ function fn_ScanOut() {
               UserName: username,
               Remark: remark,
               strItemFlg: "OLD",
+              UserDeptName: userDeptName,
             });
           } else {
             if (ddlvalueout == null) {
@@ -257,6 +260,7 @@ function fn_ScanOut() {
                 UserName: username,
                 Remark: remark,
                 strItemFlg: "OLD",
+                UserDeptName: userDeptName,
               });
             }
           }
@@ -290,6 +294,7 @@ function fn_ScanOut() {
               strUserName: params.UserName,
               strRemark: params.Remark,
               strItemFlg: params.strItemFlg,
+              strDeptName: params.UserDeptName,
             },
           },
           {
@@ -420,7 +425,8 @@ function fn_ScanOut() {
         .then((res) => {
           dtData = res.data;
           if (res.data.length > 0) {
-            setDdlFacValue(res.data[0].cost_center.substring(0, 4));
+            // setDdlFacValue(res.data[0].cost_center.substring(0, 4));
+            setDdlFacValue(res.data[0].cost_center);
             setusername(res.data[0].ename);
           }
         })
@@ -443,6 +449,23 @@ function fn_ScanOut() {
           dtData = res.data;
           setDtdata(res.data);
           setDtDataState(true);
+        })
+        .catch((err) => {
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
+          });
+        });
+      return dtData;
+    } else if (option == "getUserDeptName") {
+      let dtData = [];
+      await axios
+        .get(`/Sparepart/api/common/getUserDeptName?empcode=${params}`)
+        .then((res) => {
+          dtData = res.data;
+          setUserDeptName(res.data[0].deptname);
         })
         .catch((err) => {
           notification.error({

@@ -83,7 +83,7 @@ function fn_report() {
       width: 100,
     },
     {
-      title: "Itams Name",
+      title: "Items Name",
       dataIndex: "type_name",
       key: "type_name",
       width: 200,

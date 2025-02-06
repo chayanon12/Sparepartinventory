@@ -84,7 +84,7 @@ function fn_report() {
       fixed: "left",
     },
     {
-      title: "Itams Name",
+      title: "Items Name",
       dataIndex: "type_name",
       key: "type_name",
       width: 200,
@@ -165,9 +165,10 @@ function fn_report() {
       width: 150,
     },
     {
-      title: "User Receive",
+      title: "User Receive ID ",
       dataIndex: "user_id",
       key: "user_id",
+      width: 150,
     },
     {
       title: "User Receive name",
@@ -178,6 +179,7 @@ function fn_report() {
       title: "User Receive Dept",
       dataIndex: "dept",
       key: "dept",
+      width: 150,
     },
     {
       title: "Remark",
