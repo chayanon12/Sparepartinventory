@@ -1,4 +1,4 @@
-import { Flex, Menu } from "antd";
+import { Badge, Flex, Menu } from "antd";
 import React from "react";
 import { FaLeaf } from "react-icons/fa6";
 // import LogoFullImg from "../../assets/Fujikura.png";
@@ -52,9 +52,32 @@ function Sidebar({ collapsed, theme, pageChange }) {
           { key: "5", icon:<SearchOutlined />, label: "Modify items" },
           { key: "6", icon: <SignatureOutlined />, label: "Add Type" },
           { key: "7", icon: <FileSearchOutlined />, label: "Report" },
-          { key: "8", icon: <SendOutlined />, label: "Transfer" },
+          {
+      key: "8",
+      icon: (
+        <SendOutlined style={{ fontSize: '18px' }} />
+      ),
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span>Transfer</span>
+          {parseInt(localStorage.getItem("notify")) > 0 && (
+            <Badge
+              count={parseInt(localStorage.getItem("notify")) || 0}
+              style={{
+                fontSize: '10px',
+                marginLeft: '8px', 
+              }}
+            />
+          )}
+        </div>
+      ),}
         ]}
         onClick={(e) => pageChange(e.key)}
+
+        // <Badge count={parseInt(localStorage.getItem("notify")) || 0}>
+        //     <SendOutlined />
+        //     <span>Transfer</span>
+        //   </Badge>
       />
     </>
   );

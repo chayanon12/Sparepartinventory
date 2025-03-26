@@ -24,6 +24,7 @@ import React, {
   useEffect,
   useRef,
 } from "react";
+import moment from "moment";
 
 function fn_transfers() {
   // UI components
@@ -218,8 +219,24 @@ function fn_transfers() {
       />
     );
   }, [dataReequestNumber]);
+
+  async function send_email(toFac, quantity) {
+    const formattedDate = moment("2025-03-26").format("DD MMMM YYYY");
+    const strSubjecy = "Delivery Notifications";
+    let strPlantCodeFrom = localStorage.getItem("factory");
+    let strPlantCodeDestination = toFac;
+    let strTotalquantity = quantity;
+    const res = await axios.post("/newarrival/api/EmailSend", {
+      strPlantCodeFrom: strPlantCodeFrom,
+      strSubject: strSubjecy,
+      strDate: formattedDate,
+      strPlantCodeDestination: strPlantCodeDestination,
+      strTotalquantity: strTotalquantity,
+    });
+  }
   const onConfirmdata = useCallback(async () => {
-    if(Tofactory == localStorage.getItem('factory') || Tofactory == ''){
+    let _strError = "";
+    if (Tofactory == localStorage.getItem("factory") || Tofactory == "") {
       notification.error({
         message: "Error",
         description: "Can't transfer same factory pls,try again!",
@@ -237,27 +254,31 @@ function fn_transfers() {
           strTofac: Tofactory,
           strAdminid: localStorage.getItem("username"),
         });
-        if (res.data.message === "Success") {
-          notification.success({
-            message: "Success",
-            description: "Transfer Success",
-            duration: 2,
-            placement: "bottomRight",
-          });
-          setIsModalReqnoOpen(false);
-          SetClear();
-        } else {
-          notification.error({
-            message: "Error",
-            description: "Transfer Error",
-            duration: 2,
-            placement: "bottomRight",
-          });
-          // }
-        }
+        if (res.data.message != "Success") _strError = "Error";
+      }
+      if (_strError == "") {
+        await send_email(Tofactory, dataReequestNumber[0].subData.length);
+        notification.success({
+          message: "Success",
+          description: "Transfer Success",
+          duration: 2,
+          placement: "bottomRight",
+        });
+        setIsModalReqnoOpen(false);
+        SetClear();
+      } else {
+        notification.error({
+          message: "Error",
+          description: "Transfer Error",
+          duration: 2,
+          placement: "bottomRight",
+        });
       }
     } else if (selectedTabRef.current === "Transfer By Serial Number") {
-      let dtDatainsSerial = dataSerialNumber.filter(item => selectedRows.includes(item.serial_number));
+      let _strError = "";
+      let dtDatainsSerial = dataSerialNumber.filter((item) =>
+        selectedRows.includes(item.serial_number)
+      );
       for (let i = 0; i < dtDatainsSerial.length; i++) {
         const res = await axios.post("/newarrival/api/settrasferfactory", {
           strItemsid: dtDatainsSerial[i].serial_number,
@@ -266,31 +287,39 @@ function fn_transfers() {
           strTofac: Tofactory,
           strAdminid: localStorage.getItem("username"),
         });
-        if (res.data.message === "Success") {
-          notification.success({
-            message: "Success",
-            description: "Transfer Success",
-            duration: 2,
-            placement: "bottomRight",
-          });
-          setIsModalReqnoOpen(false);
-          SetClear();
-        } else {
-          notification.error({
-            message: "Error",
-            description: "Transfer Error",
-            duration: 2,
-            placement: "bottomRight",
-          });
-          // }
-        }
+        if (res.data.message !== "Success") _strError = "Error";
       }
-      
+      if (_strError == "") {
+        await send_email(Tofactory, dtDatainsSerial.length);
+        notification.success({
+          message: "Success",
+          description: "Transfer Success",
+          duration: 2,
+          placement: "bottomRight",
+        });
+        setIsModalReqnoOpen(false);
+        SetClear();
+      } else {
+        notification.error({
+          message: "Error",
+          description: "Transfer Error",
+          duration: 2,
+          placement: "bottomRight",
+        });
+      }
     }
-    setDataSerialNumber([])
-    setTofactory('')
-    setDataRequestNumber([])
-  }, [reqNumber, Tofactory, dataReequestNumber, selectedTabRef,setDataSerialNumber,setDataRequestNumber,selectedRows]);
+    setDataSerialNumber([]);
+    setTofactory("");
+    setDataRequestNumber([]);
+  }, [
+    reqNumber,
+    Tofactory,
+    dataReequestNumber,
+    selectedTabRef,
+    setDataSerialNumber,
+    setDataRequestNumber,
+    selectedRows,
+  ]);
   const Reqno_modal = useMemo(() => {
     {
       return (
@@ -433,7 +462,9 @@ function fn_transfers() {
         <Checkbox
           onChange={(e) => {
             if (e.target.checked) {
-              const allkeys = dataSerialNumber.map((item) => item.serial_number);
+              const allkeys = dataSerialNumber.map(
+                (item) => item.serial_number
+              );
               setSelectedRows(allkeys);
             } else {
               setSelectedRows([]);
@@ -446,7 +477,7 @@ function fn_transfers() {
         <Checkbox
           onChange={(e) => {
             if (e.target.checked) {
-              setSelectedRows((prev) => [...prev, record.serial_number]); 
+              setSelectedRows((prev) => [...prev, record.serial_number]);
             } else {
               setSelectedRows((prev) =>
                 prev.filter((key) => key !== record.serial_number)
@@ -456,7 +487,7 @@ function fn_transfers() {
           checked={selectedRows.includes(record.serial_number)}
         />
       ),
-    },    
+    },
     {
       title: "Factory",
       dataIndex: "factory",
@@ -575,6 +606,7 @@ function fn_transfers() {
   const handleOk = async () => {
     let admin = localStorage.getItem("username");
     let Factory = localStorage.getItem("factory");
+    let _strError = ""
     for (let i = 0; i < dtDetailDataAccept.length; ++i) {
       let data = await getData("setReciveItems", {
         strstrSerialNo: dtDetailDataAccept[i].serial_no,
@@ -582,25 +614,25 @@ function fn_transfers() {
         strReqNo: strCurrentReq,
         Fac: Factory,
       });
-      if (data.message == "Success") {
-        notification.success({
-          message: "Success",
-          description: "Data Accept Successfully",
-          placement: "bottomRight",
-          duration: 3,
-        });
-        setTimeout(() => {
-          setDtShowDataAccept([]);
-          setIsModalOpen(false);
-        }, 100);
-      } else {
-        notification.error({
-          message: "Error",
-          description: "Error Pls,Try Again!",
-          placement: "bottomRight",
-          duration: 3,
-        });
-      }
+      if (data.message !== "Success") _strError = "Error"
+    }
+    console.log(_strError,'error')
+    if (_strError == "") {
+      notification.success({
+        message: "Success",
+        description: "Data Accept Successfully",
+        placement: "bottomRight",
+        duration: 3,
+      });
+      setDtShowDataAccept([]);
+      setIsModalOpen(false);
+    } else {
+      notification.error({
+        message: "Error",
+        description: "Error Pls,Try Again!",
+        placement: "bottomRight",
+        duration: 3,
+      });
     }
   };
 

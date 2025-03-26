@@ -103,11 +103,11 @@ function Header({ onSwitchChange, theme, page }) {
       </Typography.Title>
       <Flex align="center" gap="1rem">
         <Flex align="center" gap="10px">
-          <Badge count={parseInt(localStorage.getItem("notify")) || 0}>
-            <Dropdown menu={{ items: test }} placement="bottom">
-              <Button icon={<InboxOutlined />}></Button>
-            </Dropdown>
-          </Badge>
+          {/* <Badge count={parseInt(localStorage.getItem("notify")) || 0}> */}
+            {/* <Dropdown menu={{ items: test }} placement="bottom"> */}
+              {/* <Button icon={<InboxOutlined />}></Button> */}
+            {/* </Dropdown> */}
+          {/* </Badge> */}
           <Dropdown menu={{ items }} placement="bottom">
             <Button>
               <Avatar
