@@ -48,7 +48,6 @@ function SecondContent() {
     }
     combinedData[item.type_name].out_count = item.total_in_stock;
   });
-  console.log(DtDataFixedFac);
   // DtDataAction.forEach((item) => {
   //   if (!combinedData[item.type_name]) {
   //     combinedData[item.type_name] = { quantity: 0, out_count: 0 };
@@ -260,6 +259,7 @@ function SecondContent() {
                 marginBottom: "5px",
                 display: "flex",
                 justifyContent: "center",
+                textAlign: "center",
               }}
             >
               Total Items In New Arrival Inventory

@@ -54,6 +54,7 @@ function fn_dashboard() {
     getData("getDttable", "");
     getData("getDttableAction", "");
     getData("getDataTableFixedFac", "");
+    getData("getNotify", "");
     const timer = setInterval(() => {
       setTime(new Date());
     }, 1000);
@@ -107,6 +108,20 @@ function fn_dashboard() {
         .get(`/newarrival/api/getDatableFixedFac?plantCode=${fac}`)
         .then((res) => {
           setDtDataFixedFac(res.data);
+        })
+        .catch((err) => {
+          notification.error({
+            message: "Error",
+            description: err,
+            duration: 2,
+            placement: "bottomRight",
+          });
+        });
+    } else if (option  == 'getNotify'){
+      await axios
+        .get(`/newarrival/api/getNotificationTransection?strPlantCode=${localStorage.getItem("factory")}`)
+        .then((res) => {
+          localStorage.setItem("notify", res.data[0].notification_count);
         })
         .catch((err) => {
           notification.error({

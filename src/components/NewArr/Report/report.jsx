@@ -73,7 +73,6 @@ function report() {
             }}
             options={[
               { value: "All", label: "All" },
-              { value: "N2", label: "N2" },
               { value: "K1", label: "K1" },
               { value: "P1", label: "P1" },
               { value: "BKK", label: "BKK" },

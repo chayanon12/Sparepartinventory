@@ -10,6 +10,7 @@ import CheckSerial from "../ChcekSerial/CheckSerial";
 import ModifyItems from "../ModifyItems/ModifyItems";
 import Addtype from "../Addtype/addtype";
 import Report from "../Report/report";
+import Transfer from "../Transfers/transfers";
 import { useState } from "react";
 import NewrrImg from "../../../assets/comnew3D.png";
 // import "./App.css";
@@ -51,6 +52,7 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
     5: <ModifyItems state={open} />,
     6: <Addtype state={open} />,
     7: <Report state={open} />,
+    8: <Transfer state={open} />,
   };
 
   return (

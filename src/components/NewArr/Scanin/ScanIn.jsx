@@ -5,7 +5,7 @@ import {
   Table as AntdTable,
   Select,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { fn_Scanin } from "./fn_Scanin";
 import "./ScanIn.css";
 import {

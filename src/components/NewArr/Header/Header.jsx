@@ -8,9 +8,19 @@ import {
   LoginOutlined,
   WindowsOutlined,
   BlockOutlined,
+  InboxOutlined,
 } from "@ant-design/icons";
 import NewrrImg from "/src/assets/comnew3D.png";
-import { Avatar, Flex, Switch, Typography, Card, Dropdown, Button } from "antd";
+import {
+  Avatar,
+  Flex,
+  Switch,
+  Typography,
+  Card,
+  Dropdown,
+  Button,
+  Badge,
+} from "antd";
 import Search from "antd/es/input/Search";
 import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -24,6 +34,7 @@ function Header({ onSwitchChange, theme, page }) {
   const onSwitchChange2 = () => {
     navigate("/InventorymanagementSystem/selectpage");
   };
+  
   const items = [
     {
       key: "1",
@@ -39,20 +50,31 @@ function Header({ onSwitchChange, theme, page }) {
       ),
     },
   ];
+  const test = [
+    {
+      key: "1",
+      label: (
+        <Button >Your package has arrived.</Button>
+      ),
+    },
+  ];
   return (
     <Flex
       align="center"
       justify="space-between"
-      style={{ background: theme === true ? "#fff" : "#001529" ,marginLeft: "20px"}}
+      style={{
+        background: theme === true ? "#fff" : "#001529",
+        marginLeft: "20px",
+      }}
     >
       <Typography.Title
         level={2}
         type="secondary"
         style={{
-          display: "flex", // ใช้ Flexbox จัดเรียง
-          alignItems: "center", // จัดให้อยู่ในแนวกลาง
+          display: "flex",
+          alignItems: "center",
           color: theme === false ? "#fff" : "#3f4840ea",
-          gap: "10px", // เพิ่มระยะห่างระหว่างรูปและข้อความ
+          gap: "10px",
         }}
       >
         {/* <img
@@ -75,11 +97,17 @@ function Header({ onSwitchChange, theme, page }) {
           ? "Modify Items" + "  (" + Pagename + ")"
           : page === "6"
           ? "Add Type" + "  (" + Pagename + ")"
-          : "Report" + "  (" + Pagename + ")"}
+          : page === "7"
+          ? "Report" + "  (" + Pagename + ")"
+          : "Transfers" + "  (" + Pagename + ")"}
       </Typography.Title>
-
       <Flex align="center" gap="1rem">
         <Flex align="center" gap="10px">
+          <Badge count={parseInt(localStorage.getItem("notify")) || 0}>
+            <Dropdown menu={{ items: test }} placement="bottom">
+              <Button icon={<InboxOutlined />}></Button>
+            </Dropdown>
+          </Badge>
           <Dropdown menu={{ items }} placement="bottom">
             <Button>
               <Avatar

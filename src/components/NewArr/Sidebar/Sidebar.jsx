@@ -22,6 +22,7 @@ import {
   ToolOutlined 
 } from "@ant-design/icons";
 import "./Sidebar.css";
+import { SendOutlined } from "@mui/icons-material";
 function Sidebar({ collapsed, theme, pageChange }) {
   return (
     <>
@@ -51,6 +52,7 @@ function Sidebar({ collapsed, theme, pageChange }) {
           { key: "5", icon:<SearchOutlined />, label: "Modify items" },
           { key: "6", icon: <SignatureOutlined />, label: "Add Type" },
           { key: "7", icon: <FileSearchOutlined />, label: "Report" },
+          { key: "8", icon: <SendOutlined />, label: "Transfer" },
         ]}
         onClick={(e) => pageChange(e.key)}
       />
