@@ -58,7 +58,6 @@ function fn_ModifyItems() {
           setMacAddress(res.data.mac_address || "");
           setDesktopMonitor(res.data.pc_monitor_serial || "");
           setOlddesktopserial(res.data.pc_old_serial || "");
-          setUsercontact(res.data.user_contact || "");
           if (res.data.item_name == null || res.data.item_name == "") {
             document.getElementById("txtItemName").focus();
           } else if (res.data.mac_address == null ||res.data.mac_address == "") {
@@ -69,9 +68,7 @@ function fn_ModifyItems() {
             document.getElementById("txtDesktopMonitor").focus();
           } else if(res.data.pc_old_serial == null ||res.data.pc_old_serial == "") {
             document.getElementById("txtOldDesktopSerial").focus();
-          } else if(res.data.user_contact == null ||res.data.user_contact == "") {
-            document.getElementById("txtUserContact").focus();
-          }
+          } 
 
         } else {
           setSerialNumber("");
@@ -91,8 +88,7 @@ function fn_ModifyItems() {
             fix_assets_code: fixAssetsCode,
             serialNo: serialNumber,
             pc_monitor_serial: DesktopMonitor,
-            pc_old_serial: olddesktopserial,
-            user_contact: usercontact,
+            pc_old_serial: olddesktopserial
           },
         });
         if (res.data.Status == "Success") {

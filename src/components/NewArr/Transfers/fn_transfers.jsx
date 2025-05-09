@@ -221,7 +221,7 @@ function fn_transfers() {
   }, [dataReequestNumber]);
 
   async function send_email(toFac, quantity) {
-    const formattedDate = moment("2025-03-26").format("DD MMMM YYYY");
+    const formattedDate = moment().format("DD MMMM YYYY");
     const strSubjecy = "Delivery Notifications";
     let strPlantCodeFrom = localStorage.getItem("factory");
     let strPlantCodeDestination = toFac;
@@ -257,7 +257,7 @@ function fn_transfers() {
         if (res.data.message != "Success") _strError = "Error";
       }
       if (_strError == "") {
-        await send_email(Tofactory, dataReequestNumber[0].subData.length);
+        // await send_email(Tofactory, dataReequestNumber[0].subData.length);
         notification.success({
           message: "Success",
           description: "Transfer Success",
@@ -290,7 +290,7 @@ function fn_transfers() {
         if (res.data.message !== "Success") _strError = "Error";
       }
       if (_strError == "") {
-        await send_email(Tofactory, dtDatainsSerial.length);
+        // await send_email(Tofactory, dtDatainsSerial.length);
         notification.success({
           message: "Success",
           description: "Transfer Success",

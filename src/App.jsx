@@ -6,7 +6,8 @@ import Selectsystem from "./components/SelectSystemPage/selectsystem";
 // import NewArrivalItems from "./components/NewArrival/Home/Homepage";
 import NewArr from "./components/NewArr/MainPage/MainPage";
 import axios from "axios";
-
+import GenQr from "./components/GenQrcode/genQrcode";
+import "./App.css";
 function App() {
   // const backendUrl = import.meta.env.VITE_SERVICE_URL;
   const backendUrl = `http://${window.location.hostname}:4002`;
@@ -32,24 +33,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/InventorymanagementSystem" element={<Login />} />
-        <Route path="/InventorymanagementSystem/selectpage" element={<Selectsystem />} />
-      
-          <Route
-          path="/InventorymanagementSystem/newarrival"
-          element={
-            <ProtectedRoute
-              element={<NewArr switchValue={switchValue} setSwitchValue={setSwitchValue} />}
-            />
-          }
-        />
-        <Route
-          path="/InventorymanagementSystem/Sparepart"
-          element={
-            <ProtectedRoute
-              element={<SparePart switchValue={switchValue} setSwitchValue={setSwitchValue} />}
-            />
-          }
-        />
+        <Route path="/InventorymanagementSystem/selectpage" element={<Selectsystem />} />      
+        <Route path="/InventorymanagementSystem/newarrival" element={ <ProtectedRoute element={<NewArr switchValue={switchValue} setSwitchValue={setSwitchValue} />} /> } />
+        <Route path="/InventorymanagementSystem/Sparepart"  element={ <ProtectedRoute element={<SparePart switchValue={switchValue} setSwitchValue={setSwitchValue} />} /> } />
+        <Route path='/InventorymanagementSystem/genQR' element={<GenQr/>} />
       </Routes>
     </BrowserRouter>
   );

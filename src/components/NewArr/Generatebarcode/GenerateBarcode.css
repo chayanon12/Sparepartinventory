@@ -4,7 +4,7 @@
 
 .TableSerial {
   margin-top: 20px;
-  max-height: 500px;
+  max-height: 400px !important; 
   max-width: 1000px;
   margin-left: 100px;
   overflow-y: none;
@@ -14,4 +14,5 @@
 }
 .TableSerial td {
   text-align: center;
+  overflow-y: auto;
 }

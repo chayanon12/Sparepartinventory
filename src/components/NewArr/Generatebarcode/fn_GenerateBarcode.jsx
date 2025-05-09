@@ -21,9 +21,9 @@ function fn_GenerateBarcode() {
   useEffect(() => {
     const dpr = window.devicePixelRatio;
     if (dpr >= 1.25) {
-      setPagination(4);
+      setPagination(10);
     } else {
-      setPagination(7);
+      setPagination(10);
     }
   }, []);
   const itemsPerPage = pagination;

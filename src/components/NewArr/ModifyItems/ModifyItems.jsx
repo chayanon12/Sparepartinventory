@@ -105,7 +105,7 @@ function ModifyItems() {
                   value={olddesktopserial}
                 />
               </td>
-              <td className="ModifyTd">User Contact : </td>
+              {/* <td className="ModifyTd">User Contact : </td>
               <td>
                 <Input
                   className="ModifyDataTextF"
@@ -114,7 +114,7 @@ function ModifyItems() {
                   onChange={(e) => setUsercontact(e.target.value)}
                   value={usercontact}
                 />
-              </td>
+              </td> */}
               <td>
                 <Button
                   type="primary"

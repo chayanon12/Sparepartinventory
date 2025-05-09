@@ -54,6 +54,7 @@ function ScanIn({ state }) {
     txtdataState,
     txtSerialGet,
     DtData2,
+    cancel
   } = fn_Scanin();
   return (
     <div style={{ width: "100%" }}>
@@ -195,6 +196,7 @@ function ScanIn({ state }) {
                               if (e.key === "Enter") {
                                 handletxtSerialChange(index, e);
                               }
+                              
                             }}
                             disabled={txtSerialGet.includes(txtSerial[index])}
                           />
@@ -205,7 +207,7 @@ function ScanIn({ state }) {
                       <TableCell colSpan={2}>
                         <Button onClick={saveData}>Save</Button>
                         &nbsp;
-                        <Button>Submit</Button>
+                        <Button onClick={cancel}>Cancel</Button>
                       </TableCell>
                     </TableRow>
                   </TableBody>

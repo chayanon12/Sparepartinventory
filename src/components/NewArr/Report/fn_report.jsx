@@ -110,6 +110,31 @@ function fn_report() {
       ),
     },
     {
+      title: "User Contact",
+      dataIndex: "usercontact",
+      key: "usercontact",
+      width: 180,
+      fixed: "left",
+      className: "no-scroll",
+      render: (text) => (
+        <div
+          style={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {text}
+        </div>
+      ),
+    },
+    {
+      title: "Req Number",
+      dataIndex: "req_no",
+      key: "req_no",
+      width: 180,
+    },
+    {
       title: "Item Name",
       dataIndex: "item_name",
       key: "item_name",
@@ -131,12 +156,6 @@ function fn_report() {
       title: "Old Desktop Serial",
       dataIndex: "olddesktopserial",
       key: "olddesktopserial",
-      width: 180,
-    },
-    {
-      title: "User Contact",
-      dataIndex: "usercontact",
-      key: "usercontact",
       width: 180,
     },
     {
@@ -244,6 +263,7 @@ function fn_report() {
         );
         if (res.data.length > 0) {
           setDtData(res.data);
+          console.log(res.data);  
           setDtDataState(true);
           notification.success({
             message: "Success",

@@ -28,7 +28,7 @@ function addtype() {
     Checktype,
     submitData,
     form,
-    EditableCell,
+    EditableCell,  
     data,
     mergedColumns,
     cancel,

@@ -25,6 +25,7 @@ function fn_Scanin() {
   const current_date = dayjs().format("YYYY-MM-DD");
   const [date, setDate] = useState(current_date);
   const [timestamp, setTimestamp] = useState("");
+  const [userReqName, setUserReqName] = useState("");
   const columns = [
     {
       title: "Request Number",
@@ -71,7 +72,7 @@ function fn_Scanin() {
       title: "Scan In Date",
       dataIndex: "strDate",
       key: "strDate",
-    }
+    },
   ];
   function SetFocus(txtFile) {
     // document.getElementById(txtFile).focus();
@@ -158,6 +159,9 @@ function fn_Scanin() {
       return;
     }
     let checkExitSerial = await submitData("getSerialRequestNo", requestno);
+    if (checkExitSerial.req_by != "") {
+      setUserReqName(checkExitSerial.req_by);
+    }
     if (checkExitSerial.serial_number.length > 0) {
       const serialNumbers = checkExitSerial.serial_number.map(
         (item) => item.serial_number
@@ -314,10 +318,11 @@ function fn_Scanin() {
               strMovementType: params.movement,
               strSerialNo: params.Serial,
               strAdminId: params.strAdminId,
-              strID: localStorage.getItem("user_empcode"),
+              strID: "",
               strDate: params.strDate,
               strItemFlg: "NEW",
               strRequestNo: params.requestno,
+              strReqby: params.req_by,
             },
           },
           {
@@ -350,7 +355,7 @@ function fn_Scanin() {
             placement: "bottomRight",
           });
         });
-      
+
       return result;
     } else if (option == "getTypeid") {
       let type = "";
@@ -383,7 +388,7 @@ function fn_Scanin() {
           setDtDataState(true);
         })
         .catch((err) => {
-          notification.error({  
+          notification.error({
             message: "Error",
             description: err,
             duration: 2,
@@ -406,7 +411,6 @@ function fn_Scanin() {
             duration: 2,
             placement: "bottomRight",
           });
-       
         });
       return dtData;
     } else if (option == "DDL") {
@@ -422,7 +426,6 @@ function fn_Scanin() {
             duration: 2,
             placement: "bottomRight",
           });
-          
         });
     } else if (option == "getdataRequestNo") {
       let data = [];
@@ -459,26 +462,34 @@ function fn_Scanin() {
         });
       return data;
     } else if (option == "setRequestNodata") {
-     let result = "";
-     await axios.post(`/newarrival/api/setReqNoStatusData`, {
-      dataList:{
-        strPlantCode: fac,
-        stritemRemain: params.itemsRemain,
-        strReqno: params.requestno,
-        strReqStatus: params.ReqStatus
-      }
-     }).then((res) => {
-        result = res.data.result;
-     }).catch((err) => {
-        alert(err)
-     })
-     return result;
+      let result = "";
+      await axios
+        .post(`/newarrival/api/setReqNoStatusData`, {
+          dataList: {
+            strPlantCode: fac,
+            stritemRemain: params.itemsRemain,
+            strReqno: params.requestno,
+            strReqStatus: params.ReqStatus,
+          },
+        })
+        .then((res) => {
+          result = res.data.result;
+        })
+        .catch((err) => {
+          alert(err);
+        });
+      return result;
     }
   }
   const handletxtSerialChange = (index, event) => {
     const newValues = [...txtSerial];
     newValues[index] = event.target.value.trim();
     setTxtSerial(newValues);
+    if (txtSerialGet.includes(txtSerial[index])) {
+      alert("This serial number is already in use and cannot be edited.");
+      newValues[index] = "";
+      setTxtSerial([...newValues]);
+    }
     if (event.key === "Enter") {
       if (event.key === "Enter") {
         const nextElement = document.getElementById("txtSerial_" + (index + 1));
@@ -491,37 +502,63 @@ function fn_Scanin() {
       }
     }
   };
+  const cancel = () => {
+    const newValues = [...txtSerial];
+    
+   console.log(txtSerialGet,'txtSerialGet')
+    newValues.forEach((value, index) => {
+      console.log(value,'value')
+      if (!txtSerialGet.includes(value)) {
+        newValues[index] = '';
+      }
+    });
+  
+    setTxtSerial([...newValues]); 
+  };
   async function saveData() {
     let data = await preparedata();
     let checkExitSerial = await submitData("getSerialRequestNo", requestno);
+
     let remainingAmount = 0;
     const dataInsert = data.filter(
       (item, index, self) =>
         index === self.findIndex((t) => t.strSerialNo === item.strSerialNo) &&
         !txtSerialGet.includes(item.strSerialNo)
     );
+    if (dataInsert.length <= 0) {
+      notification.error({
+        message: "Error",
+        description: "Please Fill Data",
+        duration: 2,
+        placement: "bottomRight",
+      });
+      return;
+    }
     if (parseInt(checkExitSerial.amount) == parseInt(data.length)) {
       //insert Close Status
-      alert('CLOSE')
-      remainingAmount = parseInt(checkExitSerial.amount) - parseInt(data.length);
+      notification.success({
+        message: "Success",
+        description: "Save All Serial Success",
+        duration: 4,
+        placement: "bottomRight",
+      });
+      remainingAmount =
+        parseInt(checkExitSerial.amount) - parseInt(data.length);
       let insertRequestNodata = await submitData("setRequestNodata", {
         itemsRemain: remainingAmount,
         requestno: requestno,
         ReqStatus: "Close",
-      })
-
-      
+      });
     } else if (parseInt(checkExitSerial.amount) > parseInt(data.length)) {
       //insert Active Status
-      alert('ACTIVE')
-      remainingAmount = parseInt(checkExitSerial.amount) - parseInt(data.length);
+      remainingAmount =
+        parseInt(checkExitSerial.amount) - parseInt(data.length);
       let insertRequestNodata = await submitData("setRequestNodata", {
         itemsRemain: remainingAmount,
         requestno: requestno,
         ReqStatus: "Active",
-      })
+      });
     } else {
-      alert('ERROR')
       notification.error({
         message: "Error",
         description: "Serial number not match",
@@ -531,7 +568,7 @@ function fn_Scanin() {
       return;
     }
     let SaveDataresult = "";
-    
+
     for (let i = 0; i < dataInsert.length; i++) {
       SaveDataresult = await submitData("submit", {
         Itemid: dataInsert[i].strItemId,
@@ -542,13 +579,13 @@ function fn_Scanin() {
         strDate: dataInsert[i].strDate,
         requestno: dataInsert[i].strRequestno,
         remark: "",
+        req_by: dataInsert[i].req_by,
       });
     }
-   
-    setDtDataState(true);
-    setDtdata(dataInsert)
 
-    setTxtSerial("");
+    setDtDataState(true);
+    setDtdata(dataInsert);
+    btnCancel_Click()
     setTxtSerialState(true);
     setDtDataState(true);
   }
@@ -567,8 +604,9 @@ function fn_Scanin() {
           strRequestno: requestno,
           strMovementType: "IN",
           adminId: localStorage.getItem("user_empcode"),
-          adminName: localStorage.getItem("username"), 
+          adminName: localStorage.getItem("username"),
           remark: "",
+          req_by: userReqName
         });
       }
     }
@@ -607,7 +645,8 @@ function fn_Scanin() {
     txtRequestNOState,
     txtdataState,
     txtSerialGet,
-    DtData2
+    DtData2,
+    cancel,
   };
 }
 

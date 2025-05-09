@@ -265,10 +265,10 @@ function fn_ScanOut() {
     setDtDataState(false);
   };
   function resetTxtfield(serial){
-    setuser("");
-    setusername("");
-    setRemark("");
-    setDdlFacValue("");
+    // setuser("");
+    // setusername("");
+    // setRemark("");
+    // setDdlFacValue("");
     setTxtScanoutValue("");
     
   }
@@ -337,7 +337,15 @@ function fn_ScanOut() {
             });
            resetTxtfield();
           }
-          setDdlFacValue(null);
+          else if (response.status === 206) {
+            notification.error({
+              message: "Error",
+              description: "Items Holding For Transfer",
+              placement: "bottomRight",
+              duration: 4,
+            });
+           resetTxtfield();
+          }
         })
         .catch((error) => {
           notification.error({
