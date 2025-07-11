@@ -1,0 +1,20 @@
+.SpareopenCardChecker {
+  animation: collapseCard 0.3s ease forwards;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  width: 98% !important;
+  height: 100%!important;
+  overflow: hidden !important;
+}
+ .TableAllCheck{
+   margin-top: 20px;
+   min-height: 300px;
+   max-height: 500px;
+   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+  }
+
+@media (max-resolution: 96dpi) {
+  .SpareopenCardChecker {
+    width: 98% !important;
+    height: 100% !important;
+  }
+}

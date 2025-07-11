@@ -13,6 +13,7 @@ import Report from "../Report/report";
 import Transfer from "../Transfers/transfers";
 import { useState } from "react";
 import NewrrImg from "../../../assets/comnew3D.png";
+import CheckUser from '../../Sparepart/CheckUser/CheckUser'
 // import "./App.css";
 import './MainPage.css';
 
@@ -53,6 +54,7 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
     6: <Addtype state={open} />,
     7: <Report state={open} />,
     8: <Transfer state={open} />,
+    9: <CheckUser state={open} />,
   };
 
   return (

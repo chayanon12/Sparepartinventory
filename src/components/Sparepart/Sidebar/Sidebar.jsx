@@ -52,6 +52,7 @@ function Sidebar({ collapsed, theme, pageChange }) {
           { key: "6", icon:<SearchOutlined />, label: "Modify items" },
           { key: "7", icon: <SignatureOutlined />, label: "Add Type" },
           { key: "8", icon: <FileSearchOutlined />, label: "Report" },
+          { key: "9", icon: <UserOutlined />, label: "Check User" },
         ]}
         onClick={(e) => pageChange(e.key)}
       />

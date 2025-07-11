@@ -15,11 +15,11 @@ import {
   SettingOutlined,
   ScanOutlined,
   PrinterOutlined,
-  BarChartOutlined ,
+  BarChartOutlined,
   FileSearchOutlined,
   SearchOutlined,
   SignatureOutlined,
-  ToolOutlined 
+  ToolOutlined,
 } from "@ant-design/icons";
 import "./Sidebar.css";
 import { SendOutlined } from "@mui/icons-material";
@@ -49,28 +49,28 @@ function Sidebar({ collapsed, theme, pageChange }) {
           { key: "2", icon: <ScanOutlined />, label: "Scan In" },
           { key: "3", icon: <LoginOutlined />, label: "Scan Out" },
           { key: "4", icon: <PrinterOutlined />, label: "Barcode Genarate" },
-          { key: "5", icon:<SearchOutlined />, label: "Modify items" },
+          { key: "5", icon: <SearchOutlined />, label: "Modify items" },
           { key: "6", icon: <SignatureOutlined />, label: "Add Type" },
           { key: "7", icon: <FileSearchOutlined />, label: "Report" },
           {
-      key: "8",
-      icon: (
-        <SendOutlined style={{ fontSize: '18px' }} />
-      ),
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span>Transfer</span>
-          {parseInt(localStorage.getItem("notify")) > 0 && (
-            <Badge
-              count={parseInt(localStorage.getItem("notify")) || 0}
-              style={{
-                fontSize: '10px',
-                marginLeft: '8px', 
-              }}
-            />
-          )}
-        </div>
-      ),}
+            key: "8",
+            icon: <SendOutlined style={{ fontSize: "18px" }} />,
+            label: (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <span>Transfer</span>
+                {parseInt(localStorage.getItem("notify")) > 0 && (
+                  <Badge
+                    count={parseInt(localStorage.getItem("notify")) || 0}
+                    style={{
+                      fontSize: "10px",
+                      marginLeft: "8px",
+                    }}
+                  />
+                )}
+              </div>
+            ),
+          },
+          { key: "9", icon: <UserOutlined />, label: "Check User" },
         ]}
         onClick={(e) => pageChange(e.key)}
 

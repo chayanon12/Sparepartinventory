@@ -11,6 +11,7 @@ import CheckSerial from "../ChcekSerial/CheckSerial";
 import ModifyItems from "../ModifyItems/ModifyItems";
 import Addtype from "../Addtype/addtype";
 import Report from "../Report/report";
+import CheckUser from "../CheckUser/CheckUser";
 import { useState } from "react";
 // import "./App.css";
 import "./MainPage.css";
@@ -52,6 +53,7 @@ const MainPage = ({ switchValue, setSwitchValue }) => {
     6: <ModifyItems state={open} />,
     7: <Addtype state={open} />,
     8: <Report state={open} />,
+    9: <CheckUser state={open} />,
   };
 
   return (
