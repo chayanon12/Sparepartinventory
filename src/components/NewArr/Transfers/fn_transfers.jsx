@@ -40,6 +40,7 @@ function fn_transfers() {
   const [dtDetailDataAccept, setDtDetailDataAccept] = useState([]);
   const [strCurrentReq, setStrCurrentReq] = useState([]);
 
+  const [strtxtReqNo, setStrtxtReqNo] = useState("");
   const reqNumberRef = useRef(null);
   const serialNumberRef = useRef(null);
   //State
@@ -83,15 +84,15 @@ function fn_transfers() {
   }, []);
   //Search by Request Number
   const SearchByRequestNumber = useCallback(async () => {
-    if (reqNumber == "") {
-      notification.error({
-        message: "Error",
-        description: "Please input serial number",
-        duration: 2,
-        placement: "bottomRight",
-      });
-      return;
-    }
+    // if (reqNumber == "") {
+    //   notification.error({
+    //     message: "Error",
+    //     description: "Please input serial number",
+    //     duration: 2,
+    //     placement: "bottomRight",
+    //   });
+    //   return;
+    // }
     const dtData = await getData("getdataByRequestNumber", reqNumber);
 
     if (dtData.length > 0) {
@@ -167,7 +168,14 @@ function fn_transfers() {
       key: "transfers",
       align: "center",
       render: (text, record) => (
-        <Button type="primary" onClick={() => setIsModalReqnoOpen(true)}>
+        <Button
+          type="primary"
+          onClick={() => {
+            console.log(record.req_no);
+            setStrtxtReqNo(record.req_no);
+            setIsModalReqnoOpen(true);
+          }}
+        >
           Transfers
         </Button>
       ),
@@ -205,13 +213,15 @@ function fn_transfers() {
         style={{ marginTop: "10px" }}
         columns={Reqcolumns}
         dataSource={dataReequestNumber}
+        scroll={{ y: 300 }}
+        className="TableAll"
         expandable={{
           expandedRowRender: (record) => (
             <Table
               columns={ReqsubColumns}
               dataSource={record.subData}
               pagination={false}
-              className="tablesubtest"
+              className="TableSub"
             />
           ),
           defaultExpandedRowKeys: dataReequestNumber.map((item) => item.req_no),
@@ -247,9 +257,10 @@ function fn_transfers() {
     }
     if (selectedTabRef.current === "Transfer By Request Number") {
       for (let i = 0; i < dataReequestNumber[0].subData.length; i++) {
+        console.log(dataReequestNumber);
         const res = await axios.post("/newarrival/api/settrasferfactory", {
           strItemsid: dataReequestNumber[0].subData[i].serial_number,
-          strReqNo: reqNumber,
+          strReqNo: strtxtReqNo,
           strFromfac: localStorage.getItem("factory"),
           strTofac: Tofactory,
           strAdminid: localStorage.getItem("username"),
@@ -606,7 +617,7 @@ function fn_transfers() {
   const handleOk = async () => {
     let admin = localStorage.getItem("username");
     let Factory = localStorage.getItem("factory");
-    let _strError = ""
+    let _strError = "";
     for (let i = 0; i < dtDetailDataAccept.length; ++i) {
       let data = await getData("setReciveItems", {
         strstrSerialNo: dtDetailDataAccept[i].serial_no,
@@ -614,9 +625,9 @@ function fn_transfers() {
         strReqNo: strCurrentReq,
         Fac: Factory,
       });
-      if (data.message !== "Success") _strError = "Error"
+      if (data.message !== "Success") _strError = "Error";
     }
-    console.log(_strError,'error')
+    console.log(_strError, "error");
     if (_strError == "") {
       notification.success({
         message: "Success",

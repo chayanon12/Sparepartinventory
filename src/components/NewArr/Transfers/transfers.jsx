@@ -13,7 +13,7 @@ function Transfers() {
 
   return (
     <div style={{ width: "100%" }}>
-      <Card className="TransferopenCard">
+      <Card className="TransferopenCard" >
         <Segmented
           value={selectedTab}
           options={[

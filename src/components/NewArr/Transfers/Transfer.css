@@ -5,6 +5,11 @@
     height: 100%!important;
     overflow-y: scroll;
 }
+.TableSub th{
+    text-align: center !important; 
+    background-color: #a3a3a336 !important;
+    color: black !important;    
+   }
 @media (max-resolution: 96dpi) {
     .TransferopenCard {
       width: 98% !important;
