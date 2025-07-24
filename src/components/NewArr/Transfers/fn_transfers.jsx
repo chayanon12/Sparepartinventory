@@ -277,6 +277,8 @@ function fn_transfers() {
         });
         setIsModalReqnoOpen(false);
         SetClear();
+        setTofactory(null);
+        console.log("Transfer Success");
       } else {
         notification.error({
           message: "Error",
@@ -372,6 +374,7 @@ function fn_transfers() {
                   .toLowerCase()
                   .localeCompare((optionB?.label ?? "").toLowerCase())
               }
+              value={Tofactory}
               options={[
                 { value: "K1", label: "K1" },
                 { value: "P1", label: "P1" },
@@ -635,7 +638,11 @@ function fn_transfers() {
         placement: "bottomRight",
         duration: 3,
       });
-      setDtShowDataAccept([]);
+      // setDtShowDataAccept([]);
+      getData("getShowTransfer", {
+        plant: localStorage.getItem("factory"),
+        flg: "All",
+      });
       setIsModalOpen(false);
     } else {
       notification.error({
@@ -654,7 +661,11 @@ function fn_transfers() {
       admin_name: adminName,
     });
     if (strCancel.message == "Success") {
-      setDtShowDataAccept([]);
+      // setDtShowDataAccept([]);
+        getData("getShowTransfer", {
+        plant: localStorage.getItem("factory"),
+        flg: "All",
+      });
       //send mail
       notification.success({
         message: "Success",
@@ -944,6 +955,21 @@ function fn_transfers() {
           .then((res) => {
             data = res.data;
           });
+      } else if (type == 'getCountNotify'){
+         axios
+        .get(`/newarrival/api/GetCountNewarrDashboard`)
+        .then((res) => {
+          // setCount(res.data[0].count_spare);
+          localStorage.setItem("countNotify", res.data[0].count_spare);
+        })
+        .catch((err) => {
+          notification.error({
+            message: "Error",
+            description: err,
+            placement: "bottomRight",
+            duration : 2
+          });
+        });
       }
       return data;
     } catch (error) {
