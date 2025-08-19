@@ -194,6 +194,7 @@ function fn_ScanOut() {
           strItemFlg: "NEW",
           UserDeptName: userDeptName,
         });
+        
       } else {
         if (username == "" || user == "" || ddlFacValue == "") {
           if (Remark != "") {
@@ -270,7 +271,7 @@ function fn_ScanOut() {
     // setRemark("");
     // setDdlFacValue("");
     setTxtScanoutValue("");
-    
+    document.getElementById("txtScanOut").focus();
   }
   async function submitData(option, params) {
     if (option == "submit") {

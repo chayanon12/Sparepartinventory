@@ -13,6 +13,7 @@ import { fn_ScanOut } from "./fn_ScanOut";
 import Scanner from "/src/assets/Scannerout.png";
 import "./ScanOut.css";
 import "../Common/StyleCommon.css";
+import axios from "axios";
 function ScanOut() {
   const {
     txtScanoutValue,
@@ -33,136 +34,150 @@ function ScanOut() {
     handleScantxtIDUserValue_Change,
     username,
     setusername,
-    Remark, setRemark,
-    btnCancel
+    Remark,
+    setRemark,
+    btnCancel,
   } = fn_ScanOut();
   useEffect(() => {
     if (user == "") {
       document.getElementById("txtScanIDUser").focus();
     }
   }, [user]);
+  const handleScanoutChange =async () => {    
+    let data = [];
+    await axios
+      .get(
+        `/newarrival/api/getScanoutItemtype?strSerialNumber=${txtScanoutValue.trim()}`
+      )
+      .then((res) => {
+         data = res.data;
+         console.log(res.data[0],'res.data[0].type_name');
+
+         setDdlValueout(res.data[0]);
+      });
+  };
   return (
-    <div style={{width: "100%"}}>
-        <Card className="openCard">
-          <div className="Scanhead">
-            <img className="ScanOutImg" src={Scanner} alt="Scanner" />
-            <h1 style={{ fontSize: "35px", color: "#d40c0ce3" }}>Scan Out</h1>
-          </div>
-          <div className="ScanOutFirstDiv">
-            <Autocomplete
-              className="ScanOutAutocomplete"
-              id="single-autocomplete"
-              value={ddlvalueout}
-              size="small"
-              onChange={(event, newValue) => {
-                setDdlValueout(newValue);
-                setDdlDataOutState(false);
-              }}
-              options={ddlData}
-              getOptionLabel={(option) => option.typename}
-              renderInput={(params) => (
-                <TextField
-                  id="autoCompleteout"
-                  error={ddlDataOutState}
-                  {...params}
-                  label="Select Type"
-                />
-              )}
-            />
-            <TextField
-              className="ScanOutUserIdTextF"
-              size="small"
-              id="txtScanIDUser"
-              label="User ID Code"
-              value={user}
-              onChange={(e) => setuser(e.target.value)}
-              onBlur={handleScantxtIDUserValue_Change}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleScantxtIDUserValue_Change();
+    <div style={{ width: "100%" }}>
+      <Card className="openCard">
+        <div className="Scanhead">
+          <img className="ScanOutImg" src={Scanner} alt="Scanner" />
+          <h1 style={{ fontSize: "35px", color: "#d40c0ce3" }}>Scan Out</h1>
+        </div>
+        <div className="ScanOutFirstDiv">
+          <Autocomplete
+            className="ScanOutAutocomplete"
+            id="single-autocomplete"
+            value={ddlvalueout}
+            size="small"
+            disabled
+            onChange={(event, newValue) => {
+              setDdlValueout(newValue);
+              setDdlDataOutState(false);
+            }}
+            options={ddlData}
+            getOptionLabel={(option) => option.typename}
+            renderInput={(params) => (
+              <TextField
+                id="autoCompleteout"
+                error={ddlDataOutState}
+                {...params}
+                label="Select Type"
+              />
+            )}
+          />
+          <TextField
+            className="ScanOutUserIdTextF"
+            size="small"
+            id="txtScanIDUser"
+            label="User ID Code"
+            value={user}
+            onChange={(e) => setuser(e.target.value)}
+            onBlur={handleScantxtIDUserValue_Change}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleScantxtIDUserValue_Change();
+              }
+            }}
+          />
+          <TextField
+            size="small"
+            className="ScanOutUserIdTextF"
+            // disabled
+            label="User Name"
+            value={username}
+            onChange={(e) => setusername(e.target.value.trim())}
+          />
+          <TextField
+            size="small"
+            className="ScanOutUserIdTextF"
+            // disabled
+            label="Dept."
+            value={ddlFacValue}
+            onChange={(e) => setDdlFacValue(e.target.value.trim())}
+            // onChange={(e) => {
+            //   const input = e.target.value.trim();
+            //   if (input.length <= 4) {
+            //     setDdlFacValue(input);
+            //   }
+            // }}
+          />
+        </div>
+        <div className="ScanOutFirstDiv">
+          <TextField
+            size="small"
+            id="txtScanOut"
+            className="ScanOutSerialTextF"
+            label="Scan out serial number"
+            value={txtScanoutValue}
+            onChange={(e) => setTxtScanoutValue(e.target.value.trim())}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                if (Remark == "") {
+                  handleScanoutChange(e)
+                  document.getElementById("txtScanOutRemark").focus();
                 }
-              }}
-            />
-            <TextField
-              size="small"
-              className="ScanOutUserIdTextF"
-              // disabled
-              label="User Name"
-              value={username}
-              onChange={(e) => setusername(e.target.value.trim())}
-            />
-            <TextField
-              size="small"
-              
-              className="ScanOutUserIdTextF"
-              // disabled
-              label="Dept."
-              value={ddlFacValue}
-              onChange={(e) => setDdlFacValue(e.target.value.trim())}
-              // onChange={(e) => {
-              //   const input = e.target.value.trim();
-              //   if (input.length <= 4) {
-              //     setDdlFacValue(input);
-              //   }
-              // }}
-            />
-          </div>
-          <div className="ScanOutFirstDiv">
-            <TextField
-              size="small"
-              id="txtScanOut"
-              className="ScanOutSerialTextF"
-              label="Scan out serial number"
-              value={txtScanoutValue}
-              onChange={(e) => setTxtScanoutValue(e.target.value.trim())}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  if(Remark == ""){
-                    document.getElementById("txtScanOutRemark").focus();
-                  }
-                }
-              }}
-              
-            />
-            <TextField
-              size="small"
-              id="txtScanOutRemark"
-              className="ScanOutRemark"
-              label="Remark"
-              value={Remark}
-              onChange={(e) => setRemark(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleScanouttxtValue_Change();
-                }
-              }}
-            />
-            <Button
-              type="primary"
-              className="ScanOutbtn"
-              onClick={handleScanouttxtValue_Change}
-            >
-              Submit
-            </Button>
-            <Button
-              type="primary"
-              className="ScanOutbtnCancel"
-              onClick={btnCancel}
-            >
-              Cancel
-            </Button>
-          </div>
-          {DtDataState && (
-            <Table
-              className="TableAll"
-              columns={columns}
-              dataSource={filteredDataSource2}
-              pagination={{
-                pageSize: 6,
-              }}
-            />
-          )}
-        </Card>
+              }
+            }}
+          />
+          <TextField
+            size="small"
+            id="txtScanOutRemark"
+            className="ScanOutRemark"
+            label="Remark"
+            value={Remark}
+            onChange={(e) => setRemark(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleScanouttxtValue_Change(e);
+              }
+            }}
+          />
+          <Button
+            type="primary"
+            className="ScanOutbtn"
+            onClick={handleScanouttxtValue_Change}
+          >
+            Submit
+          </Button>
+          <Button
+            type="primary"
+            className="ScanOutbtnCancel"
+            onClick={btnCancel}
+          >
+            Cancel
+          </Button>
+        </div>
+        {DtDataState && (
+          <Table
+            className="TableAll"
+            columns={columns}
+            dataSource={filteredDataSource2}
+            pagination={{
+              pageSize: 6,
+            }}
+          />
+        )}
+      </Card>
     </div>
   );
 }
